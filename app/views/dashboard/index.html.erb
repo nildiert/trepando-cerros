@@ -23,7 +23,7 @@
 
     <div class="bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-lg">
       <h2 class="text-xl font-semibold mb-2">Calcula tu tiempo estimado</h2>
-      <%= form_with url: root_path, method: :post, data: { action: 'submit->analysis#submit', turbo: false }, local: true, multipart: true do %>
+      <%= form_with url: root_path, method: :post, data: { action: 'submit->analysis#submit', turbo: false, analysis_target: 'form' }, local: true, multipart: true do %>
         <div data-analysis-target="dropzone"
              data-action="dragover->analysis#dragOver dragleave->analysis#dragLeave drop->analysis#drop click->analysis#openFile"
              class="mb-4 flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:border-blue-500">

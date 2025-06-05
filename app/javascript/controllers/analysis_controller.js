@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["file", "dropzone", "loader", "messages", "bar"]
+  static targets = ["form", "file", "dropzone", "loader", "messages", "bar"]
 
   connect() {
     this.submitted = false
@@ -16,7 +16,7 @@ export default class extends Controller {
 
   autoSubmit() {
     if (this.fileTarget.files.length > 0) {
-      this.element.requestSubmit()
+      this.formTarget.requestSubmit()
     }
   }
 
@@ -38,7 +38,7 @@ export default class extends Controller {
     event.preventDefault()
     this.dragLeave(event)
     this.fileTarget.files = event.dataTransfer.files
-    this.element.requestSubmit()
+    this.formTarget.requestSubmit()
   }
 
   startSteps() {
@@ -55,7 +55,7 @@ export default class extends Controller {
         this.barTarget.style.width = `${pct}%`
 
         if (idx === steps.length - 1) {
-          this.element.submit()
+          this.formTarget.submit()
         }
       }, idx * delay)
     })
