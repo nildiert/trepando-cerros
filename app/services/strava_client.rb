@@ -1,4 +1,5 @@
 require 'strava/api/client'
+require 'active_support/core_ext/integer/time'
 
 class StravaClient
   def initialize(access_token: ENV['STRAVA_ACCESS_TOKEN'])
@@ -11,7 +12,8 @@ class StravaClient
 
   # Returns average running pace in minutes per km from recent activities
   def average_run_pace
-    activities = @client.athlete_activities(per_page: 30)
+    after = 6.months.ago.to_i
+    activities = @client.athlete_activities(after: after, per_page: 200)
     runs = activities.select { |a| a['type'] == 'Run' }
     return 6.0 if runs.empty?
 
