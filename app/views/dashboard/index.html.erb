@@ -5,7 +5,17 @@
     <div class="bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-lg">
       <h2 class="text-xl font-semibold mb-2">Atleta en Strava</h2>
       <% if @athlete.present? %>
-        <p class="text-gray-800"><%= @athlete['firstname'] %> <%= @athlete['lastname'] %></p>
+        <div class="flex items-center space-x-4">
+          <% if @athlete['profile'].present? %>
+            <%= image_tag @athlete['profile'], alt: 'Foto de perfil', class: 'w-16 h-16 rounded-full' %>
+          <% end %>
+          <div>
+            <p class="text-gray-800 font-semibold"><%= @athlete['firstname'] %> <%= @athlete['lastname'] %></p>
+            <% if @athlete['bio'].present? %>
+              <p class="text-gray-600 text-sm"><%= @athlete['bio'] %></p>
+            <% end %>
+          </div>
+        </div>
       <% else %>
         <p class="text-gray-600">No se pudo cargar la información de Strava.</p>
       <% end %>
@@ -16,7 +26,7 @@
       <%= form_with url: root_path, method: :post, data: { controller: 'analysis', action: 'submit->analysis#submit', turbo: false }, local: true, multipart: true do %>
         <div class="mb-4">
           <%= label_tag :gpx_file, 'Sube tu ruta GPX', class: 'block' %>
-          <%= file_field_tag :gpx_file, class: 'border p-2 w-full text-gray-900' %>
+          <%= file_field_tag :gpx_file, class: 'border p-2 w-full text-gray-900 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-blue-600 file:text-white hover:file:bg-blue-500' %>
         </div>
         <%= submit_tag 'Calcular', class: 'bg-blue-600 text-white px-4 py-2 rounded cursor-pointer hover:bg-blue-500' %>
       <% end %>

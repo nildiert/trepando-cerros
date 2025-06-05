@@ -28,7 +28,7 @@ bundle exec rails server
 
 Al abrir `http://localhost:3000` verás un panel con información básica del atleta en Strava. Solo necesitas subir un archivo GPX de tu ruta para que la aplicación calcule el tiempo estimado de carrera. Se analizan tus entrenamientos de los últimos seis meses en Strava y se obtienen ritmos promedio en subidas, bajadas y tramos planos. Estos ritmos se comparan con la pendiente de cada segmento de la ruta para calcular el tiempo total.
 
-La interfaz usa Tailwind con un tema claro y tarjetas tipo *glass* para separar la información. Al subir tu GPX verás una barra de progreso animada y mensajes de cada etapa del análisis. El gráfico de elevación se presenta en una tarjeta aparte con animaciones suaves y no ocupa toda la pantalla. También se muestra un desglose de la distancia recorrida cada hora durante la carrera.
+La interfaz usa Tailwind con un tema claro y tarjetas tipo *glass* para separar la información. El botón de carga del GPX tiene estilos modernos y el progreso se muestra con pasos animados que toman unos segundos para que puedas ver cada mensaje. Además del nombre, se despliega la foto y la biografía del atleta. El gráfico de elevación se presenta en una tarjeta aparte con animaciones suaves y no ocupa toda la pantalla. También se muestra un desglose de la distancia recorrida cada hora durante la carrera.
 
 Things you may want to cover:
 
