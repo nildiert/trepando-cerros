@@ -23,5 +23,8 @@ module TrepandoCerros
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    # Autocarga servicios personalizados en app/services
+    config.eager_load_paths << Rails.root.join("app/services")
   end
 end

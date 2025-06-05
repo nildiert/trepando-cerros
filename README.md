@@ -1,7 +1,19 @@
-# README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Trepando Cerros
+
+Proyecto Rails 8 de ejemplo con integración para las APIs de OpenAI (GPT) y Strava.
+
+## Configuración
+
+1. Instala las dependencias Ruby con `bundle install`.
+2. Exporta las llaves de acceso necesarias:
+
+```bash
+export OPENAI_API_KEY="tu-clave-de-openai"
+export STRAVA_ACCESS_TOKEN="tu-token-de-strava"
+```
+
+Con ello puedes utilizar los servicios `GptClient` y `StravaClient` dentro de la aplicación.
 
 Things you may want to cover:
 
