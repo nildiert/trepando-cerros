@@ -2,16 +2,16 @@
   <h1 class="text-2xl font-bold">Panel de Carrera</h1>
 
   <div class="grid gap-6 md:grid-cols-2">
-    <div class="bg-white/10 backdrop-blur-md rounded-xl p-6 shadow-lg">
+    <div class="bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-lg">
       <h2 class="text-xl font-semibold mb-2">Atleta en Strava</h2>
       <% if @athlete.present? %>
-        <p class="text-gray-300"><%= @athlete['firstname'] %> <%= @athlete['lastname'] %></p>
+        <p class="text-gray-800"><%= @athlete['firstname'] %> <%= @athlete['lastname'] %></p>
       <% else %>
-        <p class="text-gray-400">No se pudo cargar la información de Strava.</p>
+        <p class="text-gray-600">No se pudo cargar la información de Strava.</p>
       <% end %>
     </div>
 
-    <div class="bg-white/10 backdrop-blur-md rounded-xl p-6 shadow-lg">
+    <div class="bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-lg">
       <h2 class="text-xl font-semibold mb-2">Calcula tu tiempo estimado</h2>
       <%= form_with url: root_path, method: :post, data: { controller: 'analysis', action: 'submit->analysis#submit', turbo: false }, local: true, multipart: true do %>
         <div class="mb-4">
@@ -24,7 +24,7 @@
         <div class="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-blue-400"></div>
         <span>Analizando...</span>
       </div>
-      <div class="w-full bg-gray-700 rounded h-2 mt-2 overflow-hidden">
+      <div class="w-full bg-gray-200 rounded h-2 mt-2 overflow-hidden">
         <div data-analysis-target="bar" class="bg-blue-500 h-full w-0 transition-all duration-500"></div>
       </div>
       <div data-analysis-target="messages" class="text-sm mt-2 space-y-1"></div>
@@ -33,16 +33,16 @@
 
   <% if @estimated_time %>
     <div class="grid gap-6 md:grid-cols-2">
-      <div class="bg-white/10 backdrop-blur-md rounded-xl p-6 shadow-lg">
+      <div class="bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-lg">
         <p class="font-bold mb-4">Tiempo estimado: <%= @estimated_time %></p>
-        <ul class="space-y-1 text-gray-300">
+        <ul class="space-y-1 text-gray-800">
           <% @hourly_progress.each do |(hour, dist)| %>
             <li>Hora <%= hour %>: <%= dist %> km</li>
           <% end %>
         </ul>
       </div>
 
-      <div class="bg-white/10 backdrop-blur-md rounded-xl p-6 shadow-lg">
+      <div class="bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-lg">
         <canvas id="profileChart" class="w-full h-56"></canvas>
       </div>
     </div>
