@@ -1,4 +1,3 @@
-
 # Trepando Cerros
 
 Proyecto Rails 8 de ejemplo con integración para la API de Strava.
@@ -20,32 +19,12 @@ La gema `dotenv-rails` cargará esta variable para permitir las llamadas a `Stra
 
 ## Uso
 
-Ejecuta la aplicación con:
+Inicia el servidor con:
 
 ```bash
 bundle exec rails server
 ```
 
-Al abrir `http://localhost:3000` verás un panel con información básica del atleta en Strava. Solo necesitas subir un archivo GPX de tu ruta para que la aplicación calcule el tiempo estimado de carrera. Se analizan tus entrenamientos de los últimos seis meses en Strava y se obtienen ritmos promedio en subidas, bajadas y tramos planos. Estos ritmos se comparan con la pendiente de cada segmento de la ruta para calcular el tiempo total.
+Al abrir `http://localhost:3000` verás una pantalla de bienvenida con un campo para buscar atletas por su ID en Strava. Tras elegir uno se mostrará otro panel donde puedes subir tu archivo GPX y obtener el tiempo estimado. La aplicación analiza tus carreras de los últimos seis meses para ajustar el ritmo en subidas, bajadas y terreno plano.
 
-La interfaz usa Tailwind con un tema claro y tarjetas tipo *glass* para separar la información. El área para subir el GPX permite arrastrar y soltar el archivo y muestra un ícono. Tan pronto seleccionas la ruta comienza el análisis automáticamente con pasos animados que se muestran debajo. Además del nombre, se despliega la foto y, si está disponible, la biografía del atleta. El gráfico de elevación se presenta en una tarjeta aparte con animaciones suaves y no ocupa toda la pantalla. También se muestra un desglose de la distancia recorrida cada hora durante la carrera.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+La interfaz usa Tailwind con un tema claro y tarjetas tipo *glass*. El área para subir el GPX permite arrastrar y soltar y muestra el progreso del análisis con mensajes animados. También se dibuja la gráfica de elevación y se muestra el avance por hora de la ruta.

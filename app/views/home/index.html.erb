@@ -1,0 +1,11 @@
+<div class="min-h-screen flex flex-col items-center justify-center p-8" data-controller="athlete-search">
+  <div class="text-center space-y-4 mb-8">
+    <h1 class="text-4xl font-bold">Trepando Cerros</h1>
+    <p class="text-lg text-gray-700">Analiza tus rutas y obtén un tiempo estimado basado en tu rendimiento en Strava.</p>
+    <img src="/icon.png" alt="Logo" class="w-24 h-24 mx-auto animate-bounce" />
+  </div>
+  <div class="w-full max-w-md">
+    <input type="text" placeholder="ID del atleta en Strava" data-athlete-search-target="input" data-action="input->athlete-search#search" class="w-full border rounded p-2" />
+    <div data-athlete-search-target="results" class="bg-white shadow rounded mt-2"></div>
+  </div>
+</div>

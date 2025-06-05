@@ -6,8 +6,8 @@ class StravaClient
     @client = Strava::Api::Client.new(access_token: access_token)
   end
 
-  def athlete
-    @client.athlete
+  def athlete(id = nil)
+    id ? @client.athlete(id) : @client.athlete
   end
 
   # Returns average running pace in minutes per km from recent activities
