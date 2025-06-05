@@ -1,7 +1,21 @@
-# README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Trepando Cerros
+
+Proyecto Rails 8 de ejemplo con integración para la API de Strava.
+
+## Requisitos previos
+
+1. Instala Ruby 3.2.2 (por ejemplo con `rbenv install 3.2.2`).
+2. Ejecuta `bundle install` para instalar las dependencias, incluida la gema `strava-ruby-client`.
+
+## Configuración
+
+1. Exporta la llave de acceso necesaria:
+
+```bash
+export STRAVA_ACCESS_TOKEN="tu-token-de-strava"
+```
+Con ello puedes utilizar el servicio `StravaClient` dentro de la aplicación.
 
 Things you may want to cover:
 
