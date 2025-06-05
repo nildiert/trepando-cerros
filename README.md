@@ -25,7 +25,7 @@ Ejecuta la aplicación con:
 bundle exec rails server
 ```
 
-Al abrir `http://localhost:3000` verás un panel con información básica del atleta en Strava y un formulario para calcular el tiempo estimado de una carrera introduciendo la distancia y tu ritmo promedio.
+Al abrir `http://localhost:3000` verás un panel con información básica del atleta en Strava. Desde allí puedes subir un archivo GPX de tu ruta o ingresar manualmente la distancia y tu ritmo para obtener el tiempo estimado de carrera. Cuando subes un GPX, la aplicación analiza cada tramo del recorrido y ajusta el ritmo según el desnivel utilizando tus actividades recientes de Strava.
 
 Things you may want to cover:
 
