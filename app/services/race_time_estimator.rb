@@ -1,12 +1,12 @@
 class RaceTimeEstimator
-  def initialize(segments, base_pace_min_per_km)
+  def initialize(segments, paces_by_grade)
     @segments = segments
-    @base_pace = base_pace_min_per_km.to_f
+    @paces = paces_by_grade
   end
 
   def total_seconds
     @segments.sum do |seg|
-      pace = adjusted_pace(seg.elevation_gain_m)
+      pace = pace_for_grade(seg.grade)
       seg.distance_km * pace * 60
     end.to_i
   end
@@ -21,8 +21,9 @@ class RaceTimeEstimator
 
   private
 
-  # Simple adjustment: +0.5 min per km per 100m of climb
-  def adjusted_pace(elevation_gain_m)
-    @base_pace + (elevation_gain_m / 100.0) * 0.5
+  def pace_for_grade(grade)
+    return @paces[:uphill] if grade > 0.03
+    return @paces[:downhill] if grade < -0.03
+    @paces[:flat]
   end
 end

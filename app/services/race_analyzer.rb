@@ -8,8 +8,8 @@ class RaceAnalyzer
     segments = GpxParser.new(@gpx_io).segments
     return nil if segments.empty?
 
-    base_pace = @strava_client.average_run_pace
-    estimator = RaceTimeEstimator.new(segments, base_pace)
+    paces = @strava_client.average_paces_by_grade
+    estimator = RaceTimeEstimator.new(segments, paces)
     estimator.formatted_time
   end
 end
