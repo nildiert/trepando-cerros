@@ -3,10 +3,14 @@
 
 Proyecto Rails 8 de ejemplo con integración para la API de Strava.
 
+## Requisitos previos
+
+1. Instala Ruby 3.2.2 (por ejemplo con `rbenv install 3.2.2`).
+2. Ejecuta `bundle install` para instalar las dependencias, incluida la gema `strava-ruby-client`.
+
 ## Configuración
 
-1. Instala las dependencias Ruby con `bundle install`.
-2. Exporta las llaves de acceso necesarias:
+1. Exporta la llave de acceso necesaria:
 
 ```bash
 export STRAVA_ACCESS_TOKEN="tu-token-de-strava"
