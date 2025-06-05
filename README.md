@@ -25,6 +25,7 @@ Inicia el servidor con:
 bundle exec rails server
 ```
 
-Al abrir `http://localhost:3000` verás una pantalla de bienvenida con un campo para buscar atletas por su nombre en Strava. Mientras escribes se mostrarán coincidencias con su foto de perfil. Tras elegir uno se mostrará otro panel donde puedes subir tu archivo GPX y obtener el tiempo estimado. La aplicación analiza tus carreras de los últimos seis meses para ajustar el ritmo en subidas, bajadas y terreno plano.
+Al abrir `http://localhost:3000` verás una pantalla de bienvenida donde puedes escribir el **ID del atleta** que aparece en la URL de Strava (por ejemplo `25991681`).
+Tras pulsar **Buscar** se mostrará la información del atleta y un panel para subir tu archivo GPX y obtener el tiempo estimado. La aplicación analiza tus carreras de los últimos seis meses para ajustar el ritmo en subidas, bajadas y terreno plano.
 
 La interfaz usa Tailwind con un tema claro y tarjetas tipo *glass*. El área para subir el GPX permite arrastrar y soltar y muestra el progreso del análisis con mensajes animados. También se dibuja la gráfica de elevación y se muestra el avance por hora de la ruta.

@@ -5,7 +5,9 @@
     <img src="/runner.svg" alt="Corredor" class="w-24 h-24 mx-auto" />
   </div>
   <div class="w-full max-w-md">
-    <input type="text" placeholder="Nombre del atleta" data-athlete-search-target="input" data-action="input->athlete-search#search" class="w-full border rounded p-2" />
-    <div data-athlete-search-target="results" class="bg-white shadow rounded mt-2"></div>
+    <form data-action="submit->athlete-search#search">
+      <input type="text" placeholder="ID del atleta" data-athlete-search-target="input" class="w-full border rounded p-2 mb-2" />
+      <button type="submit" class="w-full bg-blue-500 text-white rounded p-2 hover:bg-blue-600">Buscar</button>
+    </form>
   </div>
 </div>
