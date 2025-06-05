@@ -16,11 +16,15 @@ class AthletesController < ApplicationController
 
   def search
     results = search_athletes(params[:query])
-    if results.any?
-      render json: results.map { |a| { id: a['id'], firstname: a['firstname'], lastname: a['lastname'], profile: a['profile'] } }
-    else
-      render json: [], status: :not_found
+    athletes = Array(results).map do |a|
+      {
+        id: a['id'] || a[:id],
+        firstname: a['firstname'] || a[:firstname],
+        lastname: a['lastname'] || a[:lastname],
+        profile: a['profile'] || a[:profile]
+      }
     end
+    render json: athletes
   end
 
   private
