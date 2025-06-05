@@ -17,9 +17,6 @@ gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
-# Access the OpenAI API for GPT integration
-gem "openai"
-
 # Access the Strava API via https://github.com/dblock/strava-ruby-client
 gem "strava-ruby-client"
 
