@@ -6,16 +6,17 @@ Proyecto Rails 8 de ejemplo con integración para la API de Strava.
 ## Requisitos previos
 
 1. Instala Ruby 3.2.2 (por ejemplo con `rbenv install 3.2.2`).
-2. Ejecuta `bundle install` para instalar las dependencias, incluida la gema `strava-ruby-client`.
+2. Ejecuta `bundle install` para instalar las dependencias.
 
 ## Configuración
 
-1. Exporta la llave de acceso necesaria:
+1. Copia `.env.example` a `.env` y coloca tu token de acceso:
 
 ```bash
-export STRAVA_ACCESS_TOKEN="tu-token-de-strava"
+cp .env.example .env
+echo "STRAVA_ACCESS_TOKEN=tu-token" >> .env
 ```
-Con ello puedes utilizar el servicio `StravaClient` dentro de la aplicación.
+La gema `dotenv-rails` cargará esta variable para permitir las llamadas a `StravaClient`.
 
 ## Uso
 
@@ -25,7 +26,7 @@ Ejecuta la aplicación con:
 bundle exec rails server
 ```
 
-Al abrir `http://localhost:3000` verás un panel con información básica del atleta en Strava. Desde allí puedes subir un archivo GPX de tu ruta o ingresar manualmente la distancia y tu ritmo para obtener el tiempo estimado de carrera. Cuando subes un GPX, la aplicación analiza cada tramo del recorrido y ajusta el ritmo según el desnivel utilizando tus actividades recientes de Strava.
+Al abrir `http://localhost:3000` verás un panel con información básica del atleta en Strava. Solo necesitas subir un archivo GPX de tu ruta para que la aplicación calcule el tiempo estimado de carrera. El ritmo base se obtiene de tus actividades recientes en Strava y se ajusta por el desnivel de la ruta.
 
 Things you may want to cover:
 

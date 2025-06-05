@@ -14,14 +14,6 @@
     <h2 class="text-xl font-semibold mb-2">Calcula tu tiempo estimado</h2>
     <%= form_with url: root_path, method: :get, local: true, multipart: true do %>
       <div class="mb-4">
-        <%= label_tag :distance, 'Distancia (km)', class: 'block' %>
-        <%= number_field_tag :distance, params[:distance], step: :any, class: 'border p-2 w-full' %>
-      </div>
-      <div class="mb-4">
-        <%= label_tag :pace, 'Ritmo (min/km)', class: 'block' %>
-        <%= number_field_tag :pace, params[:pace], step: :any, class: 'border p-2 w-full' %>
-      </div>
-      <div class="mb-4">
         <%= label_tag :gpx_file, 'Sube tu ruta GPX', class: 'block' %>
         <%= file_field_tag :gpx_file, class: 'border p-2 w-full' %>
       </div>
