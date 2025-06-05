@@ -1,0 +1,30 @@
+<div class="container mx-auto p-4">
+  <h1 class="text-2xl font-bold mb-4">Panel de Carrera</h1>
+
+  <section class="mb-8">
+    <h2 class="text-xl font-semibold mb-2">Atleta en Strava</h2>
+    <% if @athlete.present? %>
+      <p class="text-gray-700"><%= @athlete['firstname'] %> <%= @athlete['lastname'] %></p>
+    <% else %>
+      <p class="text-gray-500">No se pudo cargar la información de Strava.</p>
+    <% end %>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-xl font-semibold mb-2">Calcula tu tiempo estimado</h2>
+    <%= form_with url: root_path, method: :get, local: true do %>
+      <div class="mb-4">
+        <%= label_tag :distance, 'Distancia (km)', class: 'block' %>
+        <%= number_field_tag :distance, params[:distance], step: :any, class: 'border p-2 w-full' %>
+      </div>
+      <div class="mb-4">
+        <%= label_tag :pace, 'Ritmo (min/km)', class: 'block' %>
+        <%= number_field_tag :pace, params[:pace], step: :any, class: 'border p-2 w-full' %>
+      </div>
+      <%= submit_tag 'Calcular', class: 'bg-blue-500 text-white px-4 py-2 rounded' %>
+    <% end %>
+    <% if @estimated_time %>
+      <p class="mt-4 font-bold">Tiempo estimado: <%= @estimated_time %></p>
+    <% end %>
+  </section>
+</div>

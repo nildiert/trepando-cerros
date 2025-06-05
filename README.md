@@ -17,6 +17,16 @@ export STRAVA_ACCESS_TOKEN="tu-token-de-strava"
 ```
 Con ello puedes utilizar el servicio `StravaClient` dentro de la aplicación.
 
+## Uso
+
+Ejecuta la aplicación con:
+
+```bash
+bundle exec rails server
+```
+
+Al abrir `http://localhost:3000` verás un panel con información básica del atleta en Strava y un formulario para calcular el tiempo estimado de una carrera introduciendo la distancia y tu ritmo promedio.
+
 Things you may want to cover:
 
 * Ruby version
