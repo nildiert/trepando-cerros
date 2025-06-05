@@ -8,7 +8,8 @@ class AthletesController < ApplicationController
 
     return unless params[:gpx_file].present?
 
-    analyzer = RaceAnalyzer.new(params[:gpx_file].tempfile)
+    token = session[:strava_token] || ENV['STRAVA_ACCESS_TOKEN']
+    analyzer = RaceAnalyzer.new(params[:gpx_file].tempfile, strava_client: StravaClient.new(access_token: token))
     result = analyzer.analyze
     if result
       @estimated_time = result[:time]
@@ -22,7 +23,8 @@ class AthletesController < ApplicationController
   private
 
   def fetch_athlete(id = nil)
-    client = StravaClient.new
+    token = session[:strava_token] || ENV['STRAVA_ACCESS_TOKEN']
+    client = StravaClient.new(access_token: token)
     id ? client.athlete(id) : client.athlete
   rescue StandardError
     nil
