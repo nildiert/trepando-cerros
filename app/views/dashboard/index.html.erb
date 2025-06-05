@@ -6,13 +6,13 @@
       <h2 class="text-xl font-semibold mb-2">Atleta en Strava</h2>
       <% if @athlete.present? %>
         <div class="flex items-center space-x-4">
-          <% if @athlete['profile'].present? %>
-            <%= image_tag @athlete['profile'], alt: 'Foto de perfil', class: 'w-16 h-16 rounded-full' %>
+          <% if @athlete.respond_to?(:profile) && @athlete.profile.present? %>
+            <%= image_tag @athlete.profile, alt: 'Foto de perfil', class: 'w-16 h-16 rounded-full' %>
           <% end %>
           <div>
-            <p class="text-gray-800 font-semibold"><%= @athlete['firstname'] %> <%= @athlete['lastname'] %></p>
-            <% if @athlete['bio'].present? %>
-              <p class="text-gray-600 text-sm"><%= @athlete['bio'] %></p>
+            <p class="text-gray-800 font-semibold"><%= @athlete.firstname %> <%= @athlete.lastname %></p>
+            <% if @athlete.respond_to?(:bio) && @athlete.bio.present? %>
+              <p class="text-gray-600 text-sm"><%= @athlete.bio %></p>
             <% end %>
           </div>
         </div>
