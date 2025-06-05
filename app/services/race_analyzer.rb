@@ -4,12 +4,19 @@ class RaceAnalyzer
     @strava_client = strava_client
   end
 
-  def estimated_time
-    segments = GpxParser.new(@gpx_io).segments
+  def analyze
+    parser = GpxParser.new(@gpx_io)
+    segments = parser.segments
     return nil if segments.empty?
 
     paces = @strava_client.average_paces_by_grade
     estimator = RaceTimeEstimator.new(segments, paces)
-    estimator.formatted_time
+    {
+      time: estimator.formatted_time,
+      profile: parser.elevation_profile,
+      progress: estimator.progress_by_hour
+    }
   end
+
+  alias_method :estimated_time, :analyze
 end

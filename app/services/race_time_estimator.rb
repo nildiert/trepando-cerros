@@ -19,6 +19,30 @@ class RaceTimeEstimator
     format("%02d:%02d:%02d", hours, minutes, secs)
   end
 
+  def progress_by_hour
+    progress = []
+    time_accum = 0.0
+    dist_accum = 0.0
+    next_mark = 3600.0
+
+    @segments.each do |seg|
+      pace = pace_for_grade(seg.grade)
+      seg_time = seg.distance_km * pace * 60
+
+      while time_accum + seg_time >= next_mark
+        ratio = (next_mark - time_accum) / seg_time
+        dist = dist_accum + seg.distance_km * ratio
+        progress << [next_mark / 3600, dist.round(2)]
+        next_mark += 3600.0
+      end
+
+      time_accum += seg_time
+      dist_accum += seg.distance_km
+    end
+
+    progress
+  end
+
   private
 
   def pace_for_grade(grade)

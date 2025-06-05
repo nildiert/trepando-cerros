@@ -5,8 +5,14 @@ class DashboardController < ApplicationController
     return unless params[:gpx_file].present?
 
     analyzer = RaceAnalyzer.new(params[:gpx_file].tempfile)
-    @estimated_time = analyzer.estimated_time
-    flash.now[:alert] = 'No se pudo calcular el tiempo' if @estimated_time.nil?
+    result = analyzer.analyze
+    if result
+      @estimated_time = result[:time]
+      @profile_data = result[:profile]
+      @hourly_progress = result[:progress]
+    else
+      flash.now[:alert] = 'No se pudo calcular el tiempo'
+    end
   end
 
   private

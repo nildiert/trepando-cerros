@@ -28,6 +28,27 @@ class GpxParser
     segs
   end
 
+  def elevation_profile
+    points = @doc.xpath('//trkpt').map do |pt|
+      {
+        lat: pt['lat'].to_f,
+        lon: pt['lon'].to_f,
+        ele: pt.at_xpath('ele')&.content.to_f
+      }
+    end
+    return { distance_km: [], elevation_m: [] } if points.empty?
+
+    distances = [0.0]
+    elevations = [points.first[:ele]]
+    total = 0.0
+    points.each_cons(2) do |a, b|
+      total += distance(a, b)
+      distances << total.round(2)
+      elevations << b[:ele]
+    end
+    { distance_km: distances, elevation_m: elevations }
+  end
+
   private
 
   def distance(a, b)

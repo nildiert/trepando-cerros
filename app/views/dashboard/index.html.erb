@@ -1,4 +1,4 @@
-<div class="container mx-auto p-4">
+<div class="container mx-auto p-4" data-controller="analysis">
   <h1 class="text-2xl font-bold mb-4">Panel de Carrera</h1>
 
   <section class="mb-8">
@@ -12,15 +12,41 @@
 
   <section class="mb-8">
     <h2 class="text-xl font-semibold mb-2">Calcula tu tiempo estimado</h2>
-    <%= form_with url: root_path, method: :post, data: { turbo: false }, local: true, multipart: true do %>
+    <%= form_with url: root_path, method: :post, data: { controller: 'analysis', action: 'submit->analysis#submit', turbo: false }, local: true, multipart: true do %>
       <div class="mb-4">
         <%= label_tag :gpx_file, 'Sube tu ruta GPX', class: 'block' %>
-        <%= file_field_tag :gpx_file, class: 'border p-2 w-full' %>
+        <%= file_field_tag :gpx_file, class: 'border p-2 w-full text-gray-900' %>
       </div>
-      <%= submit_tag 'Calcular', class: 'bg-blue-500 text-white px-4 py-2 rounded cursor-pointer' %>
+      <%= submit_tag 'Calcular', class: 'bg-blue-600 text-white px-4 py-2 rounded cursor-pointer hover:bg-blue-500' %>
     <% end %>
+    <div data-analysis-target="loader" class="hidden flex items-center space-x-2 mt-4">
+      <div class="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-blue-400"></div>
+      <span>Analizando...</span>
+    </div>
+    <div data-analysis-target="messages" class="text-sm mt-2 space-y-1"></div>
     <% if @estimated_time %>
       <p class="mt-4 font-bold">Tiempo estimado: <%= @estimated_time %></p>
+      <canvas id="profileChart" class="w-full h-48 mt-4"></canvas>
+      <ul class="mt-4 space-y-1">
+        <% @hourly_progress.each do |(hour, dist)| %>
+          <li>Hora <%= hour %>: <%= dist %> km</li>
+        <% end %>
+      </ul>
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const data = {
+            labels: <%= raw(@profile_data[:distance_km].to_json) %>,
+            datasets: [{
+              label: 'Elevaci\u00f3n (m)',
+              data: <%= raw(@profile_data[:elevation_m].to_json) %>,
+              fill: true,
+              borderColor: 'rgb(59,130,246)',
+              backgroundColor: 'rgba(59,130,246,0.3)'
+            }]
+          };
+          new Chart(document.getElementById('profileChart'), { type: 'line', data, options: { plugins: { legend: { display: false } }, scales: { x: { title: { display: true, text: 'Distancia (km)' } }, y: { title: { display: true, text: 'Elevaci\u00f3n (m)' } } } } });
+        });
+      </script>
     <% elsif flash[:alert] %>
       <p class="mt-4 text-red-600"><%= flash[:alert] %></p>
     <% end %>
