@@ -12,12 +12,12 @@
 
   <section class="mb-8">
     <h2 class="text-xl font-semibold mb-2">Calcula tu tiempo estimado</h2>
-    <%= form_with url: root_path, method: :post, local: true, multipart: true do %>
+    <%= form_with url: root_path, method: :post, data: { turbo: false }, local: true, multipart: true do %>
       <div class="mb-4">
         <%= label_tag :gpx_file, 'Sube tu ruta GPX', class: 'block' %>
         <%= file_field_tag :gpx_file, class: 'border p-2 w-full' %>
       </div>
-      <%= submit_tag 'Calcular', class: 'bg-blue-500 text-white px-4 py-2 rounded' %>
+      <%= submit_tag 'Calcular', class: 'bg-blue-500 text-white px-4 py-2 rounded cursor-pointer' %>
     <% end %>
     <% if @estimated_time %>
       <p class="mt-4 font-bold">Tiempo estimado: <%= @estimated_time %></p>
