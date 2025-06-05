@@ -16,7 +16,7 @@ cp .env.example .env
 echo "STRAVA_CLIENT_ID=tu-id" >> .env
 echo "STRAVA_CLIENT_SECRET=tu-secret" >> .env
 ```
-La gema `dotenv-rails` cargará estas variables para permitir las llamadas a `StravaClient` y al proceso de OAuth.
+La gema `dotenv-rails` cargará estas variables para permitir las llamadas a `StravaClient` y al proceso de OAuth. Si no se definen `STRAVA_CLIENT_ID` y `STRAVA_CLIENT_SECRET`, el enlace **Conectar con Strava** mostrará un mensaje de error.
 
 ## Uso
 
