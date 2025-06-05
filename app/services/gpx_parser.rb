@@ -6,7 +6,9 @@ class GpxParser
   EARTH_RADIUS_KM = 6371.0
 
   def initialize(io)
+    io.rewind if io.respond_to?(:rewind)
     @doc = Nokogiri::XML(io)
+    @doc.remove_namespaces!
   end
 
   def segments

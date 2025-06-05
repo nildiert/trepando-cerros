@@ -21,6 +21,8 @@
     <% end %>
     <% if @estimated_time %>
       <p class="mt-4 font-bold">Tiempo estimado: <%= @estimated_time %></p>
+    <% elsif flash[:alert] %>
+      <p class="mt-4 text-red-600"><%= flash[:alert] %></p>
     <% end %>
   </section>
 </div>
