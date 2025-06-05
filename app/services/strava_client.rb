@@ -11,14 +11,15 @@ class StravaClient
   end
 
   def search_athletes(query)
-    conn = Faraday.new('https://www.strava.com/api/v3')
-    resp = conn.get('athletes') do |req|
-      req.params[:search] = query
-      req.headers['Authorization'] = "Bearer #{ENV['STRAVA_ACCESS_TOKEN']}"
-    end
-    data = JSON.parse(resp.body) rescue nil
-
-    athletes =
+    if @client.respond_to?(:athletes)
+      @client.athletes(search: query)
+    else
+      conn = Faraday.new('https://www.strava.com/api/v3')
+      resp = conn.get('athletes') do |req|
+        req.params[:search] = query
+        req.headers['Authorization'] = "Bearer #{ENV['STRAVA_ACCESS_TOKEN']}"
+      end
+      data = JSON.parse(resp.body) rescue nil
       case data
       when Array
         data
@@ -27,8 +28,7 @@ class StravaClient
       else
         []
       end
-
-    athletes
+    end
   rescue StandardError
     []
   end
