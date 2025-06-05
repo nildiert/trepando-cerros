@@ -10,6 +10,16 @@ class StravaClient
     id ? @client.athlete(id) : @client.athlete
   end
 
+  def search_athletes(query)
+    conn = Faraday.new('https://www.strava.com/api/v3')
+    resp = conn.get('athletes', { search: query }) do |req|
+      req.headers['Authorization'] = "Bearer #{ENV['STRAVA_ACCESS_TOKEN']}"
+    end
+    JSON.parse(resp.body)
+  rescue StandardError
+    []
+  end
+
   # Returns average running pace in minutes per km from recent activities
   def average_run_pace
     paces = average_paces_by_grade

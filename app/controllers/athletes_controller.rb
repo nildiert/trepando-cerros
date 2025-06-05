@@ -14,12 +14,12 @@ class AthletesController < ApplicationController
     end
   end
 
-  def lookup
-    athlete = fetch_athlete(params[:query])
-    if athlete
-      render json: { id: athlete.id, firstname: athlete.firstname, lastname: athlete.lastname, profile: athlete.profile }
+  def search
+    results = search_athletes(params[:query])
+    if results.any?
+      render json: results.map { |a| { id: a['id'], firstname: a['firstname'], lastname: a['lastname'], profile: a['profile'] } }
     else
-      render json: {}, status: :not_found
+      render json: [], status: :not_found
     end
   end
 
@@ -27,12 +27,15 @@ class AthletesController < ApplicationController
 
   def fetch_athlete(id = nil)
     client = StravaClient.new
-    if id
-      client.athlete(id)
-    else
-      client.athlete
-    end
+    id ? client.athlete(id) : client.athlete
   rescue StandardError
     nil
+  end
+
+  def search_athletes(query)
+    client = StravaClient.new
+    client.search_athletes(query)
+  rescue StandardError
+    []
   end
 end
