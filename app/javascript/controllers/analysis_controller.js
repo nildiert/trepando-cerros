@@ -1,15 +1,18 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["loader", "messages"]
+  static targets = ["loader", "messages", "bar"]
 
   submit() {
     this.loaderTarget.classList.remove('hidden')
     this.messagesTarget.innerHTML = ''
-    const steps = ['Leyendo GPX...', 'Consultando Strava...', 'Calculando tiempos...']
+    this.barTarget.style.width = '0%'
+    const steps = ['Leyendo GPX...', 'Consultando Strava...', 'Calculando tiempos...', 'Generando gráfica...']
     steps.forEach((msg, idx) => {
       setTimeout(() => {
         this.messagesTarget.insertAdjacentHTML('beforeend', `<p>${msg}</p>`)
+        const pct = ((idx + 1) / steps.length) * 100
+        this.barTarget.style.width = `${pct}%`
       }, idx * 800)
     })
   }
