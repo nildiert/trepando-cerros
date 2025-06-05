@@ -1,6 +1,11 @@
 class AthletesController < ApplicationController
   def show
     @athlete = fetch_athlete(params[:id])
+    unless @athlete
+      flash.now[:alert] = 'No se pudo cargar la información de Strava.'
+      return
+    end
+
     return unless params[:gpx_file].present?
 
     analyzer = RaceAnalyzer.new(params[:gpx_file].tempfile)
