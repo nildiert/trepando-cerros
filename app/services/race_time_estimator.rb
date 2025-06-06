@@ -1,7 +1,10 @@
 class RaceTimeEstimator
-  DISTANCE_FATIGUE_RATE = 0.005
-  UPHILL_FATIGUE_RATE = 0.00005
-  DOWNHILL_FATIGUE_RATE = 0.00005
+  # Fatigue coefficients used to slightly slow the pace as distance and
+  # elevation accumulate. Values were lowered to avoid overestimating the
+  # effect of fatigue on long routes.
+  DISTANCE_FATIGUE_RATE = 0.002
+  UPHILL_FATIGUE_RATE  = 0.000015
+  DOWNHILL_FATIGUE_RATE = 0.000015
 
   def initialize(segments, paces_by_grade)
     @segments = segments
