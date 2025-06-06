@@ -9,8 +9,8 @@ class RaceAnalyzer
     segments = parser.segments
     return nil if segments.empty?
 
-    paces = @strava_client.average_paces_by_grade
-    estimator = RaceTimeEstimator.new(segments, paces)
+    pace_source = @strava_client.pace_model || @strava_client.average_paces_by_grade
+    estimator = RaceTimeEstimator.new(segments, pace_source)
     {
       time: estimator.formatted_time,
       profile: parser.elevation_profile,

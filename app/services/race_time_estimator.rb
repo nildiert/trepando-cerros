@@ -7,9 +7,9 @@ class RaceTimeEstimator
   DOWNHILL_FATIGUE_RATE = 0.000015
   FATIGUE_EXPONENT      = 1.1
 
-  def initialize(segments, paces_by_grade)
+  def initialize(segments, pace_source)
     @segments = segments
-    @paces = paces_by_grade
+    @paces = pace_source
   end
 
   def total_seconds
@@ -106,9 +106,13 @@ class RaceTimeEstimator
   private
 
   def pace_for_grade(grade)
-    return @paces[:uphill] if grade > 0.03
-    return @paces[:downhill] if grade < -0.03
-    @paces[:flat]
+    if @paces.respond_to?(:predict)
+      @paces.predict(grade)
+    else
+      return @paces[:uphill] if grade > 0.03
+      return @paces[:downhill] if grade < -0.03
+      @paces[:flat]
+    end
   end
 
   def segment_time(seg, dist_before, pos_before, neg_before)
