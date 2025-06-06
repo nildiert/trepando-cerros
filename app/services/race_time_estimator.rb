@@ -74,6 +74,18 @@ class RaceTimeEstimator
       neg_accum += seg.elevation_loss_m
     end
 
+    final_hr = time_accum / 3600.0
+    last_hr = progress.empty? ? -1 : progress.last[0]
+    if final_hr > last_hr + 1e-4
+      progress << [
+        final_hr.round(2),
+        dist_accum.round(2),
+        (dist_accum - prev_dist).round(2),
+        (pos_accum - prev_pos).round(1),
+        (neg_accum - prev_neg).round(1)
+      ]
+    end
+
     progress
   end
 
