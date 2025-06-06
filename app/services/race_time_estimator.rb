@@ -26,6 +26,9 @@ class RaceTimeEstimator
     pos_accum = 0.0
     neg_accum = 0.0
     next_mark = 3600.0
+    prev_dist = 0.0
+    prev_pos = 0.0
+    prev_neg = 0.0
 
     @segments.each do |seg|
       pace = pace_for_grade(seg.grade)
@@ -36,14 +39,18 @@ class RaceTimeEstimator
         dist = dist_accum + seg.distance_km * ratio
         pos = pos_accum + seg.elevation_gain_m * ratio
         neg = neg_accum + seg.elevation_loss_m * ratio
-        prev = progress.last
+
         progress << [
           next_mark / 3600,
           dist.round(2),
-          (prev ? (dist - prev[1]) : dist).round(2),
-          (prev ? (pos - prev[3]) : pos).round(1),
-          (prev ? (neg - prev[4]) : neg).round(1)
+          (dist - prev_dist).round(2),
+          (pos - prev_pos).round(1),
+          (neg - prev_neg).round(1)
         ]
+
+        prev_dist = dist
+        prev_pos = pos
+        prev_neg = neg
         next_mark += 3600.0
       end
 
