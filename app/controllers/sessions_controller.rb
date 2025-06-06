@@ -41,4 +41,9 @@ class SessionsController < ApplicationController
   rescue StandardError
     redirect_to root_path, alert: 'No se pudo autenticar con Strava'
   end
+
+  def destroy
+    reset_session
+    redirect_to root_path
+  end
 end

@@ -24,25 +24,30 @@
     <% if @athlete.present? %>
       <div class="bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-lg">
         <h2 class="text-xl font-semibold mb-2">Calcula tu tiempo estimado</h2>
-        <%= form_with url: athlete_path(@athlete.id), method: :post, data: { action: 'submit->analysis#submit', turbo: false, analysis_target: 'form' }, local: true, multipart: true do %>
-          <div data-analysis-target="dropzone"
-               data-action="dragover->analysis#dragOver dragleave->analysis#dragLeave drop->analysis#drop click->analysis#openFile"
-               class="mb-4 flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:border-blue-500">
-            <svg class="w-12 h-12 text-gray-500 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1M12 12V4m0 0L8 8m4-4l4 4" />
-            </svg>
-            <p class="text-gray-600">Arrastra tu archivo GPX o haz clic para seleccionarlo</p>
-            <%= file_field_tag :gpx_file, class: 'hidden', data: { analysis_target: 'file', action: 'change->analysis#autoSubmit' } %>
+        <% if @estimated_time %>
+          <p class="text-lg font-medium mb-2">Tiempo estimado:</p>
+          <p class="text-4xl font-bold mb-4"><%= @estimated_time %></p>
+        <% else %>
+          <%= form_with url: athlete_path(@athlete.id), method: :post, data: { action: 'submit->analysis#submit', turbo: false, analysis_target: 'form' }, local: true, multipart: true do %>
+            <div data-analysis-target="dropzone"
+                 data-action="dragover->analysis#dragOver dragleave->analysis#dragLeave drop->analysis#drop click->analysis#openFile"
+                 class="mb-4 flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:border-blue-500">
+              <svg class="w-12 h-12 text-gray-500 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1M12 12V4m0 0L8 8m4-4l4 4" />
+              </svg>
+              <p class="text-gray-600">Arrastra tu archivo GPX o haz clic para seleccionarlo</p>
+              <%= file_field_tag :gpx_file, class: 'hidden', data: { analysis_target: 'file', action: 'change->analysis#autoSubmit' } %>
+            </div>
+          <% end %>
+          <div data-analysis-target="loader" class="hidden flex items-center space-x-2 mt-4">
+            <div class="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-blue-400"></div>
+            <span>Analizando...</span>
           </div>
+          <div class="w-full bg-gray-200 rounded h-2 mt-2 overflow-hidden">
+            <div data-analysis-target="bar" class="bg-blue-500 h-full w-0 transition-all duration-500"></div>
+          </div>
+          <div data-analysis-target="messages" class="text-sm mt-2 space-y-1"></div>
         <% end %>
-        <div data-analysis-target="loader" class="hidden flex items-center space-x-2 mt-4">
-          <div class="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-blue-400"></div>
-          <span>Analizando...</span>
-        </div>
-        <div class="w-full bg-gray-200 rounded h-2 mt-2 overflow-hidden">
-          <div data-analysis-target="bar" class="bg-blue-500 h-full w-0 transition-all duration-500"></div>
-        </div>
-        <div data-analysis-target="messages" class="text-sm mt-2 space-y-1"></div>
       </div>
     <% end %>
   </div>
@@ -50,19 +55,12 @@
   <% if @estimated_time %>
     <div class="grid gap-6 md:grid-cols-2">
       <div class="bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-lg">
-        <h2 class="text-xl font-semibold mb-2">Ruta y proyección</h2>
+        <h2 class="text-xl font-semibold mb-2">Progreso por hora</h2>
         <div class="flex items-center space-x-2 mb-4">
           <label for="startTime" class="font-medium">Hora de inicio:</label>
           <input type="time" id="startTime" class="border rounded p-2 bg-white shadow-inner">
         </div>
-        <ul id="kmTimes" class="space-y-1 text-gray-800 mb-4"></ul>
-        <h3 class="font-semibold mt-4">Progreso por hora</h3>
-        <ul class="space-y-1 text-gray-800">
-          <% @hourly_progress.each do |(hour, dist)| %>
-            <li>Hora <%= hour %>: <%= dist %> km</li>
-          <% end %>
-        </ul>
-        <p class="font-bold mt-4">Tiempo estimado: <%= @estimated_time %></p>
+        <ul id="hourTimes" class="space-y-1 text-gray-800 mb-4"></ul>
       </div>
 
       <div class="bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-lg">
@@ -97,22 +95,21 @@
           }
         });
 
-        const kmSeconds = <%= raw(@km_seconds.to_json) %>;
+        const progress = <%= raw(@hourly_progress.to_json) %>;
         const input = document.getElementById('startTime');
-        const list = document.getElementById('kmTimes');
+        const list = document.getElementById('hourTimes');
         function renderTimes() {
           list.innerHTML = '';
           if (!input.value) return;
           const [h, m] = input.value.split(':').map(Number);
           const base = new Date();
           base.setHours(h, m, 0, 0);
-          kmSeconds.forEach(([km, sec]) => {
-            const t = new Date(base.getTime() + sec * 1000);
+          progress.forEach(([hr, dist]) => {
+            const t = new Date(base.getTime() + hr * 3600 * 1000);
             const hh = String(t.getHours()).padStart(2, '0');
             const mm = String(t.getMinutes()).padStart(2, '0');
-            const ss = String(t.getSeconds()).padStart(2, '0');
             const li = document.createElement('li');
-            li.textContent = `Km ${km}: ${hh}:${mm}:${ss}`;
+            li.textContent = `Hora ${hr}: ${dist} km - ${hh}:${mm}`;
             list.appendChild(li);
           });
         }
