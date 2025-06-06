@@ -16,13 +16,29 @@
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
+  <body class="min-h-screen bg-gray-100 text-gray-900" style="font-family: 'Poppins', sans-serif;">
+    <nav class="bg-white shadow-md">
+      <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+        <%= link_to 'Trepando Cerros', root_path, class: 'font-semibold text-lg' %>
+      </div>
+    </nav>
     <%= yield %>
+    <% if session[:strava_token] %>
+      <div class="fixed bottom-4 right-4">
+        <%= button_to 'Cerrar sesión', logout_path, method: :delete,
+              class: 'text-xs px-2 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300' %>
+      </div>
+    <% end %>
   </body>
 </html>

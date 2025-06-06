@@ -1,0 +1,188 @@
+<div class="container mx-auto p-4 space-y-6" data-controller="analysis">
+  <h1 class="text-2xl font-bold">Panel de Carrera</h1>
+
+  <div class="grid gap-6 md:grid-cols-2">
+    <div class="bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-lg">
+      <h2 class="text-xl font-semibold mb-2">Atleta en Strava</h2>
+      <% if @athlete.present? %>
+        <div class="flex items-center space-x-4">
+          <% if @athlete.respond_to?(:profile) && @athlete.profile.present? %>
+            <%= image_tag @athlete.profile, alt: 'Foto de perfil', class: 'w-16 h-16 rounded-full' %>
+          <% end %>
+          <div>
+            <p class="text-gray-800 font-semibold"><%= @athlete.firstname %> <%= @athlete.lastname %></p>
+            <% if @athlete.respond_to?(:bio) && @athlete.bio.present? %>
+              <p class="text-gray-600 text-sm"><%= @athlete.bio %></p>
+            <% end %>
+          </div>
+        </div>
+      <% else %>
+        <p class="text-gray-600">No se pudo cargar la información de Strava.</p>
+      <% end %>
+    </div>
+
+    <% if @athlete.present? %>
+      <div class="bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-lg">
+        <% unless @estimated_time %>
+          <h2 class="text-xl font-semibold mb-2">Calcula tu tiempo estimado</h2>
+        <% end %>
+        <% if @estimated_time %>
+          <p class="text-lg font-medium mb-2">Tiempo estimado:</p>
+          <p class="text-4xl font-bold mb-1"><%= @estimated_time %></p>
+          <p class="text-sm text-gray-600 mb-4">
+            <%= @total_distance %> km &bull; <%= @total_elevation %> m+
+          </p>
+        <% else %>
+          <%= form_with url: athlete_path(@athlete.id), method: :post, data: { action: 'submit->analysis#submit', turbo: false, analysis_target: 'form' }, local: true, multipart: true do %>
+            <div data-analysis-target="dropzone"
+                 data-action="dragover->analysis#dragOver dragleave->analysis#dragLeave drop->analysis#drop click->analysis#openFile"
+                 class="mb-4 flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:border-blue-500">
+              <svg class="w-12 h-12 text-gray-500 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1M12 12V4m0 0L8 8m4-4l4 4" />
+              </svg>
+              <p class="text-gray-600">Arrastra tu archivo GPX o haz clic para seleccionarlo</p>
+              <%= file_field_tag :gpx_file, class: 'hidden', data: { analysis_target: 'file', action: 'change->analysis#autoSubmit' } %>
+            </div>
+          <% end %>
+          <div data-analysis-target="loader" class="hidden flex items-center space-x-2 mt-4">
+            <div class="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-blue-400"></div>
+            <span>Analizando...</span>
+          </div>
+          <div class="w-full bg-gray-200 rounded h-2 mt-2 overflow-hidden">
+            <div data-analysis-target="bar" class="bg-blue-500 h-full w-0 transition-all duration-500"></div>
+          </div>
+          <div data-analysis-target="messages" class="text-sm mt-2 space-y-1"></div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <% if @estimated_time %>
+    <div class="grid gap-6 grid-cols-1">
+      <div class="bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-lg w-full">
+        <canvas id="profileChart" class="w-full h-56"></canvas>
+      </div>
+
+      <div class="bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-lg w-full">
+        <h2 class="text-xl font-semibold mb-2">Progreso por hora</h2>
+        <div class="flex items-center space-x-2 mb-4">
+          <label for="startTime" class="font-medium">Hora de inicio:</label>
+          <input type="time" id="startTime" class="border rounded p-2 bg-white shadow-inner">
+        </div>
+        <table class="w-full text-left mb-4">
+          <thead>
+            <tr>
+              <th class="px-2 py-1">Hora</th>
+              <th class="px-2 py-1">Dist. acum. (km)</th>
+              <th class="px-2 py-1">Km tramo</th>
+              <th class="px-2 py-1">Desnivel +</th>
+              <th class="px-2 py-1">Desnivel -</th>
+              <th class="px-2 py-1">Hora del día</th>
+            </tr>
+          </thead>
+          <tbody id="hourTimes"></tbody>
+        </table>
+      </div>
+    </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const data = {
+          labels: <%= raw(@profile_data[:distance_km].to_json) %>,
+          datasets: [{
+            label: 'Elevaci\u00f3n (m)',
+            data: <%= raw(@profile_data[:elevation_m].to_json) %>,
+            fill: false,
+            borderColor: 'rgb(59,130,246)',
+            backgroundColor: 'rgba(59,130,246,0.3)',
+            pointRadius: 0,
+            tension: 0.4,
+            borderWidth: 2
+          }]
+        };
+        const kmSeconds = <%= raw(@km_seconds.to_json) %>;
+
+        function timeForDistance(d) {
+          if (kmSeconds.length === 0) return 0;
+          for (let i = 0; i < kmSeconds.length; i++) {
+            const km = kmSeconds[i][0];
+            const sec = kmSeconds[i][1];
+            if (d <= km) {
+              if (i === 0) return sec * (d / km);
+              const kmA = kmSeconds[i - 1][0];
+              const secA = kmSeconds[i - 1][1];
+              const ratio = (d - kmA) / (km - kmA);
+              return secA + ratio * (sec - secA);
+            }
+          }
+          return kmSeconds[kmSeconds.length - 1][1];
+        }
+
+        function dayTimeString(seconds) {
+          const startInput = document.getElementById('startTime');
+          if (!startInput.value) return formatTime(seconds);
+          const [h, m] = startInput.value.split(':').map(Number);
+          const base = new Date();
+          base.setHours(h, m, 0, 0);
+          const t = new Date(base.getTime() + seconds * 1000);
+          return `${String(t.getHours()).padStart(2,'0')}:${String(t.getMinutes()).padStart(2,'0')}`;
+        }
+
+        function formatTime(seconds) {
+          const h = Math.floor(seconds / 3600);
+          const m = Math.floor((seconds % 3600) / 60);
+          return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
+        }
+
+        new Chart(document.getElementById('profileChart'), {
+          type: 'line',
+          data,
+          options: {
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  afterLabel: ctx => {
+                    const t = timeForDistance(ctx.parsed.x);
+                    return 'Paso aprox: ' + dayTimeString(t);
+                  }
+                }
+              }
+            },
+            scales: {
+              x: { title: { display: true, text: 'Distancia (km)' } },
+              y: { title: { display: true, text: 'Elevaci\u00f3n (m)' } }
+            },
+            animation: { duration: 1000 }
+          }
+        });
+
+        const progress = <%= raw(@hourly_progress.to_json) %>;
+        const input = document.getElementById('startTime');
+        const list = document.getElementById('hourTimes');
+        function renderTimes() {
+          list.innerHTML = '';
+          if (!input.value) return;
+          const [h, m] = input.value.split(':').map(Number);
+          const base = new Date();
+          base.setHours(h, m, 0, 0);
+          progress.forEach(([hr, cum, seg, pos, neg]) => {
+            const t = new Date(base.getTime() + hr * 3600 * 1000);
+            const hh = String(t.getHours()).padStart(2, '0');
+            const mm = String(t.getMinutes()).padStart(2, '0');
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td class='px-2 py-1'>${hr}</td>` +
+              `<td class='px-2 py-1'>${cum}</td>` +
+              `<td class='px-2 py-1'>${seg}</td>` +
+              `<td class='px-2 py-1'>${pos}</td>` +
+              `<td class='px-2 py-1'>${neg}</td>` +
+              `<td class='px-2 py-1'>${hh}:${mm}</td>`;
+            list.appendChild(tr);
+          });
+        }
+        input.addEventListener('change', renderTimes);
+      });
+    </script>
+  <% elsif flash[:alert] %>
+    <p class="text-red-600"><%= flash[:alert] %></p>
+  <% end %>
+</div>
