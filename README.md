@@ -15,13 +15,16 @@ Proyecto Rails 8 de ejemplo con integración para la API de Strava.
 cp .env.example .env
 echo "STRAVA_CLIENT_ID=tu-id" >> .env
 echo "STRAVA_CLIENT_SECRET=tu-secret" >> .env
+# (opcional) si usas un dominio distinto a `localhost:3000`, ajusta la URL de retorno
+echo "STRAVA_REDIRECT_URI=https://tu-dominio.ngrok-free.app/auth/strava/callback" >> .env
 ```
 La gema `dotenv-rails` cargará estas variables para permitir las llamadas a `StravaClient` y al proceso de OAuth. Si no se definen `STRAVA_CLIENT_ID` y `STRAVA_CLIENT_SECRET`, el enlace **Conectar con Strava** mostrará un mensaje de error.
 
 Si ejecutas la app desde una URL externa (por ejemplo mediante `ngrok`), Rails
 protege las redirecciones hacia otros dominios. El controlador ya indica
 `allow_other_host: true` al redirigir a Strava, por lo que la autenticación
-funcionará correctamente.
+funcionará correctamente. Asegúrate de que la URL indicada en `STRAVA_REDIRECT_URI`
+coincida con el valor configurado en tu aplicación de Strava.
 
 ## Uso
 
