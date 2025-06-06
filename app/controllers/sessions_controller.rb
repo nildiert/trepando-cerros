@@ -11,7 +11,10 @@ class SessionsController < ApplicationController
       client_id: client_id,
       client_secret: client_secret
     )
-    redirect_uri = ENV['STRAVA_REDIRECT_URI'].presence || strava_callback_url
+    redirect_uri = ENV['STRAVA_REDIRECT_URI'].presence ||
+                   strava_callback_url(protocol: request.protocol,
+                                       host: request.host,
+                                       port: request.port)
     redirect_to client.authorize_url(
       redirect_uri: redirect_uri,
       response_type: 'code',

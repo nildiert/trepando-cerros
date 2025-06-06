@@ -23,8 +23,11 @@ La gema `dotenv-rails` cargará estas variables para permitir las llamadas a `St
 Si ejecutas la app desde una URL externa (por ejemplo mediante `ngrok`), Rails
 protege las redirecciones hacia otros dominios. El controlador ya indica
 `allow_other_host: true` al redirigir a Strava, por lo que la autenticación
-funcionará correctamente. Asegúrate de que la URL indicada en `STRAVA_REDIRECT_URI`
-coincida con el valor configurado en tu aplicación de Strava.
+funcionará correctamente. **La URL usada como `redirect_uri` debe coincidir de
+forma exacta con la registrada en la configuración de tu aplicación en
+Strava**. Si Strava devuelve `Bad Request` con código `invalid`, revisa que
+`STRAVA_REDIRECT_URI` y la dirección en la página de ajustes de Strava sean
+idénticas.
 
 ## Uso
 
