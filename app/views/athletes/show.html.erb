@@ -58,8 +58,8 @@
   </div>
 
   <% if @estimated_time %>
-    <div class="grid gap-6 md:grid-cols-2">
-      <div class="bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-lg">
+    <div class="grid gap-6 grid-cols-1">
+      <div class="bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-lg w-full">
         <h2 class="text-xl font-semibold mb-2">Progreso por hora</h2>
         <div class="flex items-center space-x-2 mb-4">
           <label for="startTime" class="font-medium">Hora de inicio:</label>
@@ -80,7 +80,7 @@
         </table>
       </div>
 
-      <div class="bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-lg">
+      <div class="bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-lg w-full">
         <canvas id="profileChart" class="w-full h-56"></canvas>
       </div>
     </div>
