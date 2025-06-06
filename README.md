@@ -18,6 +18,11 @@ echo "STRAVA_CLIENT_SECRET=tu-secret" >> .env
 ```
 La gema `dotenv-rails` cargará estas variables para permitir las llamadas a `StravaClient` y al proceso de OAuth. Si no se definen `STRAVA_CLIENT_ID` y `STRAVA_CLIENT_SECRET`, el enlace **Conectar con Strava** mostrará un mensaje de error.
 
+Si ejecutas la app desde una URL externa (por ejemplo mediante `ngrok`), Rails
+protege las redirecciones hacia otros dominios. El controlador ya indica
+`allow_other_host: true` al redirigir a Strava, por lo que la autenticación
+funcionará correctamente.
+
 ## Uso
 
 Inicia el servidor con:

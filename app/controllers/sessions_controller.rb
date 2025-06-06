@@ -15,7 +15,7 @@ class SessionsController < ApplicationController
       redirect_uri: strava_callback_url,
       response_type: 'code',
       scope: 'activity:read_all'
-    )
+    ), allow_other_host: true
   end
 
   def callback
