@@ -14,7 +14,8 @@ class RaceAnalyzer
     {
       time: estimator.formatted_time,
       profile: parser.elevation_profile,
-      progress: estimator.progress_by_hour
+      progress: estimator.progress_by_hour,
+      km_seconds: estimator.time_per_km
     }
   end
 

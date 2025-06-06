@@ -62,6 +62,14 @@
         <canvas id="profileChart" class="w-full h-56"></canvas>
       </div>
     </div>
+    <div class="bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-lg mt-6">
+      <h2 class="text-xl font-semibold mb-2">Horas de paso por kilómetro</h2>
+      <div class="flex items-center space-x-2 mb-4">
+        <label for="startTime" class="font-medium">Hora de inicio:</label>
+        <input type="time" id="startTime" class="border rounded p-1">
+      </div>
+      <ul id="kmTimes" class="space-y-1 text-gray-800"></ul>
+    </div>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
         const data = {
@@ -87,6 +95,27 @@
             animation: { duration: 1000 }
           }
         });
+
+        const kmSeconds = <%= raw(@km_seconds.to_json) %>;
+        const input = document.getElementById('startTime');
+        const list = document.getElementById('kmTimes');
+        function renderTimes() {
+          list.innerHTML = '';
+          if (!input.value) return;
+          const [h, m] = input.value.split(':').map(Number);
+          const base = new Date();
+          base.setHours(h, m, 0, 0);
+          kmSeconds.forEach(([km, sec]) => {
+            const t = new Date(base.getTime() + sec * 1000);
+            const hh = String(t.getHours()).padStart(2, '0');
+            const mm = String(t.getMinutes()).padStart(2, '0');
+            const ss = String(t.getSeconds()).padStart(2, '0');
+            const li = document.createElement('li');
+            li.textContent = `Km ${km}: ${hh}:${mm}:${ss}`;
+            list.appendChild(li);
+          });
+        }
+        input.addEventListener('change', renderTimes);
       });
     </script>
   <% elsif flash[:alert] %>
