@@ -16,6 +16,8 @@ class AthletesController < ApplicationController
       @profile_data = result[:profile]
       @hourly_progress = result[:progress]
       @km_seconds = result[:km_seconds]
+      @total_distance = result[:distance]
+      @total_elevation = result[:elevation]
     else
       flash.now[:alert] = 'No se pudo calcular el tiempo'
     end

@@ -1,7 +1,7 @@
 require 'nokogiri'
 
 class GpxParser
-  Segment = Struct.new(:distance_km, :elevation_gain_m, :grade)
+  Segment = Struct.new(:distance_km, :elevation_gain_m, :elevation_loss_m, :grade)
 
   EARTH_RADIUS_KM = 6371.0
 
@@ -22,8 +22,10 @@ class GpxParser
     segs = []
     points.each_cons(2) do |a, b|
       dist = distance(a, b)
-      elev_gain = elevation_gain(a, b)
-      segs << Segment.new(dist, elev_gain, grade(a, b, dist))
+      delta = b[:ele] - a[:ele]
+      gain = delta.positive? ? delta : 0
+      loss = delta.negative? ? delta.abs : 0
+      segs << Segment.new(dist, gain, loss, grade(a, b, dist))
     end
     segs
   end

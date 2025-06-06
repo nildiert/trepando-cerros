@@ -23,6 +23,8 @@ class RaceTimeEstimator
     progress = []
     time_accum = 0.0
     dist_accum = 0.0
+    pos_accum = 0.0
+    neg_accum = 0.0
     next_mark = 3600.0
 
     @segments.each do |seg|
@@ -32,12 +34,23 @@ class RaceTimeEstimator
       while time_accum + seg_time >= next_mark
         ratio = (next_mark - time_accum) / seg_time
         dist = dist_accum + seg.distance_km * ratio
-        progress << [next_mark / 3600, dist.round(2)]
+        pos = pos_accum + seg.elevation_gain_m * ratio
+        neg = neg_accum + seg.elevation_loss_m * ratio
+        prev = progress.last
+        progress << [
+          next_mark / 3600,
+          dist.round(2),
+          (prev ? (dist - prev[1]) : dist).round(2),
+          (prev ? (pos - prev[3]) : pos).round(1),
+          (prev ? (neg - prev[4]) : neg).round(1)
+        ]
         next_mark += 3600.0
       end
 
       time_accum += seg_time
       dist_accum += seg.distance_km
+      pos_accum += seg.elevation_gain_m
+      neg_accum += seg.elevation_loss_m
     end
 
     progress

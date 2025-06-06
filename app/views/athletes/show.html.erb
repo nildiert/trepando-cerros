@@ -28,7 +28,10 @@
         <% end %>
         <% if @estimated_time %>
           <p class="text-lg font-medium mb-2">Tiempo estimado:</p>
-          <p class="text-4xl font-bold mb-4"><%= @estimated_time %></p>
+          <p class="text-4xl font-bold mb-1"><%= @estimated_time %></p>
+          <p class="text-sm text-gray-600 mb-4">
+            <%= @total_distance %> km &bull; <%= @total_elevation %> m+
+          </p>
         <% else %>
           <%= form_with url: athlete_path(@athlete.id), method: :post, data: { action: 'submit->analysis#submit', turbo: false, analysis_target: 'form' }, local: true, multipart: true do %>
             <div data-analysis-target="dropzone"
@@ -66,7 +69,10 @@
           <thead>
             <tr>
               <th class="px-2 py-1">Hora</th>
-              <th class="px-2 py-1">Distancia (km)</th>
+              <th class="px-2 py-1">Dist. acum. (km)</th>
+              <th class="px-2 py-1">Km tramo</th>
+              <th class="px-2 py-1">Desnivel +</th>
+              <th class="px-2 py-1">Desnivel -</th>
               <th class="px-2 py-1">Hora del día</th>
             </tr>
           </thead>
@@ -115,12 +121,17 @@
           const [h, m] = input.value.split(':').map(Number);
           const base = new Date();
           base.setHours(h, m, 0, 0);
-          progress.forEach(([hr, dist]) => {
+          progress.forEach(([hr, cum, seg, pos, neg]) => {
             const t = new Date(base.getTime() + hr * 3600 * 1000);
             const hh = String(t.getHours()).padStart(2, '0');
             const mm = String(t.getMinutes()).padStart(2, '0');
             const tr = document.createElement('tr');
-            tr.innerHTML = `<td class='px-2 py-1'>${hr}</td><td class='px-2 py-1'>${dist}</td><td class='px-2 py-1'>${hh}:${mm}</td>`;
+            tr.innerHTML = `<td class='px-2 py-1'>${hr}</td>` +
+              `<td class='px-2 py-1'>${cum}</td>` +
+              `<td class='px-2 py-1'>${seg}</td>` +
+              `<td class='px-2 py-1'>${pos}</td>` +
+              `<td class='px-2 py-1'>${neg}</td>` +
+              `<td class='px-2 py-1'>${hh}:${mm}</td>`;
             list.appendChild(tr);
           });
         }

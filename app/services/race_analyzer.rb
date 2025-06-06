@@ -15,7 +15,9 @@ class RaceAnalyzer
       time: estimator.formatted_time,
       profile: parser.elevation_profile,
       progress: estimator.progress_by_hour,
-      km_seconds: estimator.time_per_km
+      km_seconds: estimator.time_per_km,
+      distance: segments.sum(&:distance_km).round(2),
+      elevation: segments.sum(&:elevation_gain_m).round(0)
     }
   end
 
