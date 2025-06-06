@@ -38,6 +38,6 @@ bundle exec rails server
 ```
 
 Al abrir `http://localhost:3000` verás una pantalla de bienvenida con un botón **Conectar con Strava**. Tras autorizar la aplicación se mostrará tu panel con tu información de atleta y un área para subir tu archivo GPX y obtener el tiempo estimado.
-La aplicación analiza tus carreras de los últimos seis meses para ajustar el ritmo en subidas, bajadas y terreno plano.
+La aplicación analiza tus carreras de los últimos seis meses para ajustar el ritmo en subidas, bajadas y terreno plano. El tiempo estimado se calcula segmentando la ruta por desnivel y usando tus ritmos promedio de Strava para cada tipo de pendiente.
 
-La interfaz incluye un pequeño _navbar_ con opción para cerrar sesión y tarjetas con efecto de vidrio. El área de carga admite arrastrar y soltar el GPX y muestra mensajes animados durante el análisis. Una vez calculado el resultado se muestra el **tiempo estimado** y, tras elegir una hora de inicio, verás en otra tarjeta los kilómetros acumulados por cada hora con sus horarios. La gráfica de elevación aparece en un panel aparte.
+La interfaz incluye un pequeño _navbar_ con un botón de **Cerrar sesión** y tarjetas con efecto de vidrio. El área de carga admite arrastrar y soltar el GPX y muestra mensajes animados durante el análisis. Una vez calculado el resultado se muestra el **tiempo estimado**. Si seleccionas una hora de inicio verás debajo una tabla con la distancia acumulada por hora y la hora correspondiente. La gráfica de elevación aparece en un panel aparte.

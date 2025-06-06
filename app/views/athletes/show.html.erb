@@ -23,7 +23,9 @@
 
     <% if @athlete.present? %>
       <div class="bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-lg">
-        <h2 class="text-xl font-semibold mb-2">Calcula tu tiempo estimado</h2>
+        <% unless @estimated_time %>
+          <h2 class="text-xl font-semibold mb-2">Calcula tu tiempo estimado</h2>
+        <% end %>
         <% if @estimated_time %>
           <p class="text-lg font-medium mb-2">Tiempo estimado:</p>
           <p class="text-4xl font-bold mb-4"><%= @estimated_time %></p>
@@ -60,7 +62,16 @@
           <label for="startTime" class="font-medium">Hora de inicio:</label>
           <input type="time" id="startTime" class="border rounded p-2 bg-white shadow-inner">
         </div>
-        <ul id="hourTimes" class="space-y-1 text-gray-800 mb-4"></ul>
+        <table class="w-full text-left mb-4">
+          <thead>
+            <tr>
+              <th class="px-2 py-1">Hora</th>
+              <th class="px-2 py-1">Distancia (km)</th>
+              <th class="px-2 py-1">Hora del día</th>
+            </tr>
+          </thead>
+          <tbody id="hourTimes"></tbody>
+        </table>
       </div>
 
       <div class="bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-lg">
@@ -108,9 +119,9 @@
             const t = new Date(base.getTime() + hr * 3600 * 1000);
             const hh = String(t.getHours()).padStart(2, '0');
             const mm = String(t.getMinutes()).padStart(2, '0');
-            const li = document.createElement('li');
-            li.textContent = `Hora ${hr}: ${dist} km - ${hh}:${mm}`;
-            list.appendChild(li);
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td class='px-2 py-1'>${hr}</td><td class='px-2 py-1'>${dist}</td><td class='px-2 py-1'>${hh}:${mm}</td>`;
+            list.appendChild(tr);
           });
         }
         input.addEventListener('change', renderTimes);
