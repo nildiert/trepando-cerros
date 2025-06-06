@@ -1,5 +1,7 @@
 class RaceTimeEstimator
-  FATIGUE_RATE = 0.005 # pace slowdown per km completed
+  DISTANCE_FATIGUE_RATE = 0.005
+  UPHILL_FATIGUE_RATE = 0.00005
+  DOWNHILL_FATIGUE_RATE = 0.00005
 
   def initialize(segments, paces_by_grade)
     @segments = segments
@@ -8,10 +10,14 @@ class RaceTimeEstimator
 
   def total_seconds
     dist_accum = 0.0
+    pos_accum = 0.0
+    neg_accum = 0.0
     total = 0.0
     @segments.each do |seg|
-      total += segment_time(seg, dist_accum)
+      total += segment_time(seg, dist_accum, pos_accum, neg_accum)
       dist_accum += seg.distance_km
+      pos_accum += seg.elevation_gain_m
+      neg_accum += seg.elevation_loss_m
     end
     total.to_i
   end
@@ -36,7 +42,7 @@ class RaceTimeEstimator
     prev_neg = 0.0
 
     @segments.each do |seg|
-      seg_time = segment_time(seg, dist_accum)
+      seg_time = segment_time(seg, dist_accum, pos_accum, neg_accum)
 
       while time_accum + seg_time >= next_mark
         ratio = (next_mark - time_accum) / seg_time
@@ -71,10 +77,12 @@ class RaceTimeEstimator
     marks = []
     time_accum = 0.0
     dist_accum = 0.0
+    pos_accum = 0.0
+    neg_accum = 0.0
     next_km = 1.0
 
     @segments.each do |seg|
-      seg_time = segment_time(seg, dist_accum)
+      seg_time = segment_time(seg, dist_accum, pos_accum, neg_accum)
 
       while dist_accum + seg.distance_km >= next_km
         ratio = (next_km - dist_accum) / seg.distance_km
@@ -84,6 +92,8 @@ class RaceTimeEstimator
 
       time_accum += seg_time
       dist_accum += seg.distance_km
+      pos_accum += seg.elevation_gain_m
+      neg_accum += seg.elevation_loss_m
     end
 
     marks
@@ -97,8 +107,14 @@ class RaceTimeEstimator
     @paces[:flat]
   end
 
-  def segment_time(seg, dist_before)
+  def segment_time(seg, dist_before, pos_before, neg_before)
     pace = pace_for_grade(seg.grade)
-    seg.distance_km * pace * (1.0 + FATIGUE_RATE * dist_before) * 60
+    fatigue = 1.0 + DISTANCE_FATIGUE_RATE * dist_before
+    if seg.grade > 0.03
+      fatigue += UPHILL_FATIGUE_RATE * pos_before
+    elsif seg.grade < -0.03
+      fatigue += DOWNHILL_FATIGUE_RATE * neg_before
+    end
+    seg.distance_km * pace * fatigue * 60
   end
 end
