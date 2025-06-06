@@ -18,7 +18,7 @@ echo "STRAVA_CLIENT_SECRET=tu-secret" >> .env
 # (opcional) si usas un dominio distinto a `localhost:3000`, ajusta la URL de retorno
 echo "STRAVA_REDIRECT_URI=https://tu-dominio.ngrok-free.app/auth/strava/callback" >> .env
 ```
-La gema `dotenv-rails` cargará estas variables para permitir las llamadas a `StravaClient` y al proceso de OAuth. Si no se definen `STRAVA_CLIENT_ID` y `STRAVA_CLIENT_SECRET`, el enlace **Conectar con Strava** mostrará un mensaje de error.
+La gema `dotenv-rails` cargará estas variables para permitir las llamadas a `StravaClient` y al proceso de OAuth. El flujo solicitará los scopes `activity:read_all` y `profile:read_all`, así que habilítalos también en la configuración de tu aplicación en Strava. Si no se definen `STRAVA_CLIENT_ID` y `STRAVA_CLIENT_SECRET`, el enlace **Conectar con Strava** mostrará un mensaje de error.
 
 Si ejecutas la app desde una URL externa (por ejemplo mediante `ngrok`), Rails
 protege las redirecciones hacia otros dominios. El controlador ya indica

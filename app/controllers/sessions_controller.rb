@@ -18,7 +18,7 @@ class SessionsController < ApplicationController
     redirect_to client.authorize_url(
       redirect_uri: redirect_uri,
       response_type: 'code',
-      scope: 'activity:read_all'
+      scope: 'activity:read_all,profile:read_all'
     ), allow_other_host: true
   end
 

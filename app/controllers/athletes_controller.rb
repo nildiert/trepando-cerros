@@ -25,7 +25,11 @@ class AthletesController < ApplicationController
   def fetch_athlete(id = nil)
     token = session[:strava_token] || ENV['STRAVA_ACCESS_TOKEN']
     client = StravaClient.new(access_token: token)
-    id ? client.athlete(id) : client.athlete
+    if id.present? && session[:athlete_id].present? && id.to_s != session[:athlete_id].to_s
+      client.athlete(id)
+    else
+      client.athlete
+    end
   rescue StandardError
     nil
   end
