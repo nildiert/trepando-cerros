@@ -60,6 +60,10 @@
   <% if @estimated_time %>
     <div class="grid gap-6 grid-cols-1">
       <div class="bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-lg w-full">
+        <canvas id="profileChart" class="w-full h-56"></canvas>
+      </div>
+
+      <div class="bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-lg w-full">
         <h2 class="text-xl font-semibold mb-2">Progreso por hora</h2>
         <div class="flex items-center space-x-2 mb-4">
           <label for="startTime" class="font-medium">Hora de inicio:</label>
@@ -79,10 +83,6 @@
           <tbody id="hourTimes"></tbody>
         </table>
       </div>
-
-      <div class="bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-lg w-full">
-        <canvas id="profileChart" class="w-full h-56"></canvas>
-      </div>
     </div>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
@@ -99,11 +99,55 @@
             borderWidth: 2
           }]
         };
+        const kmSeconds = <%= raw(@km_seconds.to_json) %>;
+
+        function timeForDistance(d) {
+          if (kmSeconds.length === 0) return 0;
+          for (let i = 0; i < kmSeconds.length; i++) {
+            const km = kmSeconds[i][0];
+            const sec = kmSeconds[i][1];
+            if (d <= km) {
+              if (i === 0) return sec * (d / km);
+              const kmA = kmSeconds[i - 1][0];
+              const secA = kmSeconds[i - 1][1];
+              const ratio = (d - kmA) / (km - kmA);
+              return secA + ratio * (sec - secA);
+            }
+          }
+          return kmSeconds[kmSeconds.length - 1][1];
+        }
+
+        function dayTimeString(seconds) {
+          const startInput = document.getElementById('startTime');
+          if (!startInput.value) return formatTime(seconds);
+          const [h, m] = startInput.value.split(':').map(Number);
+          const base = new Date();
+          base.setHours(h, m, 0, 0);
+          const t = new Date(base.getTime() + seconds * 1000);
+          return `${String(t.getHours()).padStart(2,'0')}:${String(t.getMinutes()).padStart(2,'0')}`;
+        }
+
+        function formatTime(seconds) {
+          const h = Math.floor(seconds / 3600);
+          const m = Math.floor((seconds % 3600) / 60);
+          return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
+        }
+
         new Chart(document.getElementById('profileChart'), {
           type: 'line',
           data,
           options: {
-            plugins: { legend: { display: false } },
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  afterLabel: ctx => {
+                    const t = timeForDistance(ctx.parsed.x);
+                    return 'Paso aprox: ' + dayTimeString(t);
+                  }
+                }
+              }
+            },
             scales: {
               x: { title: { display: true, text: 'Distancia (km)' } },
               y: { title: { display: true, text: 'Elevaci\u00f3n (m)' } }
