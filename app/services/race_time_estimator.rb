@@ -1,14 +1,19 @@
 class RaceTimeEstimator
+  FATIGUE_RATE = 0.005 # pace slowdown per km completed
+
   def initialize(segments, paces_by_grade)
     @segments = segments
     @paces = paces_by_grade
   end
 
   def total_seconds
-    @segments.sum do |seg|
-      pace = pace_for_grade(seg.grade)
-      seg.distance_km * pace * 60
-    end.to_i
+    dist_accum = 0.0
+    total = 0.0
+    @segments.each do |seg|
+      total += segment_time(seg, dist_accum)
+      dist_accum += seg.distance_km
+    end
+    total.to_i
   end
 
   def formatted_time
@@ -31,8 +36,7 @@ class RaceTimeEstimator
     prev_neg = 0.0
 
     @segments.each do |seg|
-      pace = pace_for_grade(seg.grade)
-      seg_time = seg.distance_km * pace * 60
+      seg_time = segment_time(seg, dist_accum)
 
       while time_accum + seg_time >= next_mark
         ratio = (next_mark - time_accum) / seg_time
@@ -70,8 +74,7 @@ class RaceTimeEstimator
     next_km = 1.0
 
     @segments.each do |seg|
-      pace = pace_for_grade(seg.grade)
-      seg_time = seg.distance_km * pace * 60
+      seg_time = segment_time(seg, dist_accum)
 
       while dist_accum + seg.distance_km >= next_km
         ratio = (next_km - dist_accum) / seg.distance_km
@@ -92,5 +95,10 @@ class RaceTimeEstimator
     return @paces[:uphill] if grade > 0.03
     return @paces[:downhill] if grade < -0.03
     @paces[:flat]
+  end
+
+  def segment_time(seg, dist_before)
+    pace = pace_for_grade(seg.grade)
+    seg.distance_km * pace * (1.0 + FATIGUE_RATE * dist_before) * 60
   end
 end
