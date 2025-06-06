@@ -5,6 +5,7 @@ class RaceTimeEstimator
   DISTANCE_FATIGUE_RATE = 0.002
   UPHILL_FATIGUE_RATE  = 0.000015
   DOWNHILL_FATIGUE_RATE = 0.000015
+  FATIGUE_EXPONENT      = 1.1
 
   def initialize(segments, paces_by_grade)
     @segments = segments
@@ -112,11 +113,11 @@ class RaceTimeEstimator
 
   def segment_time(seg, dist_before, pos_before, neg_before)
     pace = pace_for_grade(seg.grade)
-    fatigue = 1.0 + DISTANCE_FATIGUE_RATE * dist_before
+    fatigue = 1.0 + DISTANCE_FATIGUE_RATE * (dist_before ** FATIGUE_EXPONENT)
     if seg.grade > 0.03
-      fatigue += UPHILL_FATIGUE_RATE * pos_before
+      fatigue += UPHILL_FATIGUE_RATE * (pos_before ** FATIGUE_EXPONENT)
     elsif seg.grade < -0.03
-      fatigue += DOWNHILL_FATIGUE_RATE * neg_before
+      fatigue += DOWNHILL_FATIGUE_RATE * (neg_before ** FATIGUE_EXPONENT)
     end
     seg.distance_km * pace * fatigue * 60
   end
