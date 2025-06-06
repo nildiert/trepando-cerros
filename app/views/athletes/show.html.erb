@@ -50,25 +50,24 @@
   <% if @estimated_time %>
     <div class="grid gap-6 md:grid-cols-2">
       <div class="bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-lg">
-        <p class="font-bold mb-4">Tiempo estimado: <%= @estimated_time %></p>
+        <h2 class="text-xl font-semibold mb-2">Ruta y proyección</h2>
+        <div class="flex items-center space-x-2 mb-4">
+          <label for="startTime" class="font-medium">Hora de inicio:</label>
+          <input type="time" id="startTime" class="border rounded p-2 bg-white shadow-inner">
+        </div>
+        <ul id="kmTimes" class="space-y-1 text-gray-800 mb-4"></ul>
+        <h3 class="font-semibold mt-4">Progreso por hora</h3>
         <ul class="space-y-1 text-gray-800">
           <% @hourly_progress.each do |(hour, dist)| %>
             <li>Hora <%= hour %>: <%= dist %> km</li>
           <% end %>
         </ul>
+        <p class="font-bold mt-4">Tiempo estimado: <%= @estimated_time %></p>
       </div>
 
       <div class="bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-lg">
         <canvas id="profileChart" class="w-full h-56"></canvas>
       </div>
-    </div>
-    <div class="bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-lg mt-6">
-      <h2 class="text-xl font-semibold mb-2">Horas de paso por kilómetro</h2>
-      <div class="flex items-center space-x-2 mb-4">
-        <label for="startTime" class="font-medium">Hora de inicio:</label>
-        <input type="time" id="startTime" class="border rounded p-1">
-      </div>
-      <ul id="kmTimes" class="space-y-1 text-gray-800"></ul>
     </div>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
@@ -77,10 +76,12 @@
           datasets: [{
             label: 'Elevaci\u00f3n (m)',
             data: <%= raw(@profile_data[:elevation_m].to_json) %>,
-            fill: true,
+            fill: false,
             borderColor: 'rgb(59,130,246)',
             backgroundColor: 'rgba(59,130,246,0.3)',
-            tension: 0.4
+            pointRadius: 0,
+            tension: 0.4,
+            borderWidth: 2
           }]
         };
         new Chart(document.getElementById('profileChart'), {
