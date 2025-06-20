@@ -65,6 +65,7 @@
             <li><button class="px-3 py-2 border-b-2 font-medium text-sm" data-tabs-target="tab" data-action="tabs#change">Resumen</button></li>
             <li><button class="px-3 py-2 border-b-2 font-medium text-sm" data-tabs-target="tab" data-action="tabs#change">Gráfica</button></li>
             <li><button class="px-3 py-2 border-b-2 font-medium text-sm" data-tabs-target="tab" data-action="tabs#change">Progreso</button></li>
+            <li><button class="px-3 py-2 border-b-2 font-medium text-sm" data-tabs-target="tab" data-action="tabs#change">Controles</button></li>
           </ul>
         </nav>
         <div data-tabs-target="panel">
@@ -101,7 +102,24 @@
                 <th class="px-2 py-1">Hora del día</th>
               </tr>
             </thead>
-            <tbody id="hourTimes"></tbody>
+          <tbody id="hourTimes"></tbody>
+        </table>
+        </div>
+        <div data-tabs-target="panel" class="hidden" data-controller="checkpoints" data-checkpoints-km-seconds-value='<%= raw(@km_seconds.to_json) %>'>
+          <form data-action="submit->checkpoints#add" class="mb-4 flex space-x-2">
+            <input type="text" placeholder="Nombre" data-checkpoints-target="name" class="border rounded px-2 py-1 flex-grow">
+            <input type="number" step="0.1" placeholder="Km" data-checkpoints-target="km" class="border rounded px-2 py-1 w-24">
+            <button type="submit" class="bg-blue-500 text-white px-3 py-1 rounded">Agregar</button>
+          </form>
+          <table class="w-full text-left">
+            <thead>
+              <tr>
+                <th class="px-2 py-1">Nombre</th>
+                <th class="px-2 py-1">Km</th>
+                <th class="px-2 py-1">Hora aprox.</th>
+              </tr>
+            </thead>
+            <tbody data-checkpoints-target="list"></tbody>
           </table>
         </div>
       </div>
