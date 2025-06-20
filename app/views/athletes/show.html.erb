@@ -24,7 +24,7 @@
     <% if @athlete.present? %>
       <div class="bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-lg">
         <% unless @estimated_time %>
-          <h2 class="text-xl font-semibold mb-2">Calcula tu tiempo estimado</h2>
+          <h2 data-analysis-target="heading" class="text-xl font-semibold mb-2">Cargar Archivo</h2>
         <% end %>
         <% if @estimated_time %>
           <p class="text-lg font-medium mb-2">Tiempo estimado:</p>
@@ -42,6 +42,15 @@
               </svg>
               <p class="text-gray-600">Arrastra tu archivo GPX o haz clic para seleccionarlo</p>
               <%= file_field_tag :gpx_file, class: 'hidden', data: { analysis_target: 'file', action: 'change->analysis#autoSubmit' } %>
+              <%= hidden_field_tag :start_time, @start_time, data: { analysis_target: 'timeField' } %>
+            </div>
+            <div data-analysis-target="timeCard" class="hidden mb-4 flex flex-col items-center justify-center p-6 text-center">
+              <p class="mb-2 font-medium">Selecciona tu hora de inicio</p>
+              <input type="time" data-analysis-target="timeInput" class="px-2 py-1">
+              <div class="flex justify-end space-x-2 mt-4">
+                <button type="button" data-action="analysis#cancelTime" class="px-3 py-2 bg-gray-200 rounded hover:bg-gray-300">Cancelar</button>
+                <button type="button" data-action="analysis#confirmTime" class="px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Aceptar</button>
+              </div>
             </div>
           <% end %>
           <div data-analysis-target="loader" class="hidden flex items-center space-x-2 mt-4">
@@ -52,10 +61,11 @@
             <div data-analysis-target="bar" class="bg-blue-500 h-full w-0 transition-all duration-500"></div>
           </div>
           <div data-analysis-target="messages" class="text-sm mt-2 space-y-1"></div>
+
         <% end %>
       </div>
-    <% end %>
-  </div>
+      <% end %>
+    </div>
 
   <% if @estimated_time %>
     <div class="grid gap-6 grid-cols-1">
@@ -80,16 +90,9 @@
         </div>
         <div data-tabs-target="panel" class="hidden">
           <h2 class="text-xl font-semibold mb-2">Progreso por hora</h2>
-          <div class="flex items-center space-x-4 mb-4" data-controller="time-dial">
+          <div class="flex items-center space-x-4 mb-4">
             <label for="startTime" class="font-medium">Hora de inicio:</label>
-            <input type="time" id="startTime" data-time-dial-target="input" class="hidden">
-            <div data-time-dial-target="dial"
-                 class="relative w-24 h-24 rounded-full border-2 border-blue-500 bg-white"
-                 data-action="pointerdown->time-dial#pointerDown pointermove->time-dial#pointerMove pointerup->time-dial#pointerUp pointerleave->time-dial#pointerUp">
-              <div data-time-dial-target="hourHand" class="absolute left-1/2 top-1/2 w-0.5 bg-blue-700 origin-bottom" style="height:30%;"></div>
-              <div data-time-dial-target="minuteHand" class="absolute left-1/2 top-1/2 w-0.5 bg-blue-400 origin-bottom" style="height:45%;"></div>
-            </div>
-            <span data-time-dial-target="label" class="text-blue-700 font-medium">00:00</span>
+            <input type="time" id="startTime" value="<%= @start_time %>" class="border rounded px-2 py-1">
           </div>
           <table class="w-full text-left mb-4">
             <thead>
@@ -229,6 +232,7 @@
           });
         }
         input.addEventListener('change', renderTimes);
+        renderTimes();
       });
     </script>
   <% elsif flash[:alert] %>

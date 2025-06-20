@@ -1,7 +1,18 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["form", "file", "dropzone", "loader", "messages", "bar"]
+  static targets = [
+    "form",
+    "file",
+    "dropzone",
+    "heading",
+    "loader",
+    "messages",
+    "bar",
+    "timeField",
+    "timeCard",
+    "timeInput"
+  ]
 
   connect() {
     this.submitted = false
@@ -11,8 +22,38 @@ export default class extends Controller {
     if (this.submitted) return
     event.preventDefault()
     this.submitted = true
+    this.dropzoneTarget.classList.add('hidden')
+    this.timeCardTarget.classList.remove('hidden')
+    if (this.hasHeadingTarget) {
+      this.headingTarget.textContent = 'Selecciona tu hora de inicio'
+    }
+  }
+
+  confirmTime() {
+    const value = this.timeInputTarget.value
+    this.timeFieldTarget.value = value
+    const startInput = document.getElementById('startTime')
+    if (startInput) {
+      startInput.value = value
+      startInput.dispatchEvent(new Event('change'))
+    }
+    this.timeCardTarget.classList.add('hidden')
+    if (this.hasHeadingTarget) {
+      this.headingTarget.classList.add('hidden')
+    }
     this.startSteps()
   }
+
+  cancelTime() {
+    this.timeCardTarget.classList.add('hidden')
+    this.dropzoneTarget.classList.remove('hidden')
+    this.submitted = false
+    if (this.hasHeadingTarget) {
+      this.headingTarget.textContent = 'Cargar Archivo'
+      this.headingTarget.classList.remove('hidden')
+    }
+  }
+
 
   autoSubmit() {
     if (this.fileTarget.files.length > 0) {
@@ -61,3 +102,4 @@ export default class extends Controller {
     })
   }
 }
+
