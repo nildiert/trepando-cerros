@@ -79,9 +79,16 @@
         </div>
         <div data-tabs-target="panel" class="hidden">
           <h2 class="text-xl font-semibold mb-2">Progreso por hora</h2>
-          <div class="flex items-center space-x-2 mb-4">
+          <div class="flex items-center space-x-4 mb-4" data-controller="time-dial">
             <label for="startTime" class="font-medium">Hora de inicio:</label>
-            <input type="time" id="startTime" class="border rounded p-2 bg-white shadow-inner">
+            <input type="time" id="startTime" data-time-dial-target="input" class="hidden">
+            <div data-time-dial-target="dial"
+                 class="relative w-24 h-24 rounded-full border-2 border-blue-500 bg-white"
+                 data-action="pointerdown->time-dial#pointerDown pointermove->time-dial#pointerMove pointerup->time-dial#pointerUp pointerleave->time-dial#pointerUp">
+              <div data-time-dial-target="hourHand" class="absolute left-1/2 top-1/2 w-0.5 bg-blue-700 origin-bottom" style="height:30%;"></div>
+              <div data-time-dial-target="minuteHand" class="absolute left-1/2 top-1/2 w-0.5 bg-blue-400 origin-bottom" style="height:45%;"></div>
+            </div>
+            <span data-time-dial-target="label" class="text-blue-700 font-medium">00:00</span>
           </div>
           <table class="w-full text-left mb-4">
             <thead>
