@@ -26,7 +26,8 @@ class AthletesController < ApplicationController
   end
 
   def nutrition
-    plan = NutritionPlan.new(start_time: params[:start_time])
+    start_time = params[:start_time].to_s[0, 5]
+    plan = NutritionPlan.new(start_time: start_time)
     send_data plan.pdf, filename: "plan_nutricional.pdf", type: "application/pdf"
   end
 
