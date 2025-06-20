@@ -44,6 +44,23 @@
               <%= file_field_tag :gpx_file, class: 'hidden', data: { analysis_target: 'file', action: 'change->analysis#autoSubmit' } %>
               <%= hidden_field_tag :start_time, @start_time, data: { analysis_target: 'timeField' } %>
             </div>
+            <div data-analysis-target="timeCard" class="hidden mb-4 flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+              <p class="mb-2 font-medium">Selecciona tu hora de inicio</p>
+              <div data-controller="time-dial" class="flex items-center space-x-4">
+                <input type="time" data-time-dial-target="input" data-analysis-target="timeInput" class="hidden">
+                <div data-time-dial-target="dial"
+                     class="relative w-24 h-24 rounded-full border-2 border-blue-500 bg-white"
+                     data-action="pointerdown->time-dial#pointerDown pointermove->time-dial#pointerMove pointerup->time-dial#pointerUp pointerleave->time-dial#pointerUp">
+                  <div data-time-dial-target="hourHand" class="absolute left-1/2 top-1/2 w-0.5 bg-blue-700 origin-bottom" style="height:30%;"></div>
+                  <div data-time-dial-target="minuteHand" class="absolute left-1/2 top-1/2 w-0.5 bg-blue-400 origin-bottom" style="height:45%;"></div>
+                </div>
+                <span data-time-dial-target="label" class="text-blue-700 font-medium">00:00</span>
+              </div>
+              <div class="flex justify-end space-x-2 mt-4">
+                <button type="button" data-action="analysis#cancelTime" class="px-3 py-2 bg-gray-200 rounded hover:bg-gray-300">Cancelar</button>
+                <button type="button" data-action="analysis#confirmTime" class="px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Aceptar</button>
+              </div>
+            </div>
           <% end %>
           <div data-analysis-target="loader" class="hidden flex items-center space-x-2 mt-4">
             <div class="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-blue-400"></div>
@@ -54,16 +71,6 @@
           </div>
           <div data-analysis-target="messages" class="text-sm mt-2 space-y-1"></div>
 
-          <div data-analysis-target="timeModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
-            <div class="bg-white p-6 rounded-lg shadow-lg w-80">
-              <h2 class="text-lg font-semibold mb-4 text-center">Selecciona tu hora de inicio</h2>
-              <input type="time" data-analysis-target="timeInput" class="border rounded w-full mb-4 px-2 py-1">
-              <div class="flex justify-end space-x-2">
-                <button type="button" data-action="analysis#cancelTime" class="px-3 py-2 bg-gray-200 rounded hover:bg-gray-300">Cancelar</button>
-                <button type="button" data-action="analysis#confirmTime" class="px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Aceptar</button>
-              </div>
-            </div>
-          </div>
         <% end %>
       </div>
       <% end %>

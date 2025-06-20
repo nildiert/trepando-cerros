@@ -9,7 +9,7 @@ export default class extends Controller {
     "messages",
     "bar",
     "timeField",
-    "timeModal",
+    "timeCard",
     "timeInput"
   ]
 
@@ -21,7 +21,8 @@ export default class extends Controller {
     if (this.submitted) return
     event.preventDefault()
     this.submitted = true
-    this.timeModalTarget.classList.remove('hidden')
+    this.dropzoneTarget.classList.add('hidden')
+    this.timeCardTarget.classList.remove('hidden')
   }
 
   confirmTime() {
@@ -32,12 +33,13 @@ export default class extends Controller {
       startInput.value = value
       startInput.dispatchEvent(new Event('change'))
     }
-    this.timeModalTarget.classList.add('hidden')
+    this.timeCardTarget.classList.add('hidden')
     this.startSteps()
   }
 
   cancelTime() {
-    this.timeModalTarget.classList.add('hidden')
+    this.timeCardTarget.classList.add('hidden')
+    this.dropzoneTarget.classList.remove('hidden')
     this.submitted = false
   }
 
