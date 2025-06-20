@@ -14,6 +14,14 @@ const BLOCKS = [
   { group: "Bloque 4", section: "E", hours: 2, mix: "1/2 Drink Mix 160", mixCH: 20, gel: "Gel 100" }
 ]
 
+const CH = {
+  "1/2 Drink Mix 320": 40,
+  "1/2 Drink Mix 160": 20,
+  "Gel 160": 40,
+  "Gel 100 CAF": 25,
+  "Gel 100": 25
+}
+
 function buildSchedule(maxHours = 30) {
   const schedule = []
   let count = 0
@@ -68,6 +76,7 @@ export default class extends Controller {
     let prev = 0
     hours.forEach((h, idx) => {
       const counts = this.segmentCounts(schedule, prev, h)
+      const carbs = this.segmentCarbRate(schedule, prev, h)
       const name = idx === 0
         ? `Inicio → Bag ${idx + 1} (${this.bags[idx] || 'meta'} km)`
         : idx < this.bags.length
@@ -80,6 +89,7 @@ export default class extends Controller {
         <td class='px-2 py-1'>${name}</td>
         <td class='px-2 py-1'>${this.timeRangeString(secs)}</td>
         <td class='px-2 py-1'>${h}</td>
+        <td class='px-2 py-1'>${carbs}</td>
         <td class='px-2 py-1'>${counts["Drink Mix 320"]}</td>
         <td class='px-2 py-1'>${counts["Drink Mix 160"]}</td>
         <td class='px-2 py-1'>${counts["Gel 160"]}</td>
@@ -101,6 +111,16 @@ export default class extends Controller {
       counts[k] = Math.ceil(counts[k])
     })
     return counts
+  }
+
+  segmentCarbRate(schedule, start, finish) {
+    let total = 0
+    for (let i = start; i < finish && i < schedule.length; i++) {
+      const item = schedule[i]
+      total += CH[item.mix] + CH[item.gel]
+    }
+    const hours = Math.max(1, finish - start)
+    return Math.round(total / hours)
   }
 
   dayTimeString(seconds) {
