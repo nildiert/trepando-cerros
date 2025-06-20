@@ -36,6 +36,8 @@ export default class extends Controller {
   static targets = ["km", "list"]
   static values = { kmSeconds: Array }
 
+  static RANGE_SEC = 30 * 60 // +/- 30 minutes
+
   connect() {
     this.bags = []
     this.render()
@@ -71,10 +73,13 @@ export default class extends Controller {
         : idx < this.bags.length
           ? `Bag ${idx} → Bag ${idx + 1} (${this.bags[idx] || 'meta'} km)`
           : `Bag ${idx} → Meta`
+      const secs = times[idx] + 3600
       prev = h
       const row = document.createElement("tr")
       row.innerHTML = `
         <td class='px-2 py-1'>${name}</td>
+        <td class='px-2 py-1'>${this.timeRangeString(secs)}</td>
+        <td class='px-2 py-1'>${h}</td>
         <td class='px-2 py-1'>${counts["Drink Mix 320"]}</td>
         <td class='px-2 py-1'>${counts["Drink Mix 160"]}</td>
         <td class='px-2 py-1'>${counts["Gel 160"]}</td>
@@ -96,6 +101,28 @@ export default class extends Controller {
       counts[k] = Math.ceil(counts[k])
     })
     return counts
+  }
+
+  dayTimeString(seconds) {
+    const input = document.getElementById("startTime")
+    if (!input || !input.value) return this.formatTime(seconds)
+    const [h, m] = input.value.split(":").map(Number)
+    const base = new Date()
+    base.setHours(h, m, 0, 0)
+    const t = new Date(base.getTime() + seconds * 1000)
+    return `${String(t.getHours()).padStart(2, '0')}:${String(t.getMinutes()).padStart(2, '0')}`
+  }
+
+  timeRangeString(seconds) {
+    const start = Math.max(0, seconds - this.constructor.RANGE_SEC)
+    const finish = seconds + this.constructor.RANGE_SEC
+    return `${this.dayTimeString(start)} - ${this.dayTimeString(finish)}`
+  }
+
+  formatTime(seconds) {
+    const h = Math.floor(seconds / 3600)
+    const m = Math.floor((seconds % 3600) / 60)
+    return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`
   }
 
   timeForDistance(d) {
