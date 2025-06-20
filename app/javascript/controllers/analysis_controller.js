@@ -38,6 +38,9 @@ export default class extends Controller {
       startInput.dispatchEvent(new Event('change'))
     }
     this.timeCardTarget.classList.add('hidden')
+    if (this.hasHeadingTarget) {
+      this.headingTarget.classList.add('hidden')
+    }
     this.startSteps()
   }
 
@@ -47,6 +50,7 @@ export default class extends Controller {
     this.submitted = false
     if (this.hasHeadingTarget) {
       this.headingTarget.textContent = 'Cargar Archivo'
+      this.headingTarget.classList.remove('hidden')
     }
   }
 
