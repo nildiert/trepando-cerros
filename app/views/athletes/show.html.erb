@@ -76,7 +76,8 @@
             <li><button class="px-3 py-2 border-b-2 font-medium text-sm" data-tabs-target="tab" data-action="tabs#change">Gráfica</button></li>
             <li><button class="px-3 py-2 border-b-2 font-medium text-sm" data-tabs-target="tab" data-action="tabs#change">Progreso</button></li>
             <li><button class="px-3 py-2 border-b-2 font-medium text-sm" data-tabs-target="tab" data-action="tabs#change">Controles</button></li>
-          </ul>
+            <li><button class="px-3 py-2 border-b-2 font-medium text-sm" data-tabs-target="tab" data-action="tabs#change">Nutrición</button></li>
+         </ul>
         </nav>
         <div data-tabs-target="panel">
           <p class="text-lg font-medium mb-2">Tiempo estimado:</p>
@@ -124,6 +125,20 @@
             </thead>
             <tbody data-checkpoints-target="list"></tbody>
           </table>
+        </div>
+        <div data-tabs-target="panel" class="hidden" data-controller="nutrition">
+          <h2 class="text-xl font-semibold mb-2">Plan nutricional</h2>
+          <details class="mb-4">
+            <summary class="cursor-pointer font-semibold">Resumen</summary>
+            <ul class="list-disc pl-6 text-sm mt-2">
+              <li>Drink Mix 320 (80 g CH / 500 ml) | 7 sachets</li>
+              <li>Drink Mix 160 (40 g CH / 500 ml) | 8 sachets</li>
+              <li>Gel 160 (40 g CH) | 17 gels</li>
+              <li>Gel 100 CAF 100 (25 g CH + 100 mg cafeína) | 3 gels</li>
+              <li>Gel 100 (25 g CH) | 11 gels</li>
+            </ul>
+          </details>
+          <div data-nutrition-target="list"></div>
         </div>
       </div>
     </div>
