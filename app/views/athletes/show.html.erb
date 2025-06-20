@@ -199,19 +199,37 @@
       });
     </script>
     <div data-tabs-target="panel" class="hidden" data-controller="checkpoints">
-      <p class="mb-2">Agrega puntos de control para conocer tu hora de paso.</p>
-      <template data-checkpoints-target="template">
-        <div class="checkpoint-row flex space-x-2 mb-2">
-          <input type="text" placeholder="Nombre" data-field="name" class="border rounded p-1 flex-1" />
-          <input type="number" step="0.1" placeholder="Km" data-field="km" class="border rounded p-1 w-24" />
+      <div class="grid gap-6 md:grid-cols-2">
+        <div class="bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-lg">
+          <h2 class="text-xl font-semibold mb-2">Agregar puntos</h2>
+          <template data-checkpoints-target="template">
+            <div class="checkpoint-row flex space-x-2 mb-2">
+              <input type="text" placeholder="Nombre" data-field="name" class="border rounded p-1 flex-1" />
+              <input type="number" step="0.1" placeholder="Km" data-field="km" class="border rounded p-1 w-24" />
+            </div>
+          </template>
+          <div data-checkpoints-target="list"></div>
+          <div class="mt-2 space-x-2">
+            <button type="button" data-action="checkpoints#addRow" class="px-2 py-1 bg-gray-200 rounded">Añadir punto</button>
+            <button type="button" data-action="checkpoints#compute" class="px-2 py-1 bg-blue-500 text-white rounded">Calcular</button>
+            <input type="file" accept=".xlsx" data-checkpoints-target="file" data-action="checkpoints#import" class="hidden" />
+            <button type="button" data-action="checkpoints#chooseFile" class="px-2 py-1 bg-gray-200 rounded">Subir Excel</button>
+            <button type="button" data-action="checkpoints#export" class="px-2 py-1 bg-gray-200 rounded">Descargar Excel</button>
+          </div>
+          <div data-checkpoints-target="loader" class="hidden flex items-center space-x-2 mt-4">
+            <div class="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-blue-400"></div>
+            <span>Procesando...</span>
+          </div>
+          <div class="w-full bg-gray-200 rounded h-2 mt-2 overflow-hidden">
+            <div data-checkpoints-target="bar" class="bg-blue-500 h-full w-0 transition-all duration-500"></div>
+          </div>
+          <div data-checkpoints-target="messages" class="text-sm mt-2 space-y-1"></div>
         </div>
-      </template>
-      <div data-checkpoints-target="list"></div>
-      <div class="mt-2 space-x-2">
-        <button type="button" data-action="checkpoints#addRow" class="px-2 py-1 bg-gray-200 rounded">Añadir punto</button>
-        <button type="button" data-action="checkpoints#compute" class="px-2 py-1 bg-blue-500 text-white rounded">Calcular</button>
+        <div class="bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-lg">
+          <h2 class="text-xl font-semibold mb-2">Horarios estimados</h2>
+          <div data-checkpoints-target="output" class="space-y-1"></div>
+        </div>
       </div>
-      <div data-checkpoints-target="output" class="mt-4 space-y-1"></div>
     </div>
   <% elsif flash[:alert] %>
     <p class="text-red-600"><%= flash[:alert] %></p>
