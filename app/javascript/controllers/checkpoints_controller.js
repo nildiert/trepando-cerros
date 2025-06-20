@@ -1,5 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
+const RANGE_SEC = 5 * 60 // +/- 5 minutes
+
 export default class extends Controller {
   static values = { kmSeconds: Array }
   static targets = ["name", "km", "list"]
@@ -10,7 +12,7 @@ export default class extends Controller {
     const km = parseFloat(this.kmTarget.value)
     if (!name || isNaN(km)) return
     const secs = this.timeForDistance(km)
-    const time = this.dayTimeString(secs)
+    const time = this.timeRangeString(secs)
     const tr = document.createElement("tr")
     tr.innerHTML = `<td class='px-2 py-1'>${name}</td>` +
       `<td class='px-2 py-1'>${km}</td>` +
@@ -45,6 +47,12 @@ export default class extends Controller {
     base.setHours(h, m, 0, 0)
     const t = new Date(base.getTime() + seconds * 1000)
     return `${String(t.getHours()).padStart(2,'0')}:${String(t.getMinutes()).padStart(2,'0')}`
+  }
+
+  timeRangeString(seconds) {
+    const start = Math.max(0, seconds - RANGE_SEC)
+    const finish = seconds + RANGE_SEC
+    return `${this.dayTimeString(start)} - ${this.dayTimeString(finish)}`
   }
 
   formatTime(seconds) {

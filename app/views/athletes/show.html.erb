@@ -116,7 +116,7 @@
               <tr>
                 <th class="px-2 py-1">Nombre</th>
                 <th class="px-2 py-1">Km</th>
-                <th class="px-2 py-1">Hora aprox.</th>
+                <th class="px-2 py-1">Rango aprox.</th>
               </tr>
             </thead>
             <tbody data-checkpoints-target="list"></tbody>
@@ -158,6 +158,8 @@
           return kmSeconds[kmSeconds.length - 1][1];
         }
 
+        const RANGE_SEC = 5 * 60;
+
         function dayTimeString(seconds) {
           const startInput = document.getElementById('startTime');
           if (!startInput.value) return formatTime(seconds);
@@ -166,6 +168,12 @@
           base.setHours(h, m, 0, 0);
           const t = new Date(base.getTime() + seconds * 1000);
           return `${String(t.getHours()).padStart(2,'0')}:${String(t.getMinutes()).padStart(2,'0')}`;
+        }
+
+        function timeRangeString(seconds) {
+          const start = Math.max(0, seconds - RANGE_SEC);
+          const finish = seconds + RANGE_SEC;
+          return `${dayTimeString(start)} - ${dayTimeString(finish)}`;
         }
 
         function formatTime(seconds) {
@@ -184,7 +192,7 @@
                 callbacks: {
                   afterLabel: ctx => {
                     const t = timeForDistance(ctx.parsed.x);
-                    return 'Paso aprox: ' + dayTimeString(t);
+                    return 'Paso aprox: ' + timeRangeString(t);
                   }
                 }
               }
