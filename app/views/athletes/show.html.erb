@@ -54,20 +54,6 @@
           </div>
           <div data-analysis-target="messages" class="text-sm mt-2 space-y-1"></div>
         <% end %>
-        <div data-analysis-target="modal" class="fixed inset-0 bg-black/50 flex items-center justify-center hidden">
-          <div class="bg-white rounded-lg p-6 space-y-4 text-center">
-            <p class="font-medium">Selecciona tu hora de inicio</p>
-            <div data-controller="time-dial" class="flex items-center space-x-4 justify-center">
-              <input type="time" data-analysis-target="timeInput" data-time-dial-target="input" class="hidden">
-              <div data-time-dial-target="dial" class="relative w-24 h-24 rounded-full border-2 border-blue-500 bg-white" data-action="pointerdown->time-dial#pointerDown pointermove->time-dial#pointerMove pointerup->time-dial#pointerUp pointerleave->time-dial#pointerUp">
-                <div data-time-dial-target="hourHand" class="absolute left-1/2 top-1/2 w-0.5 bg-blue-700 origin-bottom" style="height:30%;"></div>
-                <div data-time-dial-target="minuteHand" class="absolute left-1/2 top-1/2 w-0.5 bg-blue-400 origin-bottom" style="height:45%;"></div>
-              </div>
-              <span data-time-dial-target="label" class="text-blue-700 font-medium">00:00</span>
-            </div>
-            <button type="button" data-action="analysis#confirmTime" class="bg-blue-500 text-white px-4 py-2 rounded">Aceptar</button>
-          </div>
-        </div>
       </div>
       <% end %>
     </div>
