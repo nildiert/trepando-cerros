@@ -75,8 +75,8 @@ export default class extends Controller {
       const row = document.createElement("tr")
       row.innerHTML = `
         <td class='px-2 py-1'>${name}</td>
-        <td class='px-2 py-1'>${counts["Drink Mix 320"].toFixed(1)}</td>
-        <td class='px-2 py-1'>${counts["Drink Mix 160"].toFixed(1)}</td>
+        <td class='px-2 py-1'>${counts["Drink Mix 320"]}</td>
+        <td class='px-2 py-1'>${counts["Drink Mix 160"]}</td>
         <td class='px-2 py-1'>${counts["Gel 160"]}</td>
         <td class='px-2 py-1'>${counts["Gel 100 CAF"]}</td>
         <td class='px-2 py-1'>${counts["Gel 100"]}</td>`
@@ -92,6 +92,9 @@ export default class extends Controller {
       counts[mix] += 0.5
       counts[item.gel] += 1
     }
+    Object.keys(counts).forEach(k => {
+      counts[k] = Math.ceil(counts[k])
+    })
     return counts
   }
 
