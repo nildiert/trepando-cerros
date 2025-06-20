@@ -6,7 +6,7 @@ class AthletesController < ApplicationController
       return
     end
 
-    @start_time = params[:start_time]
+    @start_time = params[:start_time].to_s[0, 5]
 
     return unless params[:gpx_file].present?
 
