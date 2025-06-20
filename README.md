@@ -42,3 +42,10 @@ La aplicación analiza tus carreras recientes para ajustar el ritmo en subidas, 
 Además considera el desgaste del cuerpo: a medida que se acumulan kilómetros se aplica un pequeño factor de fatiga que incrementa ligeramente el tiempo estimado. Los gemelos se cansan en las subidas y los cuádriceps en las bajadas. El efecto de la fatiga ahora crece de forma un poco exponencial, de modo que a mayor distancia o desnivel acumulado el ritmo se vuelve gradualmente más lento, pero con coeficientes reducidos para evitar resultados exagerados.
 
   La interfaz muestra tarjetas con efecto de vidrio y un pequeño botón gris de **Cerrar sesión** en la esquina inferior derecha cuando estás autenticado. El área de carga admite arrastrar y soltar el GPX y muestra mensajes animados durante el análisis. Una vez calculado el resultado se muestra el **tiempo estimado**. Si seleccionas una hora de inicio verás una tabla con la distancia acumulada por hora, los kilómetros recorridos en cada tramo y el desnivel positivo y negativo por hora. La última fila indica la hora estimada de finalización. Encima de la tabla se muestra la gráfica de elevación y, al pasar el cursor, indica la hora aproximada de paso según la hora de inicio.
+
+En la pestaña **Nutrición** encontrarás un enlace **Descargar PDF** para obtener un plan nutricional resumido por bloques. Cada línea muestra el rango de horas y la ingesta sugerida en forma abreviada, por ejemplo:
+```
+BLQ 1 (08:00–15:00) - 1/2 DM320 40 g CH - Gel 160 40 g CH
+BLQ 2 A (15:00–19:00) - 1/2 DM160 20 g CH - Gel 160 40 g CH
+```
+
