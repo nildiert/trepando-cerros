@@ -1,7 +1,17 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["form", "file", "dropzone", "loader", "messages", "bar"]
+  static targets = [
+    "form",
+    "file",
+    "dropzone",
+    "loader",
+    "messages",
+    "bar",
+    "modal",
+    "timeInput",
+    "timeField"
+  ]
 
   connect() {
     this.submitted = false
@@ -11,6 +21,12 @@ export default class extends Controller {
     if (this.submitted) return
     event.preventDefault()
     this.submitted = true
+    this.modalTarget.classList.remove('hidden')
+  }
+
+  confirmTime() {
+    this.modalTarget.classList.add('hidden')
+    this.timeFieldTarget.value = this.timeInputTarget.value
     this.startSteps()
   }
 
@@ -61,3 +77,4 @@ export default class extends Controller {
     })
   }
 }
+
