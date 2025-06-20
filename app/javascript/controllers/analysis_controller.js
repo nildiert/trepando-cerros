@@ -5,6 +5,7 @@ export default class extends Controller {
     "form",
     "file",
     "dropzone",
+    "heading",
     "loader",
     "messages",
     "bar",
@@ -23,6 +24,9 @@ export default class extends Controller {
     this.submitted = true
     this.dropzoneTarget.classList.add('hidden')
     this.timeCardTarget.classList.remove('hidden')
+    if (this.hasHeadingTarget) {
+      this.headingTarget.textContent = 'Selecciona tu hora de inicio'
+    }
   }
 
   confirmTime() {
@@ -41,6 +45,9 @@ export default class extends Controller {
     this.timeCardTarget.classList.add('hidden')
     this.dropzoneTarget.classList.remove('hidden')
     this.submitted = false
+    if (this.hasHeadingTarget) {
+      this.headingTarget.textContent = 'Cargar Archivo'
+    }
   }
 
 
