@@ -6,6 +6,8 @@ class AthletesController < ApplicationController
       return
     end
 
+    @start_time = params[:start_time]
+
     return unless params[:gpx_file].present?
 
     token = session[:strava_token] || ENV['STRAVA_ACCESS_TOKEN']

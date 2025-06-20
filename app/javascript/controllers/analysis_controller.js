@@ -25,7 +25,13 @@ export default class extends Controller {
   }
 
   confirmTime() {
-    this.timeFieldTarget.value = this.timeInputTarget.value
+    const value = this.timeInputTarget.value
+    this.timeFieldTarget.value = value
+    const startInput = document.getElementById('startTime')
+    if (startInput) {
+      startInput.value = value
+      startInput.dispatchEvent(new Event('change'))
+    }
     this.timeModalTarget.classList.add('hidden')
     this.startSteps()
   }
