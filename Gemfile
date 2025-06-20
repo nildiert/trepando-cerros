@@ -16,6 +16,7 @@ gem "turbo-rails"
 gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
+gem "prawn"
 
 # Access the Strava API via https://github.com/dblock/strava-ruby-client
 gem "strava-ruby-client"

@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   root "home#index"
   resources :athletes, only: [:show]
+  get "athletes/:id/nutrition" => "athletes#nutrition", as: :nutrition_athlete, defaults: { format: :pdf }
   post "athletes/:id" => "athletes#show"
 
   get "/auth/strava" => "sessions#connect", as: :strava_connect
