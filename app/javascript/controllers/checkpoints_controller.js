@@ -1,6 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 
-const RANGE_SEC = 5 * 60 // +/- 5 minutes
+const RANGE_SEC = 30 * 60 // +/- 30 minutes
 
 export default class extends Controller {
   static values = { kmSeconds: Array }
