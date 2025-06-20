@@ -128,25 +128,17 @@
         </div>
         <div data-tabs-target="panel" class="hidden" data-controller="nutrition">
           <h2 class="text-xl font-semibold mb-2">Plan nutricional</h2>
-          <ul class="list-disc pl-6 mb-4 text-sm">
-            <li>Drink Mix 320 (80 g CH / 500 ml) | 7 sachets</li>
-            <li>Drink Mix 160 (40 g CH / 500 ml) | 8 sachets</li>
-            <li>Gel 160 (40 g CH) | 17 gels</li>
-            <li>Gel 100 CAF 100 (25 g CH + 100 mg cafeína) | 3 gels</li>
-            <li>Gel 100 (25 g CH) | 11 gels</li>
-          </ul>
-          <table class="w-full text-left">
-            <thead>
-              <tr>
-                <th class="px-2 py-1">Hora</th>
-                <th class="px-2 py-1">Drink Mix</th>
-                <th class="px-2 py-1">Gel</th>
-                <th class="px-2 py-1">CH</th>
-                <th class="px-2 py-1">Hora del día</th>
-              </tr>
-            </thead>
-            <tbody data-nutrition-target="list"></tbody>
-          </table>
+          <details class="mb-4">
+            <summary class="cursor-pointer font-semibold">Resumen</summary>
+            <ul class="list-disc pl-6 text-sm mt-2">
+              <li>Drink Mix 320 (80 g CH / 500 ml) | 7 sachets</li>
+              <li>Drink Mix 160 (40 g CH / 500 ml) | 8 sachets</li>
+              <li>Gel 160 (40 g CH) | 17 gels</li>
+              <li>Gel 100 CAF 100 (25 g CH + 100 mg cafeína) | 3 gels</li>
+              <li>Gel 100 (25 g CH) | 11 gels</li>
+            </ul>
+          </details>
+          <div data-nutrition-target="list"></div>
         </div>
       </div>
     </div>
