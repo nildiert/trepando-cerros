@@ -76,7 +76,8 @@
             <li><button class="px-3 py-2 border-b-2 font-medium text-sm" data-tabs-target="tab" data-action="tabs#change">Gráfica</button></li>
             <li><button class="px-3 py-2 border-b-2 font-medium text-sm" data-tabs-target="tab" data-action="tabs#change">Progreso</button></li>
             <li><button class="px-3 py-2 border-b-2 font-medium text-sm" data-tabs-target="tab" data-action="tabs#change">Controles</button></li>
-          </ul>
+            <li><button class="px-3 py-2 border-b-2 font-medium text-sm" data-tabs-target="tab" data-action="tabs#change">Nutrición</button></li>
+         </ul>
         </nav>
         <div data-tabs-target="panel">
           <p class="text-lg font-medium mb-2">Tiempo estimado:</p>
@@ -123,6 +124,27 @@
               </tr>
             </thead>
             <tbody data-checkpoints-target="list"></tbody>
+          </table>
+        </div>
+        <div data-tabs-target="panel" class="hidden" data-controller="nutrition">
+          <h2 class="text-xl font-semibold mb-2">Plan nutricional</h2>
+          <ul class="list-disc pl-6 mb-4 text-sm">
+            <li>Drink Mix 320 (80 g CH / 500 ml) | 7 sachets</li>
+            <li>Drink Mix 160 (40 g CH / 500 ml) | 8 sachets</li>
+            <li>Gel 160 (40 g CH) | 17 gels</li>
+            <li>Gel 100 CAF 100 (25 g CH + 100 mg cafeína) | 3 gels</li>
+            <li>Gel 100 (25 g CH) | 11 gels</li>
+          </ul>
+          <table class="w-full text-left">
+            <thead>
+              <tr>
+                <th class="px-2 py-1">Hora</th>
+                <th class="px-2 py-1">Drink Mix</th>
+                <th class="px-2 py-1">Gel</th>
+                <th class="px-2 py-1">Hora del día</th>
+              </tr>
+            </thead>
+            <tbody data-nutrition-target="list"></tbody>
           </table>
         </div>
       </div>
