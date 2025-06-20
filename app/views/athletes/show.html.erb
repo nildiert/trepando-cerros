@@ -209,12 +209,28 @@
             </div>
           </template>
           <div data-checkpoints-target="list"></div>
-          <div class="mt-2 space-x-2">
-            <button type="button" data-action="checkpoints#addRow" class="px-2 py-1 bg-gray-200 rounded">Añadir punto</button>
-            <button type="button" data-action="checkpoints#compute" class="px-2 py-1 bg-blue-500 text-white rounded">Calcular</button>
+          <div class="mt-2 space-x-2 flex">
+            <button type="button" data-action="checkpoints#addRow" class="p-2 bg-gray-200 rounded" title="Agregar punto" aria-label="Agregar punto">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+              </svg>
+            </button>
+            <button type="button" data-action="checkpoints#compute" class="p-2 bg-blue-500 text-white rounded" title="Calcular" aria-label="Calcular">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3l14 9-14 9V3z" />
+              </svg>
+            </button>
             <input type="file" accept=".xlsx" data-checkpoints-target="file" data-action="checkpoints#import" class="hidden" />
-            <button type="button" data-action="checkpoints#chooseFile" class="px-2 py-1 bg-gray-200 rounded">Subir Excel</button>
-            <button type="button" data-action="checkpoints#export" class="px-2 py-1 bg-gray-200 rounded">Descargar Excel</button>
+            <button type="button" data-action="checkpoints#chooseFile" class="p-2 bg-gray-200 rounded" title="Subir Excel" aria-label="Subir Excel">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v4a2 2 0 002 2h12a2 2 0 002-2v-4M8 12l4-4 4 4M12 8v8" />
+              </svg>
+            </button>
+            <button type="button" data-action="checkpoints#export" class="p-2 bg-gray-200 rounded" title="Descargar Excel" aria-label="Descargar Excel">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v4a2 2 0 002 2h12a2 2 0 002-2V4M16 12l-4 4-4-4M12 16V8" />
+              </svg>
+            </button>
           </div>
           <div data-checkpoints-target="loader" class="hidden flex items-center space-x-2 mt-4">
             <div class="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-blue-400"></div>
