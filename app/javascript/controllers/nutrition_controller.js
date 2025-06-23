@@ -107,7 +107,9 @@ export default class extends Controller {
         const end = new Date(base.getTime() + (block.start + block.hours) * 3600 * 1000)
         const secSummary = document.createElement("summary")
         secSummary.classList.add("cursor-pointer", "font-medium", "bg-gray-100", "px-2", "py-1", "rounded")
-        secSummary.textContent = `${block.name} (${timeStr(start)}–${timeStr(end)}) (${block.mixCH + block.gelCH}g)`
+        const relStart = this.formatTime(block.start * 3600)
+        const relEnd = this.formatTime((block.start + block.hours) * 3600)
+        secSummary.textContent = `${block.name} (${timeStr(start)}–${timeStr(end)}) [${relStart} - ${relEnd}](${block.mixCH + block.gelCH}g)`
         section.appendChild(secSummary)
 
         const table = document.createElement("table")
@@ -145,5 +147,11 @@ export default class extends Controller {
       })
       this.listTarget.appendChild(groupDetail)
     })
+  }
+
+  formatTime(seconds) {
+    const h = Math.floor(seconds / 3600)
+    const m = Math.floor((seconds % 3600) / 60)
+    return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`
   }
 }
