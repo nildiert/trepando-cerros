@@ -6,20 +6,37 @@ export default class extends Controller {
   static values = { kmSeconds: Array }
   static targets = ["name", "km", "list"]
 
+  connect() {
+    this.points = []
+  }
+
   add(event) {
     event.preventDefault()
     const name = this.nameTarget.value.trim()
     const km = parseFloat(this.kmTarget.value)
     if (!name || isNaN(km)) return
     const secs = this.timeForDistance(km)
-    const time = this.timeRangeString(secs)
-    const tr = document.createElement("tr")
-    tr.innerHTML = `<td class='px-2 py-1'>${name}</td>` +
-      `<td class='px-2 py-1'>${km}</td>` +
-      `<td class='px-2 py-1'>${time}</td>`
-    this.listTarget.appendChild(tr)
+    this.points.push({ name, km, secs })
+    this.points.sort((a, b) => a.km - b.km)
+    this.render()
     this.nameTarget.value = ""
     this.kmTarget.value = ""
+  }
+
+  render() {
+    this.listTarget.innerHTML = ""
+    let prev = 0
+    this.points.forEach(pt => {
+      const range = this.timeRangeString(pt.secs)
+      const diff = this.formatTime(pt.secs - prev)
+      const tr = document.createElement("tr")
+      tr.innerHTML = `<td class='px-2 py-1'>${pt.name}</td>` +
+        `<td class='px-2 py-1'>${pt.km}</td>` +
+        `<td class='px-2 py-1'>${range}</td>` +
+        `<td class='px-2 py-1'>${diff}</td>`
+      this.listTarget.appendChild(tr)
+      prev = pt.secs
+    })
   }
 
   timeForDistance(d) {
