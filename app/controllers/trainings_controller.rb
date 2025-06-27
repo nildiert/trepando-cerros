@@ -3,6 +3,8 @@ class TrainingsController < ApplicationController
   before_action :set_athlete
 
   def show
+    @week_start = Date.current.beginning_of_week
+    @messages = random_messages(7)
   end
 
   private
@@ -25,5 +27,20 @@ class TrainingsController < ApplicationController
     end
   rescue StandardError
     nil
+  end
+
+  def random_messages(count)
+    samples = [
+      "Sesión de fuerza y resistencia.",
+      "Rodaje suave por la ciudad.",
+      "Entrenamiento de velocidad en pista.",
+      "Día de descanso y estiramientos.",
+      "Trabajos de técnica de carrera.",
+      "Entrenamiento cruzado con bicicleta.",
+      "Series en subida de intensidad moderada.",
+      "Sesión de recuperación activa.",
+      "Rodaje por terreno montañoso." 
+    ]
+    samples.shuffle.take(count)
   end
 end
