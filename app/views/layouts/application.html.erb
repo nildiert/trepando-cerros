@@ -38,12 +38,29 @@
             <span>Trepando Cerros</span>
           <% end %>
         </div>
-        <% if can? :manage, :settings %>
+        <% if current_user %>
           <div class="flex-none">
-            <%= link_to settings_path, class: 'btn btn-sm flex items-center gap-1' do %>
-              <i class="fa-solid fa-gear fa-lg text-primary"></i>
-              <span>Configuración</span>
-            <% end %>
+            <div class="dropdown dropdown-end">
+              <label tabindex="0" class="btn btn-ghost">
+                <i class="fa-solid fa-user"></i>
+              </label>
+              <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-40">
+                <li>
+                  <%= link_to athlete_path(current_athlete_id), class: 'flex items-center gap-2' do %>
+                    <i class="fa-solid fa-user"></i>
+                    <span>Perfil</span>
+                  <% end %>
+                </li>
+                <% if can? :manage, :settings %>
+                  <li>
+                    <%= link_to settings_path, class: 'flex items-center gap-2' do %>
+                      <i class="fa-solid fa-gear"></i>
+                      <span>Configuración</span>
+                    <% end %>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
           </div>
         <% end %>
       </div>
