@@ -40,8 +40,7 @@ class SessionsController < ApplicationController
     profile = Profile.find_by(athlete_id: athlete_id)
     user = profile&.user
     unless user
-      admin_flag = User.count.zero?
-      user = User.create!(admin: admin_flag)
+      user = User.create!
       user.create_profile!(athlete_id: athlete_id)
     end
 

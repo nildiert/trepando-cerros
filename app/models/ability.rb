@@ -6,6 +6,7 @@ class Ability
 
     can :read, :all
 
+    can :manage, :settings if user.persisted?
     can :manage, :all if user.admin?
 
     user.permissions.each do |perm|
