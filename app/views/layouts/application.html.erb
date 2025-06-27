@@ -40,11 +40,11 @@
         </div>
         <% if current_user %>
           <div class="flex-none">
-            <div class="dropdown dropdown-end z-50">
-              <label tabindex="0" class="btn btn-ghost">
+            <details class="dropdown dropdown-end z-50">
+              <summary class="btn btn-ghost">
                 <i class="fa-solid fa-user"></i>
-              </label>
-              <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-40 z-50">
+              </summary>
+              <ul class="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
                 <li>
                   <label for="profile-modal" class="flex items-center gap-2 cursor-pointer">
                     <i class="fa-solid fa-user"></i>
@@ -58,7 +58,7 @@
                   <% end %>
                 </li>
               </ul>
-            </div>
+            </details>
           </div>
         <% end %>
       </div>
