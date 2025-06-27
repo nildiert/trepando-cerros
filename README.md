@@ -44,3 +44,7 @@ Además considera el desgaste del cuerpo: a medida que se acumulan kilómetros s
   La interfaz muestra tarjetas con efecto de vidrio y un pequeño botón gris de **Cerrar sesión** en la esquina inferior derecha cuando estás autenticado. El área de carga admite arrastrar y soltar el GPX y muestra mensajes animados durante el análisis. Una vez calculado el resultado se muestra el **tiempo estimado**. Si seleccionas una hora de inicio verás una tabla con la distancia acumulada por hora, los kilómetros recorridos en cada tramo y el desnivel positivo y negativo por hora. La última fila indica la hora estimada de finalización. Encima de la tabla se muestra la gráfica de elevación y, al pasar el cursor, indica la hora aproximada de paso según la hora de inicio.
 
 Esta aplicación usa Tailwind CSS junto con la librería daisyUI, cargada desde CDN y aplicando el tema **nord** para un estilo coherente y moderno. Toda la interfaz se apoya en componentes de daisyUI para botones, formularios y tablas.
+
+## Perfil de administrador
+
+La primera cuenta que se crea en la aplicación se marca como administradora. Solo este usuario puede acceder a la sección de configuración. Los demás usuarios únicamente verán las opciones de predicción de carreras.
