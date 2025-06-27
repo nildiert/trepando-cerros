@@ -1,16 +1,54 @@
-<h1 class="text-2xl font-bold mb-4 flex items-center gap-2">
-  <i class="fa-solid fa-gear fa-lg text-primary"></i>
-  <span>Configuración</span>
-</h1>
-<%= form_with url: settings_path, method: :patch do %>
-  <div class="form-control mb-4">
-    <label class="label cursor-pointer">
-      <%= check_box_tag :race_predictor, '1', @race_predictor.enabled?, class: 'checkbox' %>
-      <span class="label-text ml-2">Habilitar predictor de carrera</span>
-    </label>
+<div class="container mx-auto p-4 flex gap-6">
+  <aside class="w-48 space-y-2">
+    <ul class="menu bg-base-100 p-2 rounded-box">
+      <li>
+        <%= link_to athlete_path(@athlete&.id), class: ["flex items-center gap-2", (current_page?(athlete_path(@athlete&.id)) ? "active" : nil)].compact.join(' ') do %>
+          <i class="fa-solid fa-chart-line"></i>
+          <span>Dashboard</span>
+        <% end %>
+      </li>
+      <% if can? :manage, :settings %>
+        <li>
+          <%= link_to athlete_settings_path(@athlete&.id), class: ["flex items-center gap-2", (current_page?(athlete_settings_path(@athlete&.id)) ? "active" : nil)].compact.join(' ') do %>
+            <i class="fa-solid fa-gear"></i>
+            <span>Configuración</span>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </aside>
+
+  <div class="flex-1 space-y-6">
+    <div data-controller="tabs" class="card bg-base-100 shadow w-full">
+      <div class="card-body">
+        <nav class="border-b border-gray-200 mb-4">
+          <ul class="flex space-x-4">
+            <li>
+              <button class="px-3 py-2 border-b-2 font-medium text-sm" data-tabs-target="tab" data-action="tabs#change">General</button>
+            </li>
+            <li>
+              <button class="px-3 py-2 border-b-2 font-medium text-sm" data-tabs-target="tab" data-action="tabs#change">Perfiles</button>
+            </li>
+          </ul>
+        </nav>
+        <div data-tabs-target="panel">
+          <p class="text-gray-600">Configuraciones generales.</p>
+        </div>
+        <div data-tabs-target="panel" class="hidden">
+          <%= form_with url: athlete_settings_path(@athlete&.id), method: :patch do %>
+            <div class="form-control mb-4">
+              <label class="label cursor-pointer">
+                <%= check_box_tag :race_predictor, '1', @race_predictor.enabled?, class: 'checkbox' %>
+                <span class="label-text ml-2">Habilitar predictor de carrera</span>
+              </label>
+            </div>
+            <button type="submit" class="btn btn-primary flex items-center gap-1">
+              <i class="fa-solid fa-floppy-disk text-primary"></i>
+              <span>Guardar</span>
+            </button>
+          <% end %>
+        </div>
+      </div>
+    </div>
   </div>
-  <button type="submit" class="btn btn-primary flex items-center gap-1">
-    <i class="fa-solid fa-floppy-disk text-primary"></i>
-    <span>Guardar</span>
-  </button>
-<% end %>
+</div>
