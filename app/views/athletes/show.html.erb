@@ -19,6 +19,12 @@
   </aside>
 
   <div class="flex-1 space-y-6">
+    <h1 class="text-2xl font-bold flex items-center gap-2">
+      <div class="tooltip" data-tip="Predictor de carrera">
+        <i class="fa-solid fa-person-running text-primary"></i>
+      </div>
+      <span>Dashboard</span>
+    </h1>
     <div class="space-y-6">
     <% if @athlete.present? %>
       <% if can? :use, :race_predictor %>
