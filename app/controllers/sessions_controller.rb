@@ -35,9 +35,19 @@ class SessionsController < ApplicationController
       client_secret: client_secret
     )
     token = client.oauth_token(code: params[:code])
+    athlete_id = token.athlete['id']
+
+    profile = Profile.find_by(athlete_id: athlete_id)
+    user = profile&.user
+    unless user
+      user = User.create!
+      user.create_profile!(athlete_id: athlete_id)
+    end
+
+    session[:user_id] = user.id
     session[:strava_token] = token.access_token
-    session[:athlete_id] = token.athlete['id']
-    redirect_to athlete_path(token.athlete['id'])
+
+    redirect_to athlete_path(athlete_id)
   rescue StandardError
     redirect_to root_path, alert: 'No se pudo autenticar con Strava'
   end
