@@ -46,19 +46,11 @@
               </label>
               <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-40">
                 <li>
-                  <%= link_to athlete_path(current_athlete_id), class: 'flex items-center gap-2' do %>
+                  <label for="profile-modal" class="flex items-center gap-2 cursor-pointer">
                     <i class="fa-solid fa-user"></i>
                     <span>Perfil</span>
-                  <% end %>
+                  </label>
                 </li>
-                <% if can? :manage, :settings %>
-                  <li>
-                    <label for="settings-modal" class="flex items-center gap-2 cursor-pointer">
-                      <i class="fa-solid fa-gear"></i>
-                      <span>Configuración</span>
-                    </label>
-                  </li>
-                <% end %>
               </ul>
             </div>
           </div>
@@ -68,6 +60,9 @@
     <%= yield %>
     <% if current_user && can?(:manage, :settings) %>
       <%= render 'settings/modal' %>
+    <% end %>
+    <% if current_user %>
+      <%= render 'athletes/profile_modal', athlete: @athlete %>
     <% end %>
     <% if session[:strava_token] %>
       <div class="fixed bottom-4 right-4">

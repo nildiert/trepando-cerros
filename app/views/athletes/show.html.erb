@@ -19,45 +19,11 @@
   </aside>
 
   <div class="flex-1 space-y-6">
-    <h1 class="text-3xl font-bold flex items-center gap-2">
-      <div class="tooltip" data-tip="Predictor de carrera">
-        <i class="fa-solid fa-person-running text-primary"></i>
-      </div>
-      <span>Dashboard</span>
-    </h1>
-
-    <div class="grid gap-6 md:grid-cols-2">
-    <div class="card bg-base-100 shadow">
-      <div class="card-body">
-      <h2 class="text-xl font-semibold mb-2">Atleta en Strava</h2>
-      <% if @athlete.present? %>
-        <div class="flex items-center space-x-4">
-          <% if @athlete.respond_to?(:profile) && @athlete.profile.present? %>
-            <%= image_tag @athlete.profile, alt: 'Foto de perfil', class: 'w-16 h-16 rounded-full' %>
-          <% end %>
-          <div>
-            <p class="text-gray-800 font-semibold"><%= @athlete.firstname %> <%= @athlete.lastname %></p>
-            <% if @athlete.respond_to?(:bio) && @athlete.bio.present? %>
-              <p class="text-gray-600 text-sm"><%= @athlete.bio %></p>
-            <% end %>
-          </div>
-        </div>
-      <% else %>
-        <p class="text-gray-600">No se pudo cargar la información de Strava.</p>
-      <% end %>
-      </div>
-    </div>
-
+    <div class="space-y-6">
     <% if @athlete.present? %>
       <% if can? :use, :race_predictor %>
-      <div class="card bg-base-100 shadow">
+      <div class="card bg-base-100 shadow w-full">
         <div class="card-body">
-        <% unless @estimated_time %>
-          <h2 data-analysis-target="heading" class="text-xl font-semibold mb-2 flex items-center gap-2">
-            <i class="fa-solid fa-file-arrow-up fa-lg text-primary"></i>
-            <span>Cargar Archivo</span>
-          </h2>
-        <% end %>
         <% if @estimated_time %>
           <p class="text-lg font-medium mb-2">Tiempo estimado:</p>
           <p class="text-4xl font-bold mb-1"><%= @estimated_time %></p>
