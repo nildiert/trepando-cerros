@@ -33,15 +33,15 @@
     <nav class="navbar bg-base-100 shadow">
       <div class="container mx-auto flex justify-between">
         <div class="flex-1">
-          <%= link_to root_path, class: 'btn btn-ghost normal-case text-lg font-semibold flex items-center space-x-2' do %>
-            <i class="fa-solid fa-mountain"></i>
+          <%= link_to root_path, class: 'btn btn-ghost normal-case text-lg font-semibold flex items-center gap-2' do %>
+            <i class="fa-solid fa-mountain fa-lg text-primary"></i>
             <span>Trepando Cerros</span>
           <% end %>
         </div>
         <% if can? :manage, :settings %>
           <div class="flex-none">
-            <%= link_to settings_path, class: 'btn btn-sm flex items-center space-x-1' do %>
-              <i class="fa-solid fa-gear"></i>
+            <%= link_to settings_path, class: 'btn btn-sm flex items-center gap-1' do %>
+              <i class="fa-solid fa-gear fa-lg text-primary"></i>
               <span>Configuración</span>
             <% end %>
           </div>
@@ -51,8 +51,8 @@
     <%= yield %>
     <% if session[:strava_token] %>
       <div class="fixed bottom-4 right-4">
-        <%= button_to logout_path, method: :delete, class: 'btn btn-sm flex items-center space-x-1' do %>
-          <i class="fa-solid fa-right-from-bracket"></i>
+        <%= button_to logout_path, method: :delete, class: 'btn btn-sm flex items-center gap-1' do %>
+          <i class="fa-solid fa-right-from-bracket text-primary"></i>
           <span>Cerrar sesión</span>
         <% end %>
       </div>

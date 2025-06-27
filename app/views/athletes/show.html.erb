@@ -28,8 +28,8 @@
       <div class="card bg-base-100 shadow">
         <div class="card-body">
         <% unless @estimated_time %>
-          <h2 data-analysis-target="heading" class="text-xl font-semibold mb-2 flex items-center space-x-2">
-            <i class="fa-solid fa-file-arrow-up"></i>
+          <h2 data-analysis-target="heading" class="text-xl font-semibold mb-2 flex items-center gap-2">
+            <i class="fa-solid fa-file-arrow-up fa-lg text-primary"></i>
             <span>Cargar Archivo</span>
           </h2>
         <% end %>
@@ -125,11 +125,11 @@
         </table>
         </div>
         <div data-tabs-target="panel" class="hidden" data-controller="checkpoints" data-checkpoints-km-seconds-value='<%= raw(@km_seconds.to_json) %>'>
-          <form data-action="submit->checkpoints#add" class="mb-4 flex space-x-2">
+          <form data-action="submit->checkpoints#add" class="mb-4 flex gap-2">
             <input type="text" placeholder="Nombre" data-checkpoints-target="name" class="input input-bordered flex-grow">
             <input type="number" step="0.1" placeholder="Km" data-checkpoints-target="km" class="input input-bordered w-24">
-            <button type="submit" class="btn btn-primary flex items-center space-x-1">
-              <i class="fa-solid fa-plus"></i>
+            <button type="submit" class="btn btn-primary flex items-center gap-1">
+              <i class="fa-solid fa-plus text-primary"></i>
               <span>Agregar</span>
             </button>
           </form>
@@ -160,10 +160,10 @@
           <div data-nutrition-target="list"></div>
         </div>
         <div data-tabs-target="panel" class="hidden" data-controller="dropbags" data-dropbags-km-seconds-value='<%= raw(@km_seconds.to_json) %>'>
-          <form data-action="submit->dropbags#add" class="mb-4 flex space-x-2">
+          <form data-action="submit->dropbags#add" class="mb-4 flex gap-2">
             <input type="number" step="0.1" placeholder="Km" data-dropbags-target="km" class="input input-bordered w-24">
-            <button type="submit" class="btn btn-primary flex items-center space-x-1">
-              <i class="fa-solid fa-plus"></i>
+            <button type="submit" class="btn btn-primary flex items-center gap-1">
+              <i class="fa-solid fa-plus text-primary"></i>
               <span>Agregar</span>
             </button>
           </form>
