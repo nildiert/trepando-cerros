@@ -8,4 +8,5 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-Role.find_or_create_by!(name: 'normal')
+role = Role.find_or_create_by!(name: 'normal')
+RolePermission.find_or_create_by!(role: role, name: 'race_predictor')

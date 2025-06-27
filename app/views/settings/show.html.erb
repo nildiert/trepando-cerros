@@ -39,7 +39,9 @@
             <h3 class="font-semibold mb-2">Perfiles disponibles</h3>
             <ul class="list-disc list-inside">
               <% @roles.each do |role| %>
-                <li><%= role.name %></li>
+                <li>
+                  <%= link_to role.name, role_path(role), class: 'link' %>
+                </li>
               <% end %>
             </ul>
           </div>

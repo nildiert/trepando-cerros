@@ -1,0 +1,18 @@
+<div class="container mx-auto p-4 space-y-6">
+  <h2 class="text-xl font-semibold"><%= @role.name.capitalize %></h2>
+
+  <%= form_with model: @role, url: role_path(@role), method: :patch do %>
+    <div class="space-y-4">
+      <% @permissions.each do |perm| %>
+        <% record = @role.role_permissions.find_by(name: perm) %>
+        <div class="form-control">
+          <label class="label cursor-pointer justify-start space-x-2">
+            <%= check_box_tag perm, '1', record&.enabled?, class: 'toggle border-gray-400 bg-gray-300 checked:border-primary checked:bg-primary checked:text-primary-content' %>
+            <span class="label-text capitalize"><%= perm.tr('_', ' ') %></span>
+          </label>
+        </div>
+      <% end %>
+    </div>
+    <button type="submit" class="btn btn-primary mt-4">Guardar</button>
+  <% end %>
+</div>
