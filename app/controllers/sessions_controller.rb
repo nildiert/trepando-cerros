@@ -40,7 +40,8 @@ class SessionsController < ApplicationController
     profile = Profile.find_by(athlete_id: athlete_id)
     user = profile&.user
     unless user
-      user = User.create!
+      default_role = Role.find_by(name: 'normal')
+      user = User.create!(role: default_role)
       user.create_profile!(athlete_id: athlete_id)
     end
 

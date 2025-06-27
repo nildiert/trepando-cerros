@@ -34,7 +34,15 @@
         <div data-tabs-target="panel">
           <p class="text-gray-600">Configuraciones generales.</p>
         </div>
-        <div data-tabs-target="panel" class="hidden">
+        <div data-tabs-target="panel" class="hidden space-y-4">
+          <div>
+            <h3 class="font-semibold mb-2">Perfiles disponibles</h3>
+            <ul class="list-disc list-inside">
+              <% @roles.each do |role| %>
+                <li><%= role.name %></li>
+              <% end %>
+            </ul>
+          </div>
           <%= form_with url: athlete_settings_path(@athlete&.id), method: :patch do %>
             <div class="form-control mb-4">
               <label class="label cursor-pointer">
