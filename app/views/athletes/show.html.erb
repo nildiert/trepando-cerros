@@ -135,7 +135,10 @@
           </table>
         </div>
         <div data-tabs-target="panel" class="hidden" data-controller="nutrition">
-          <h2 class="text-xl font-semibold mb-2">Plan nutricional</h2>
+          <h2 class="text-xl font-semibold mb-2 flex items-center space-x-4">
+            <span>Plan nutricional</span>
+            <%= link_to 'Descargar PDF', nutrition_athlete_path(@athlete, start_time: @start_time), class: 'text-blue-500 underline', data: { turbo: false } %>
+          </h2>
           <details class="mb-4">
             <summary class="cursor-pointer font-semibold">Resumen</summary>
             <ul class="list-disc pl-6 text-sm mt-2">
