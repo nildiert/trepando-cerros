@@ -2,7 +2,7 @@
 <%= form_with url: settings_path, method: :patch do %>
   <div class="mb-4">
     <label class="flex items-center">
-      <%= check_box_tag :race_predictor, '1', @features[:race_predictor] %>
+      <%= check_box_tag :race_predictor, '1', @race_predictor.enabled? %>
       <span class="ml-2">Habilitar predictor de carrera</span>
     </label>
   </div>

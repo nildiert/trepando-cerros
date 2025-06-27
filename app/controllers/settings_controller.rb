@@ -3,14 +3,14 @@ class SettingsController < ApplicationController
 
   def show
     authorize! :manage, :settings
-    @features = session[:features] || { race_predictor: true }
+    @race_predictor = current_user.permissions.find_or_initialize_by(name: 'race_predictor')
   end
 
   def update
     authorize! :manage, :settings
-    session[:features] = {
-      race_predictor: params[:race_predictor] == '1'
-    }
+    perm = current_user.permissions.find_or_initialize_by(name: 'race_predictor')
+    perm.enabled = params[:race_predictor] == '1'
+    perm.save!
     redirect_to settings_path, notice: 'Configuraci\u00f3n actualizada'
   end
 

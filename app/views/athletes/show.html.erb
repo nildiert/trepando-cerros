@@ -22,7 +22,7 @@
     </div>
 
     <% if @athlete.present? %>
-      <% if session.dig(:features, :race_predictor) != false %>
+      <% if can? :use, :race_predictor %>
       <div class="bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-lg">
         <% unless @estimated_time %>
           <h2 data-analysis-target="heading" class="text-xl font-semibold mb-2">Cargar Archivo</h2>
