@@ -51,14 +51,12 @@
                     <span>Perfil</span>
                   </label>
                 </li>
-                <% if can? :manage, :settings %>
-                  <li>
-                    <label for="settings-modal" class="flex items-center gap-2 cursor-pointer">
-                      <i class="fa-solid fa-gear"></i>
-                      <span>Configuración</span>
-                    </label>
-                  </li>
-                <% end %>
+                <li>
+                  <%= button_to logout_path, method: :delete, class: 'flex items-center gap-2 w-full text-left' do %>
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Cerrar sesión</span>
+                  <% end %>
+                </li>
               </ul>
             </div>
           </div>
@@ -72,13 +70,6 @@
     <% if current_user %>
       <%= render 'athletes/profile_modal', athlete: @athlete %>
     <% end %>
-    <% if session[:strava_token] %>
-      <div class="fixed bottom-4 right-4">
-        <%= button_to logout_path, method: :delete, class: 'btn btn-sm flex items-center gap-1' do %>
-          <i class="fa-solid fa-right-from-bracket text-primary"></i>
-          <span>Cerrar sesión</span>
-        <% end %>
-      </div>
-    <% end %>
+    <%# Logout handled in dropdown menu %>
   </body>
 </html>
