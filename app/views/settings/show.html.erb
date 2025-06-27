@@ -7,6 +7,12 @@
           <span>Dashboard</span>
         <% end %>
       </li>
+      <li>
+        <%= link_to athlete_training_path(@athlete&.id), class: ["flex items-center gap-2", (current_page?(athlete_training_path(@athlete&.id)) ? "active" : nil)].compact.join(' ') do %>
+          <i class="fa-solid fa-dumbbell"></i>
+          <span>Entrenamiento</span>
+        <% end %>
+      </li>
       <% if can? :manage, :settings %>
         <li>
           <%= link_to athlete_settings_path(@athlete&.id), class: ["flex items-center gap-2", (current_page?(athlete_settings_path(@athlete&.id)) ? "active" : nil)].compact.join(' ') do %>
