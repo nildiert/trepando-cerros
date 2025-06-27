@@ -31,6 +31,9 @@
     <nav class="bg-white shadow-md">
       <div class="container mx-auto px-4 py-3 flex justify-between items-center">
         <%= link_to 'Trepando Cerros', root_path, class: 'font-semibold text-lg' %>
+        <% if can? :manage, :settings %>
+          <%= link_to 'Configuraci\u00f3n', settings_path, class: 'text-sm ml-4 text-blue-600' %>
+        <% end %>
       </div>
     </nav>
     <%= yield %>
