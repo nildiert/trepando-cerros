@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   root "home#index"
   resources :athletes, only: [:show] do
+    resource :training, only: [:show]
     resource :settings, only: [:show, :update]
   end
   resources :roles, only: [:show, :update]
