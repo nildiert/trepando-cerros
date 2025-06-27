@@ -34,19 +34,13 @@
         <div data-tabs-target="panel">
           <p class="text-gray-600">Configuraciones generales.</p>
         </div>
-        <div data-tabs-target="panel" class="hidden">
-          <%= form_with url: athlete_settings_path(@athlete&.id), method: :patch do %>
-            <div class="form-control mb-4">
-              <label class="label cursor-pointer">
-                <%= check_box_tag :race_predictor, '1', @race_predictor.enabled?, class: 'checkbox' %>
-                <span class="label-text ml-2">Habilitar predictor de carrera</span>
-              </label>
-            </div>
-            <button type="submit" class="btn btn-primary flex items-center gap-1">
-              <i class="fa-solid fa-floppy-disk text-primary"></i>
-              <span>Guardar</span>
-            </button>
-          <% end %>
+        <div data-tabs-target="panel" class="hidden space-y-4">
+          <div>
+            <h3 class="font-semibold mb-2">Perfiles disponibles</h3>
+            <turbo-frame id="roles">
+              <%= render 'roles/list', roles: @roles %>
+            </turbo-frame>
+          </div>
         </div>
       </div>
     </div>

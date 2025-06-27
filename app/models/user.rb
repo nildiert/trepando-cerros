@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  belongs_to :role, optional: true
   has_one :profile, dependent: :destroy
   has_many :permissions, dependent: :destroy
 

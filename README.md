@@ -47,4 +47,7 @@ Esta aplicación usa Tailwind CSS junto con la librería daisyUI, cargada desde 
 
 ## Perfil de administrador
 
-La primera cuenta que se crea en la aplicación se marca como administradora. Solo este usuario puede acceder a la sección de configuración. Los demás usuarios únicamente verán las opciones de predicción de carreras.
+Las cuentas ya no se crean con permisos de administrador por defecto. Cualquier usuario inicia con un perfil **normal**, creado automáticamente al iniciar el proyecto. Desde la sección de configuración se puede ver la lista completa de perfiles y ajustar sus permisos.
+
+Cada perfil puede habilitar o deshabilitar funciones como el predictor de carrera de forma independiente.
+Desde la lista de perfiles puedes ingresar a cada uno y cambiar sus permisos usando botones de tipo switch que muestran claramente si una opción está encendida o apagada.

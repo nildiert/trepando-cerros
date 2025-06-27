@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :athletes, only: [:show] do
     resource :settings, only: [:show, :update]
   end
+  resources :roles, only: [:show, :update]
   post "athletes/:id" => "athletes#show"
 
   get "/auth/strava" => "sessions#connect", as: :strava_connect

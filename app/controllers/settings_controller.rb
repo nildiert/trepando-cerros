@@ -5,6 +5,7 @@ class SettingsController < ApplicationController
   def show
     authorize! :manage, :settings
     @race_predictor = current_user.permissions.find_or_initialize_by(name: 'race_predictor')
+    @roles = Role.all
   end
 
   def update
