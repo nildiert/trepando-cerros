@@ -6,15 +6,19 @@ class ApplicationController < ActionController::Base
     redirect_to root_path, alert: 'No autorizado'
   end
 
-  helper_method :current_athlete_id
+  helper_method :current_user, :current_athlete_id
 
   private
 
+  def current_user
+    @current_user ||= User.find_by(id: session[:user_id])
+  end
+
   def current_athlete_id
-    session[:athlete_id]
+    current_user&.profile&.athlete_id
   end
 
   def current_ability
-    @current_ability ||= Ability.new(current_athlete_id)
+    @current_ability ||= Ability.new(current_user)
   end
 end

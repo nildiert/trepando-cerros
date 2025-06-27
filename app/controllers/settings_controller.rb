@@ -17,6 +17,6 @@ class SettingsController < ApplicationController
   private
 
   def authenticate_user
-    redirect_to root_path unless session[:athlete_id]
+    redirect_to root_path unless session[:user_id]
   end
 end
