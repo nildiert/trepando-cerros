@@ -9,10 +9,10 @@
       </li>
       <% if can? :manage, :settings %>
         <li>
-          <label for="settings-modal" class="flex items-center gap-2 cursor-pointer">
+          <%= link_to settings_path, class: 'flex items-center gap-2' do %>
             <i class="fa-solid fa-gear"></i>
             <span>Configuración</span>
-          </label>
+          <% end %>
         </li>
       <% end %>
     </ul>

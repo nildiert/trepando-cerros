@@ -64,9 +64,6 @@
       </div>
     </nav>
     <%= yield %>
-    <% if current_user && can?(:manage, :settings) %>
-      <%= render 'settings/modal' %>
-    <% end %>
     <% if current_user %>
       <%= render 'athletes/profile_modal', athlete: @athlete %>
     <% end %>
