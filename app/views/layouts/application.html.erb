@@ -16,7 +16,7 @@
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-p+Hb9P5h88MtXztQ5Xx0lHxsI3a59+i08iZ9faILSv9uWtoiiOzoqgC4wB+Q4ynir+Y54zoU1fN31i0gXvYZkg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
@@ -25,7 +25,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
@@ -38,24 +38,38 @@
             <span>Trepando Cerros</span>
           <% end %>
         </div>
-        <% if can? :manage, :settings %>
+        <% if current_user %>
           <div class="flex-none">
-            <%= link_to settings_path, class: 'btn btn-sm flex items-center gap-1' do %>
-              <i class="fa-solid fa-gear fa-lg text-primary"></i>
-              <span>Configuración</span>
-            <% end %>
+            <div class="dropdown dropdown-end z-50">
+              <label tabindex="0" class="btn btn-ghost">
+                <i class="fa-solid fa-user"></i>
+              </label>
+              <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-40 z-50">
+                <li>
+                  <label for="profile-modal" class="flex items-center gap-2 cursor-pointer">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Perfil</span>
+                  </label>
+                </li>
+                <li>
+                  <%= button_to logout_path, method: :delete, class: 'flex items-center gap-2 w-full text-left' do %>
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Cerrar sesión</span>
+                  <% end %>
+                </li>
+              </ul>
+            </div>
           </div>
         <% end %>
       </div>
     </nav>
     <%= yield %>
-    <% if session[:strava_token] %>
-      <div class="fixed bottom-4 right-4">
-        <%= button_to logout_path, method: :delete, class: 'btn btn-sm flex items-center gap-1' do %>
-          <i class="fa-solid fa-right-from-bracket text-primary"></i>
-          <span>Cerrar sesión</span>
-        <% end %>
-      </div>
+    <% if current_user && can?(:manage, :settings) %>
+      <%= render 'settings/modal' %>
     <% end %>
+    <% if current_user %>
+      <%= render 'athletes/profile_modal', athlete: @athlete %>
+    <% end %>
+    <%# Logout handled in dropdown menu %>
   </body>
 </html>
