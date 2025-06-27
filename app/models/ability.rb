@@ -6,16 +6,12 @@ class Ability
 
     can :read, :all
 
-    if user.admin?
-      can :manage, :all
-    end
+    can :manage, :all if user.admin?
 
     user.permissions.each do |perm|
       next unless perm.enabled?
 
       case perm.name
-      when 'manage_settings'
-        can :manage, :settings
       when 'race_predictor'
         can :use, :race_predictor
       end
