@@ -53,10 +53,10 @@
                 </li>
                 <% if can? :manage, :settings %>
                   <li>
-                    <%= link_to settings_path, class: 'flex items-center gap-2' do %>
+                    <label for="settings-modal" class="flex items-center gap-2 cursor-pointer">
                       <i class="fa-solid fa-gear"></i>
                       <span>Configuración</span>
-                    <% end %>
+                    </label>
                   </li>
                 <% end %>
               </ul>
@@ -66,6 +66,9 @@
       </div>
     </nav>
     <%= yield %>
+    <% if current_user && can?(:manage, :settings) %>
+      <%= render 'settings/modal' %>
+    <% end %>
     <% if session[:strava_token] %>
       <div class="fixed bottom-4 right-4">
         <%= button_to logout_path, method: :delete, class: 'btn btn-sm flex items-center gap-1' do %>

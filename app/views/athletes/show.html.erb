@@ -1,12 +1,32 @@
-<div class="container mx-auto p-4 space-y-6" data-controller="analysis">
-  <h1 class="text-3xl font-bold flex items-center gap-2">
-    <div class="tooltip" data-tip="Predictor de carrera">
-      <i class="fa-solid fa-person-running text-primary"></i>
-    </div>
-    <span>Dashboard</span>
-  </h1>
+<div class="container mx-auto p-4 flex gap-6" data-controller="analysis">
+  <aside class="w-48 space-y-2 hidden md:block">
+    <ul class="menu bg-base-100 p-2 rounded-box">
+      <li>
+        <%= link_to athlete_path(@athlete&.id), class: 'flex items-center gap-2' do %>
+          <i class="fa-solid fa-chart-line"></i>
+          <span>Dashboard</span>
+        <% end %>
+      </li>
+      <% if can? :manage, :settings %>
+        <li>
+          <label for="settings-modal" class="flex items-center gap-2 cursor-pointer">
+            <i class="fa-solid fa-gear"></i>
+            <span>Configuración</span>
+          </label>
+        </li>
+      <% end %>
+    </ul>
+  </aside>
 
-  <div class="grid gap-6 md:grid-cols-2">
+  <div class="flex-1 space-y-6">
+    <h1 class="text-3xl font-bold flex items-center gap-2">
+      <div class="tooltip" data-tip="Predictor de carrera">
+        <i class="fa-solid fa-person-running text-primary"></i>
+      </div>
+      <span>Dashboard</span>
+    </h1>
+
+    <div class="grid gap-6 md:grid-cols-2">
     <div class="card bg-base-100 shadow">
       <div class="card-body">
       <h2 class="text-xl font-semibold mb-2">Atleta en Strava</h2>
@@ -301,6 +321,7 @@
         renderTimes();
       });
     </script>
+    </div>
   <% elsif flash[:alert] %>
     <p class="text-red-600"><%= flash[:alert] %></p>
   <% end %>
