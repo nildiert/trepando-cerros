@@ -1,4 +1,7 @@
-<h1 class="text-2xl font-bold mb-4">Configuraci\u00f3n</h1>
+<h1 class="text-2xl font-bold mb-4 flex items-center gap-2">
+  <i class="fa-solid fa-gear fa-lg text-primary"></i>
+  <span>Configuración</span>
+</h1>
 <%= form_with url: settings_path, method: :patch do %>
   <div class="form-control mb-4">
     <label class="label cursor-pointer">
@@ -6,5 +9,8 @@
       <span class="label-text ml-2">Habilitar predictor de carrera</span>
     </label>
   </div>
-  <%= submit_tag 'Guardar', class: 'btn btn-primary' %>
+  <button type="submit" class="btn btn-primary flex items-center gap-1">
+    <i class="fa-solid fa-floppy-disk text-primary"></i>
+    <span>Guardar</span>
+  </button>
 <% end %>
