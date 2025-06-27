@@ -6,7 +6,7 @@
   </div>
   <div class="w-full max-w-md text-center">
     <% if ENV['STRAVA_CLIENT_ID'].present? && ENV['STRAVA_CLIENT_SECRET'].present? %>
-      <%= link_to 'Conectar con Strava', strava_connect_path, class: 'bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600' %>
+      <%= link_to 'Conectar con Strava', strava_connect_path, class: 'btn btn-primary' %>
     <% else %>
       <p class="text-red-600">Configura STRAVA_CLIENT_ID y STRAVA_CLIENT_SECRET en tu <code>.env</code> para conectarte con Strava.</p>
     <% end %>
