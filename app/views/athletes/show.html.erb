@@ -2,7 +2,8 @@
   <h1 class="text-2xl font-bold">Panel de Carrera</h1>
 
   <div class="grid gap-6 md:grid-cols-2">
-    <div class="bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-lg">
+    <div class="card bg-base-100 shadow">
+      <div class="card-body">
       <h2 class="text-xl font-semibold mb-2">Atleta en Strava</h2>
       <% if @athlete.present? %>
         <div class="flex items-center space-x-4">
@@ -19,11 +20,13 @@
       <% else %>
         <p class="text-gray-600">No se pudo cargar la información de Strava.</p>
       <% end %>
+      </div>
     </div>
 
     <% if @athlete.present? %>
       <% if can? :use, :race_predictor %>
-      <div class="bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-lg">
+      <div class="card bg-base-100 shadow">
+        <div class="card-body">
         <% unless @estimated_time %>
           <h2 data-analysis-target="heading" class="text-xl font-semibold mb-2">Cargar Archivo</h2>
         <% end %>
@@ -37,7 +40,7 @@
           <%= form_with url: athlete_path(@athlete.id), method: :post, data: { action: 'submit->analysis#submit', turbo: false, analysis_target: 'form' }, local: true, multipart: true do %>
             <div data-analysis-target="dropzone"
                  data-action="dragover->analysis#dragOver dragleave->analysis#dragLeave drop->analysis#drop click->analysis#openFile"
-                 class="mb-4 flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:border-blue-500">
+                 class="mb-4 flex flex-col items-center justify-center border-2 border-dashed border-base-300 rounded-box p-6 text-center cursor-pointer hover:border-primary">
               <svg class="w-12 h-12 text-gray-500 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1M12 12V4m0 0L8 8m4-4l4 4" />
               </svg>
@@ -47,10 +50,10 @@
             </div>
             <div data-analysis-target="timeCard" class="hidden mb-4 flex flex-col items-center justify-center p-6 text-center">
               <p class="mb-2 font-medium">Selecciona tu hora de inicio</p>
-              <input type="time" data-analysis-target="timeInput" class="px-2 py-1">
+              <input type="time" data-analysis-target="timeInput" class="input input-bordered">
               <div class="flex justify-end space-x-2 mt-4">
-                <button type="button" data-action="analysis#cancelTime" class="px-3 py-2 bg-gray-200 rounded hover:bg-gray-300">Cancelar</button>
-                <button type="button" data-action="analysis#confirmTime" class="px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Aceptar</button>
+                <button type="button" data-action="analysis#cancelTime" class="btn">Cancelar</button>
+                <button type="button" data-action="analysis#confirmTime" class="btn btn-primary">Aceptar</button>
               </div>
             </div>
           <% end %>
@@ -58,15 +61,16 @@
             <div class="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-blue-400"></div>
             <span>Analizando...</span>
           </div>
-          <div class="w-full bg-gray-200 rounded h-2 mt-2 overflow-hidden">
-            <div data-analysis-target="bar" class="bg-blue-500 h-full w-0 transition-all duration-500"></div>
+          <div class="w-full bg-base-300 rounded h-2 mt-2 overflow-hidden">
+            <div data-analysis-target="bar" class="bg-primary h-full w-0 transition-all duration-500"></div>
           </div>
           <div data-analysis-target="messages" class="text-sm mt-2 space-y-1"></div>
 
         <% end %>
+        </div>
       </div>
       <% else %>
-      <div class="bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-lg">
+      <div class="card bg-base-100 shadow p-6">
         <p class="text-gray-600">El predictor de carrera está deshabilitado.</p>
       </div>
       <% end %>
@@ -75,7 +79,8 @@
 
   <% if @estimated_time %>
     <div class="grid gap-6 grid-cols-1">
-      <div class="bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-lg w-full" data-controller="tabs">
+      <div class="card bg-base-100 shadow w-full" data-controller="tabs">
+        <div class="card-body">
         <nav class="border-b border-gray-200 mb-4">
           <ul class="flex space-x-4">
             <li><button class="px-3 py-2 border-b-2 font-medium text-sm" data-tabs-target="tab" data-action="tabs#change">Resumen</button></li>
@@ -100,9 +105,9 @@
           <h2 class="text-xl font-semibold mb-2">Progreso por hora</h2>
           <div class="flex items-center space-x-4 mb-4">
             <label for="startTime" class="font-medium">Hora de inicio:</label>
-            <input type="time" id="startTime" value="<%= @start_time %>" class="border rounded px-2 py-1">
+            <input type="time" id="startTime" value="<%= @start_time %>" class="input input-bordered">
           </div>
-          <table class="w-full text-left mb-4">
+          <table class="table w-full mb-4">
             <thead>
               <tr>
                 <th class="px-2 py-1">Hora</th>
@@ -118,11 +123,11 @@
         </div>
         <div data-tabs-target="panel" class="hidden" data-controller="checkpoints" data-checkpoints-km-seconds-value='<%= raw(@km_seconds.to_json) %>'>
           <form data-action="submit->checkpoints#add" class="mb-4 flex space-x-2">
-            <input type="text" placeholder="Nombre" data-checkpoints-target="name" class="border rounded px-2 py-1 flex-grow">
-            <input type="number" step="0.1" placeholder="Km" data-checkpoints-target="km" class="border rounded px-2 py-1 w-24">
-            <button type="submit" class="bg-blue-500 text-white px-3 py-1 rounded">Agregar</button>
+            <input type="text" placeholder="Nombre" data-checkpoints-target="name" class="input input-bordered flex-grow">
+            <input type="number" step="0.1" placeholder="Km" data-checkpoints-target="km" class="input input-bordered w-24">
+            <button type="submit" class="btn btn-primary">Agregar</button>
           </form>
-          <table class="w-full text-left">
+          <table class="table w-full">
             <thead>
               <tr>
                 <th class="px-2 py-1">Nombre</th>
@@ -150,10 +155,10 @@
         </div>
         <div data-tabs-target="panel" class="hidden" data-controller="dropbags" data-dropbags-km-seconds-value='<%= raw(@km_seconds.to_json) %>'>
           <form data-action="submit->dropbags#add" class="mb-4 flex space-x-2">
-            <input type="number" step="0.1" placeholder="Km" data-dropbags-target="km" class="border rounded px-2 py-1 w-24">
-            <button type="submit" class="bg-blue-500 text-white px-3 py-1 rounded">Agregar</button>
+            <input type="number" step="0.1" placeholder="Km" data-dropbags-target="km" class="input input-bordered w-24">
+            <button type="submit" class="btn btn-primary">Agregar</button>
           </form>
-          <table class="w-full text-left">
+          <table class="table w-full">
             <thead>
               <tr>
                 <th class="px-2 py-1">Segmento</th>
