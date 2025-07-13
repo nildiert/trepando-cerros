@@ -9,6 +9,13 @@
     <% unless ENV['STRAVA_CLIENT_ID'].present? && ENV['STRAVA_CLIENT_SECRET'].present? %>
       <p class="text-error">Configura STRAVA_CLIENT_ID y STRAVA_CLIENT_SECRET en tu <code>.env</code> para conectarte con Strava.</p>
     <% end %>
-    <p class="mt-4">Ve a <strong>Configuración</strong> para conectar tu cuenta de Strava.</p>
+    <% unless current_user %>
+      <%= link_to google_connect_path, class: 'btn btn-primary mt-4 flex items-center gap-2' do %>
+        <i class="fa-brands fa-google"></i>
+        <span>Iniciar sesión con Google</span>
+      <% end %>
+    <% else %>
+      <p class="mt-4">Ve a <strong>Configuración</strong> para conectar tu cuenta de Strava.</p>
+    <% end %>
   </div>
 </div>

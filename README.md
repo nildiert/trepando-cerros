@@ -17,8 +17,12 @@ echo "STRAVA_CLIENT_ID=tu-id" >> .env
 echo "STRAVA_CLIENT_SECRET=tu-secret" >> .env
 # (opcional) si usas un dominio distinto a `localhost:3000`, ajusta la URL de retorno
 echo "STRAVA_REDIRECT_URI=https://tu-dominio.ngrok-free.app/auth/strava/callback" >> .env
+echo "GOOGLE_CLIENT_ID=tu-google-id" >> .env
+echo "GOOGLE_CLIENT_SECRET=tu-google-secret" >> .env
 ```
 La gema `dotenv-rails` cargará estas variables para permitir las llamadas a `StravaClient` y al proceso de OAuth. El flujo solicitará los scopes `activity:read_all` y `profile:read_all`, así que habilítalos también en la configuración de tu aplicación en Strava. Si no se definen `STRAVA_CLIENT_ID` y `STRAVA_CLIENT_SECRET`, la opción **Conectar con Strava** en la configuración mostrará un mensaje de error.
+
+Las variables `GOOGLE_CLIENT_ID` y `GOOGLE_CLIENT_SECRET` se usan para permitir el inicio de sesión con Google.
 
 Si ejecutas la app desde una URL externa (por ejemplo mediante `ngrok`), Rails
 protege las redirecciones hacia otros dominios. El controlador ya indica
@@ -37,7 +41,7 @@ Inicia el servidor con:
 bundle exec rails server
 ```
 
-Al abrir `http://localhost:3000` verás una pantalla de bienvenida. Desde el apartado **Configuración** podrás usar la opción **Conectar con Strava**. En la misma sección podrás **Desconectar** tu cuenta si lo deseas. Tras autorizar la aplicación se mostrará tu panel con tu información de atleta y un área para subir tu archivo GPX y obtener el tiempo estimado.
+Al abrir `http://localhost:3000` verás una pantalla de bienvenida donde puedes **Iniciar sesión con Google**. Una vez autenticado podrás ir al apartado **Configuración** para usar la opción **Conectar con Strava** o **Desconectar** tu cuenta. Tras autorizar la aplicación se mostrará tu panel con tu información de atleta y un área para subir tu archivo GPX y obtener el tiempo estimado.
 La aplicación analiza tus carreras recientes para ajustar el ritmo en subidas, bajadas y terreno plano. Ahora se entrenan modelos simples con tus actividades del último año (priorizando las más largas) para predecir el ritmo según la pendiente. Estos modelos se generan con una regresión lineal muy ligera y se usan al estimar el tiempo de la ruta.
 Además considera el desgaste del cuerpo: a medida que se acumulan kilómetros se aplica un pequeño factor de fatiga que incrementa ligeramente el tiempo estimado. Los gemelos se cansan en las subidas y los cuádriceps en las bajadas. El efecto de la fatiga ahora crece de forma un poco exponencial, de modo que a mayor distancia o desnivel acumulado el ritmo se vuelve gradualmente más lento, pero con coeficientes reducidos para evitar resultados exagerados.
 

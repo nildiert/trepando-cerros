@@ -1,4 +1,26 @@
 class SessionsController < ApplicationController
+  def google_connect
+    redirect_to '/auth/google_oauth2'
+  end
+
+  def google_callback
+    auth = request.env['omniauth.auth']
+    google_id = auth['uid']
+    email = auth['info']['email']
+
+    user = User.find_or_initialize_by(google_id: google_id)
+    if user.new_record?
+      default_role = Role.find_by(name: 'normal')
+      user.role = default_role
+      user.email = email
+      user.save!
+      user.create_profile!
+    end
+
+    session[:user_id] = user.id
+
+    redirect_to root_path
+  end
   def connect
     client_id = ENV['STRAVA_CLIENT_ID']
     client_secret = ENV['STRAVA_CLIENT_SECRET']

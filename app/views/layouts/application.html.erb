@@ -60,6 +60,13 @@
               </ul>
             </details>
           </div>
+        <% else %>
+          <div class="flex-none">
+            <%= link_to google_connect_path, class: 'btn btn-ghost flex items-center gap-2' do %>
+              <i class="fa-brands fa-google"></i>
+              <span>Iniciar sesión</span>
+            <% end %>
+          </div>
         <% end %>
       </div>
     </nav>

@@ -11,6 +11,8 @@ Rails.application.routes.draw do
 
   get "/auth/strava" => "sessions#connect", as: :strava_connect
   get "/auth/strava/callback" => "sessions#callback", as: :strava_callback
+  get "/auth/google" => "sessions#google_connect", as: :google_connect
+  get "/auth/google_oauth2/callback" => "sessions#google_callback", as: :google_callback
   delete "/auth/strava" => "sessions#disconnect", as: :strava_disconnect
   delete "/logout" => "sessions#destroy", as: :logout
 end
