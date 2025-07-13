@@ -32,6 +32,6 @@ class RolesController < ApplicationController
   end
 
   def available_permissions
-    %w[race_predictor]
+    %w[race_predictor training_plan]
   end
 end

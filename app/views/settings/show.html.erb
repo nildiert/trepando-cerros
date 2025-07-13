@@ -15,6 +15,14 @@
           <span>Entrenamiento</span>
         <% end %>
       </li>
+      <% if can?(:manage, TrainingPlan) %>
+        <li>
+          <%= link_to training_plans_path, class: ["flex items-center gap-2", (current_page?(training_plans_path) ? "active" : nil)].compact.join(' ') do %>
+            <i class="fa-solid fa-list-check"></i>
+            <span>Planes</span>
+          <% end %>
+        </li>
+      <% end %>
       <li>
         <%= link_to settings_path, class: ["flex items-center gap-2", (current_page?(settings_path) ? "active" : nil)].compact.join(' ') do %>
           <i class="fa-solid fa-gear"></i>

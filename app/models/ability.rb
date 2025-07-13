@@ -16,6 +16,8 @@ class Ability
       case perm.name
       when 'race_predictor'
         can :use, :race_predictor
+      when 'training_plan'
+        can :manage, TrainingPlan
       end
     end
   end

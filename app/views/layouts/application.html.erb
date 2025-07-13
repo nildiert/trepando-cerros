@@ -52,6 +52,14 @@
                     <span>Perfil</span>
                   </label>
                 </li>
+                <% if can?(:manage, TrainingPlan) %>
+                  <li>
+                    <%= link_to training_plans_path, class: 'flex items-center gap-2' do %>
+                      <i class="fa-solid fa-list-check"></i>
+                      <span>Planes</span>
+                    <% end %>
+                  </li>
+                <% end %>
                 <li>
                   <%= button_to logout_path, method: :delete, class: 'flex items-center gap-2 w-full text-left' do %>
                     <i class="fa-solid fa-right-from-bracket"></i>
