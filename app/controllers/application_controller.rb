@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   private
 
   def developer_auto_login
-    return if session[:user_id].present? || params[:auto_login].blank?
+    return if params[:auto_login].blank?
 
     user = User.find_by(email: params[:auto_login])
     session[:user_id] = user.id if user
