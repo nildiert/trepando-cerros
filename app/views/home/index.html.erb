@@ -16,6 +16,12 @@
         <span>Iniciar sesión con Google</span>
       <% end %>
     <% else %>
+      <p class="mt-4">Sesión iniciada como <strong><%= current_user.email %></strong>.</p>
+      <%= button_to logout_path, method: :delete,
+                    class: 'btn btn-outline btn-sm mt-2 flex items-center gap-2' do %>
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span>Cerrar sesión</span>
+      <% end %>
       <p class="mt-4">Ve a <strong>Configuración</strong> para conectar tu cuenta de Strava.</p>
     <% end %>
   </div>

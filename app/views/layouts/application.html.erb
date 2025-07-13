@@ -41,8 +41,9 @@
         <% if current_user %>
           <div class="flex-none">
             <details class="dropdown dropdown-end z-50">
-              <summary class="btn btn-ghost">
+              <summary class="btn btn-ghost flex items-center gap-2">
                 <i class="fa-solid fa-user"></i>
+                <span><%= current_user.email %></span>
               </summary>
               <ul class="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
                 <li>
