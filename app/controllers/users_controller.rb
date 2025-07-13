@@ -16,7 +16,7 @@ class UsersController < ApplicationController
     authorize! :manage, :settings
     @roles = Role.all
     if @user.update(user_params)
-      redirect_to users_path, notice: 'Usuario actualizado'
+      redirect_to settings_path, notice: 'Usuario actualizado'
     else
       render :edit, status: :unprocessable_entity
     end

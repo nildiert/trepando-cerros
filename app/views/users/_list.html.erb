@@ -11,7 +11,10 @@
       <tr>
         <td><%= user.email %></td>
         <td class="capitalize"><%= user.role&.name || 'Sin perfil' %></td>
-        <td><%= link_to 'Editar', edit_user_path(user), class: 'btn btn-sm' %></td>
+        <td>
+          <label for="edit-user-<%= user.id %>-modal" class="btn btn-sm">Editar</label>
+          <%= render 'users/edit_modal', user: user, roles: roles %>
+        </td>
       </tr>
     <% end %>
   </tbody>

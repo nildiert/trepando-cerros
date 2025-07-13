@@ -87,10 +87,10 @@
               </ul>
             </nav>
             <div data-tabs-target="panel" class="space-y-4">
-              <%= render 'users/list', users: @users %>
+              <%= render 'users/list', users: @users, roles: @roles %>
             </div>
             <div data-tabs-target="panel" class="hidden space-y-4">
-              <div data-controller="role-selector">
+              <div data-controller="role-selector" class="space-y-4">
                 <div class="form-control w-60 mb-4">
                   <label for="role-select" class="label">Selecciona un perfil</label>
                   <select id="role-select" class="select select-bordered" data-role-selector-target="select" data-action="change->role-selector#change">
@@ -100,6 +100,8 @@
                   </select>
                 </div>
                 <turbo-frame id="role_permissions" src="<%= role_path(@roles.first) %>" data-role-selector-target="frame"></turbo-frame>
+                <label for="new-role-modal" class="btn btn-primary btn-sm mt-4">Nuevo perfil</label>
+                <%= render 'roles/new_modal' %>
               </div>
             </div>
           </div>

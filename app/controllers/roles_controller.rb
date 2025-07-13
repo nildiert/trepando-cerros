@@ -1,6 +1,6 @@
 class RolesController < ApplicationController
   before_action :authenticate_user
-  before_action :set_role
+  before_action :set_role, only: [:show, :update]
 
   def show
     authorize! :manage, :settings
@@ -25,6 +25,16 @@ class RolesController < ApplicationController
     end
   end
 
+  def create
+    authorize! :manage, :settings
+    @role = Role.new(role_params)
+    if @role.save
+      redirect_to settings_path, notice: 'Perfil creado'
+    else
+      redirect_to settings_path, alert: 'No se pudo crear el perfil'
+    end
+  end
+
   private
 
   def set_role
@@ -33,5 +43,9 @@ class RolesController < ApplicationController
 
   def available_permissions
     %w[race_predictor training_plan]
+  end
+
+  def role_params
+    params.require(:role).permit(:name)
   end
 end
