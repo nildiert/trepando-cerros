@@ -16,7 +16,16 @@ class ApplicationController < ActionController::Base
     return if params[:auto_login].blank?
 
     user = User.find_by(email: params[:auto_login])
-    session[:user_id] = user.id if user
+    unless user
+      default_role = Role.find_by(name: 'normal')
+      user = User.create!(
+        email: params[:auto_login],
+        google_id: SecureRandom.uuid,
+        role: default_role
+      )
+    end
+
+    session[:user_id] = user.id
   end
 
   def current_user
