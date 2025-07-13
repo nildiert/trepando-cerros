@@ -1,0 +1,14 @@
+<input type="checkbox" id="new-role-modal" class="modal-toggle" />
+<div class="modal">
+  <div class="modal-box w-11/12 max-w-2xl relative">
+    <label for="new-role-modal" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+    <h3 class="text-xl font-semibold mb-4">Nuevo Perfil</h3>
+    <%= form_with model: Role.new, url: roles_path do |f| %>
+      <div class="form-control mb-4">
+        <%= f.label :name, 'Nombre', class: 'label' %>
+        <%= f.text_field :name, class: 'input input-bordered w-full' %>
+      </div>
+      <%= f.submit 'Guardar', class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+</div>

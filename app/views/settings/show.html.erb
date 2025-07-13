@@ -15,6 +15,14 @@
           <span>Entrenamiento</span>
         <% end %>
       </li>
+      <% if can?(:manage, TrainingPlan) %>
+        <li>
+          <%= link_to training_plans_path, class: ["flex items-center gap-2", (current_page?(training_plans_path) ? "active" : nil)].compact.join(' ') do %>
+            <i class="fa-solid fa-list-check"></i>
+            <span>Planes</span>
+          <% end %>
+        </li>
+      <% end %>
       <li>
         <%= link_to settings_path, class: ["flex items-center gap-2", (current_page?(settings_path) ? "active" : nil)].compact.join(' ') do %>
           <i class="fa-solid fa-gear"></i>
@@ -33,7 +41,7 @@
               <button class="px-3 py-2 border-b-2 font-medium text-sm" data-tabs-target="tab" data-action="tabs#change">General</button>
             </li>
             <li>
-              <button class="px-3 py-2 border-b-2 font-medium text-sm" data-tabs-target="tab" data-action="tabs#change">Perfiles</button>
+              <button class="px-3 py-2 border-b-2 font-medium text-sm" data-tabs-target="tab" data-action="tabs#change">Usuarios</button>
             </li>
           </ul>
         </nav>
@@ -67,11 +75,35 @@
           <% end %>
         </div>
         <div data-tabs-target="panel" class="hidden space-y-4">
-          <div>
-            <h3 class="font-semibold mb-2">Perfiles disponibles</h3>
-            <turbo-frame id="roles">
-              <%= render 'roles/list', roles: @roles %>
-            </turbo-frame>
+          <div data-controller="tabs">
+            <nav class="border-b border-gray-200 mb-4">
+              <ul class="flex space-x-4">
+                <li>
+                  <button class="px-3 py-2 border-b-2 font-medium text-sm" data-tabs-target="tab" data-action="tabs#change">Usuarios</button>
+                </li>
+                <li>
+                  <button class="px-3 py-2 border-b-2 font-medium text-sm" data-tabs-target="tab" data-action="tabs#change">Perfiles</button>
+                </li>
+              </ul>
+            </nav>
+            <div data-tabs-target="panel" class="space-y-4">
+              <%= render 'users/list', users: @users, roles: @roles %>
+            </div>
+            <div data-tabs-target="panel" class="hidden space-y-4">
+              <div data-controller="role-selector" class="space-y-4">
+                <div class="form-control w-60 mb-4">
+                  <label for="role-select" class="label">Selecciona un perfil</label>
+                  <select id="role-select" class="select select-bordered" data-role-selector-target="select" data-action="change->role-selector#change">
+                    <% @roles.each do |r| %>
+                      <option value="<%= r.id %>"><%= r.name.capitalize %></option>
+                    <% end %>
+                  </select>
+                </div>
+                <turbo-frame id="role_permissions" src="<%= role_path(@roles.first) %>" data-role-selector-target="frame"></turbo-frame>
+                <label for="new-role-modal" class="btn btn-primary btn-sm mt-4">Nuevo perfil</label>
+                <%= render 'roles/new_modal' %>
+              </div>
+            </div>
           </div>
         </div>
       </div>

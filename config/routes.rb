@@ -10,7 +10,9 @@ Rails.application.routes.draw do
   end
   get "/race_predictor" => "athletes#show", as: :race_predictor
   get "/dashboard" => "dashboard#show", as: :dashboard
-  resources :roles, only: [:show, :update]
+  resources :roles, only: [:show, :update, :create]
+  resources :training_plans, only: [:index, :new, :create, :show]
+  resources :users, only: [:index, :edit, :update]
   post "athletes/:id" => "athletes#show"
 
   get "/auth/strava" => "sessions#connect", as: :strava_connect

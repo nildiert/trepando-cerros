@@ -1,5 +1,8 @@
 <ul class="list bg-base-100 rounded-box shadow-md w-full">
-  <li class="p-4 pb-2 text-xs opacity-60 tracking-wide">Perfiles registrados</li>
+  <li class="p-4 pb-2 text-xs opacity-60 tracking-wide flex justify-between items-center">
+    <span>Perfiles registrados</span>
+    <label for="new-role-modal" class="btn btn-primary btn-sm">Nuevo perfil</label>
+  </li>
   <% roles.each do |role| %>
     <li class="list-row">
       <div><img class="size-10 rounded-box" src="https://img.daisyui.com/images/profile/demo/1@94.webp" /></div>
@@ -16,3 +19,4 @@
     </li>
   <% end %>
 </ul>
+<%= render 'roles/new_modal' %>
