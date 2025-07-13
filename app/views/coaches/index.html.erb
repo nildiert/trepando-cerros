@@ -41,16 +41,15 @@
   <div class="flex-1 space-y-6">
     <div class="card bg-base-100 shadow">
       <div class="card-body">
-        <h2 class="text-xl font-semibold mb-4">Mis Planes de Entrenamiento</h2>
-        <%= link_to 'Nuevo Plan', new_training_plan_path, class: 'btn btn-primary mb-4' %>
-        <% if @training_plans.any? %>
+        <h2 class="text-xl font-semibold mb-4">Mis Entrenadores</h2>
+        <% if @coaches.any? %>
           <ul class="list-disc pl-5">
-            <% @training_plans.each do |plan| %>
-              <li><%= link_to plan.name, training_plan_path(plan) %></li>
+            <% @coaches.each do |coach| %>
+              <li><%= coach.email %></li>
             <% end %>
           </ul>
         <% else %>
-          <p class="text-gray-600">No tienes planes creados.</p>
+          <p class="text-gray-600">Aún no tienes entrenadores registrados.</p>
         <% end %>
       </div>
     </div>

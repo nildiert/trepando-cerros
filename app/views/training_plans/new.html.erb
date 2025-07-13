@@ -1,23 +1,68 @@
-<div class="container mx-auto p-4">
-  <h2 class="text-xl font-semibold mb-4">Nuevo Plan</h2>
-  <%= form_with model: @training_plan do |f| %>
-    <div class="form-control mb-4">
-      <%= f.label :name, 'Nombre', class: 'label' %>
-      <%= f.text_field :name, class: 'input input-bordered w-full' %>
-    </div>
-    <% if @athletes.any? %>
-      <div class="form-control mb-4">
-        <%= f.label :athlete_id, 'Corredor', class: 'label' %>
-        <%= f.select :athlete_id,
-              options_from_collection_for_select(@athletes, :id, ->(u) { u.profile&.athlete_id || u.id }),
-              include_blank: true,
-              class: 'select select-bordered w-full' %>
+<div class="container mx-auto p-4 flex gap-6">
+  <aside class="w-48 space-y-2">
+    <ul class="menu bg-base-100 p-2 rounded-box">
+      <% if session[:strava_token].present? %>
+        <li>
+          <%= link_to race_predictor_path, class: ["flex items-center gap-2", (current_page?(race_predictor_path) ? "active" : nil)].compact.join(' ') do %>
+            <i class="fa-solid fa-chart-line"></i>
+            <span>Calcular Carrera</span>
+          <% end %>
+        </li>
+      <% end %>
+      <li>
+        <%= link_to training_path, class: ["flex items-center gap-2", (current_page?(training_path) ? "active" : nil)].compact.join(' ') do %>
+          <i class="fa-solid fa-dumbbell"></i>
+          <span>Entrenamiento</span>
+        <% end %>
+      </li>
+      <% if can?(:manage, TrainingPlan) %>
+        <li>
+          <%= link_to training_plans_path, class: ["flex items-center gap-2", (current_page?(training_plans_path) ? "active" : nil)].compact.join(' ') do %>
+            <i class="fa-solid fa-list-check"></i>
+            <span>Planes</span>
+          <% end %>
+        </li>
+      <% end %>
+      <li>
+        <%= link_to coaches_path, class: ["flex items-center gap-2", (current_page?(coaches_path) ? "active" : nil)].compact.join(' ') do %>
+          <i class="fa-solid fa-user"></i>
+          <span>Entrenadores</span>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to settings_path, class: ["flex items-center gap-2", (current_page?(settings_path) ? "active" : nil)].compact.join(' ') do %>
+          <i class="fa-solid fa-gear"></i>
+          <span>Configuración</span>
+        <% end %>
+      </li>
+    </ul>
+  </aside>
+
+  <div class="flex-1 space-y-6">
+    <div class="card bg-base-100 shadow">
+      <div class="card-body">
+        <h2 class="text-xl font-semibold mb-4">Nuevo Plan</h2>
+        <%= form_with model: @training_plan do |f| %>
+          <div class="form-control mb-4">
+            <%= f.label :name, 'Nombre', class: 'label' %>
+            <%= f.text_field :name, class: 'input input-bordered w-full' %>
+          </div>
+          <% if @athletes.any? %>
+            <div class="form-control mb-4">
+              <%= f.label :athlete_id, 'Corredor', class: 'label' %>
+              <%= f.select :athlete_id,
+                    options_from_collection_for_select(@athletes, :id, ->(u) { u.profile&.athlete_id || u.id }),
+                    include_blank: true,
+                    class: 'select select-bordered w-full' %>
+            </div>
+          <% end %>
+          <div class="form-control mb-4">
+            <%= f.label :description, 'Descripción', class: 'label' %>
+            <%= f.text_area :description, rows: 4, class: 'textarea textarea-bordered w-full' %>
+          </div>
+          <%= f.submit 'Guardar', class: 'btn btn-primary' %>
+        <% end %>
       </div>
-    <% end %>
-    <div class="form-control mb-4">
-      <%= f.label :description, 'Descripción', class: 'label' %>
-      <%= f.text_area :description, rows: 4, class: 'textarea textarea-bordered w-full' %>
     </div>
-    <%= f.submit 'Guardar', class: 'btn btn-primary' %>
-  <% end %>
+  </div>
 </div>
