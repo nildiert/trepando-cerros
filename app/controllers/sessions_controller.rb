@@ -17,7 +17,8 @@ class SessionsController < ApplicationController
       user.email = email
       user.save!
       user.create_profile!(first_name: first_name, last_name: last_name)
-    elsif user.profile
+    elsif user.profile &&
+          (user.profile.first_name.blank? || user.profile.last_name.blank?)
       user.profile.update(first_name: first_name, last_name: last_name)
     end
 
