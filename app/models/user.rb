@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   belongs_to :role, optional: true
+  belongs_to :club, optional: true
   has_one :profile, dependent: :destroy
   has_many :permissions, dependent: :destroy
   has_many :training_plans, dependent: :destroy

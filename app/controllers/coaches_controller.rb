@@ -3,7 +3,11 @@ class CoachesController < ApplicationController
   before_action :set_athlete
 
   def index
-    @coaches = current_user.coaches
+    if current_user.club
+      @coaches = current_user.club.users.joins(:role).where(roles: { name: 'trainer' })
+    else
+      @coaches = User.joins(:role).where(roles: { name: 'trainer' })
+    end
   end
 
   private

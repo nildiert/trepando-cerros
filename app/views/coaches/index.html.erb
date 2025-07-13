@@ -41,7 +41,7 @@
   <div class="flex-1 space-y-6">
     <div class="card bg-base-100 shadow">
       <div class="card-body">
-        <h2 class="text-xl font-semibold mb-4">Mis Entrenadores</h2>
+        <h2 class="text-xl font-semibold mb-4">Entrenadores Disponibles</h2>
         <% if @coaches.any? %>
           <ul class="list-disc pl-5">
             <% @coaches.each do |coach| %>
@@ -49,7 +49,7 @@
             <% end %>
           </ul>
         <% else %>
-          <p class="text-gray-600">Aún no tienes entrenadores registrados.</p>
+          <p class="text-gray-600">No hay entrenadores disponibles.</p>
         <% end %>
       </div>
     </div>

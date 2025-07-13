@@ -13,3 +13,5 @@ RolePermission.find_or_create_by!(role: role, name: 'race_predictor')
 
 trainer = Role.find_or_create_by!(name: 'trainer')
 RolePermission.find_or_create_by!(role: trainer, name: 'training_plan')
+
+club = Club.find_or_create_by!(name: 'Club de Entrenamiento')
