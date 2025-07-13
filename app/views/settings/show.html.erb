@@ -23,14 +23,6 @@
           <% end %>
         </li>
       <% end %>
-      <% if can?(:manage, :settings) %>
-        <li>
-          <%= link_to users_path, class: ["flex items-center gap-2", (current_page?(users_path) ? "active" : nil)].compact.join(' ') do %>
-            <i class="fa-solid fa-users"></i>
-            <span>Usuarios</span>
-          <% end %>
-        </li>
-      <% end %>
       <li>
         <%= link_to settings_path, class: ["flex items-center gap-2", (current_page?(settings_path) ? "active" : nil)].compact.join(' ') do %>
           <i class="fa-solid fa-gear"></i>
@@ -49,7 +41,7 @@
               <button class="px-3 py-2 border-b-2 font-medium text-sm" data-tabs-target="tab" data-action="tabs#change">General</button>
             </li>
             <li>
-              <button class="px-3 py-2 border-b-2 font-medium text-sm" data-tabs-target="tab" data-action="tabs#change">Perfiles</button>
+              <button class="px-3 py-2 border-b-2 font-medium text-sm" data-tabs-target="tab" data-action="tabs#change">Usuarios</button>
             </li>
           </ul>
         </nav>
@@ -83,11 +75,28 @@
           <% end %>
         </div>
         <div data-tabs-target="panel" class="hidden space-y-4">
-          <div>
-            <h3 class="font-semibold mb-2">Perfiles disponibles</h3>
-            <turbo-frame id="roles">
-              <%= render 'roles/list', roles: @roles %>
-            </turbo-frame>
+          <div data-controller="tabs">
+            <nav class="border-b border-gray-200 mb-4">
+              <ul class="flex space-x-4">
+                <li>
+                  <button class="px-3 py-2 border-b-2 font-medium text-sm" data-tabs-target="tab" data-action="tabs#change">Usuarios</button>
+                </li>
+                <li>
+                  <button class="px-3 py-2 border-b-2 font-medium text-sm" data-tabs-target="tab" data-action="tabs#change">Perfiles</button>
+                </li>
+              </ul>
+            </nav>
+            <div data-tabs-target="panel" class="space-y-4">
+              <%= render 'users/list', users: @users %>
+            </div>
+            <div data-tabs-target="panel" class="hidden space-y-4">
+              <div>
+                <h3 class="font-semibold mb-2">Perfiles disponibles</h3>
+                <turbo-frame id="roles">
+                  <%= render 'roles/list', roles: @roles %>
+                </turbo-frame>
+              </div>
+            </div>
           </div>
         </div>
       </div>
