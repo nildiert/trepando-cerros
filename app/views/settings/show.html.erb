@@ -44,23 +44,20 @@
               <tbody>
                 <tr>
                   <th>Conexión con Strava</th>
-                  <td class="flex items-center gap-2">
-                    <% if session[:strava_token].present? %>
-                      <span class="badge badge-success">Conectado</span>
-                    <% else %>
-                      <span class="badge badge-secondary">No conectado</span>
-                    <% end %>
-                  </td>
                   <td>
-                    <% if session[:strava_token].present? %>
-                      <%= button_to 'Desconectar de Strava', strava_disconnect_path, method: :delete,
-                          class: 'btn btn-sm btn-outline' %>
-                    <% else %>
-                      <%= link_to strava_connect_path, class: 'btn btn-sm btn-primary flex items-center gap-2' do %>
-                        <i class="fa-brands fa-strava fa-lg text-orange-600"></i>
-                        <span>Conectar con Strava</span>
+                    <div class="flex items-center gap-2">
+                      <% if session[:strava_token].present? %>
+                        <span class="badge badge-success">Conectado</span>
+                        <%= button_to 'Desconectar de Strava', strava_disconnect_path, method: :delete,
+                            class: 'btn btn-sm btn-outline' %>
+                      <% else %>
+                        <span class="badge badge-secondary">No conectado</span>
+                        <%= link_to strava_connect_path, class: 'btn btn-sm btn-primary flex items-center gap-2' do %>
+                          <i class="fa-brands fa-strava fa-lg text-orange-600"></i>
+                          <span>Conectar con Strava</span>
+                        <% end %>
                       <% end %>
-                    <% end %>
+                    </div>
                   </td>
                 </tr>
               </tbody>
