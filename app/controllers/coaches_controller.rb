@@ -1,6 +1,7 @@
 class CoachesController < ApplicationController
   before_action :authenticate_user
   before_action :set_athlete
+  before_action :authorize_admin, only: [:index]
 
   def index
     if current_user.club
@@ -11,6 +12,10 @@ class CoachesController < ApplicationController
   end
 
   private
+
+  def authorize_admin
+    authorize! :manage, User
+  end
 
   def set_athlete
     @athlete = fetch_athlete(params[:athlete_id])
