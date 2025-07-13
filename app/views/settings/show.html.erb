@@ -2,8 +2,8 @@
   <aside class="w-48 space-y-2">
     <ul class="menu bg-base-100 p-2 rounded-box">
       <li>
-        <% if @athlete.present? %>
-          <%= link_to athlete_path(@athlete.id), class: ["flex items-center gap-2", (current_page?(athlete_path(@athlete.id)) ? "active" : nil)].compact.join(' ') do %>
+        <% if current_user %>
+          <%= link_to dashboard_path, class: ["flex items-center gap-2", (current_page?(dashboard_path) ? "active" : nil)].compact.join(' ') do %>
             <i class="fa-solid fa-chart-line"></i>
             <span>Dashboard</span>
           <% end %>

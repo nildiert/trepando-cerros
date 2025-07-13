@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     resource :training, only: [:show]
     resource :settings, only: [:show, :update]
   end
+  get "/dashboard" => "athletes#show", as: :dashboard
   resources :roles, only: [:show, :update]
   post "athletes/:id" => "athletes#show"
 
