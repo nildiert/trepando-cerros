@@ -24,6 +24,6 @@ admin_user = User.find_or_create_by!(email: 'admin@example.com') do |u|
   u.google_id = SecureRandom.uuid
   u.role = admin_role
   u.club = club
-  u.build_profile
+  u.build_profile(first_name: 'Admin', last_name: 'User')
   u.admin = true if u.respond_to?(:admin=)
 end

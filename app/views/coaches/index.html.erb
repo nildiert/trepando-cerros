@@ -51,7 +51,7 @@
         <% if @coaches.any? %>
           <ul class="list-disc pl-5">
             <% @coaches.each do |coach| %>
-              <li><%= coach.email %></li>
+              <li><%= coach.full_name.presence || coach.email %></li>
             <% end %>
           </ul>
         <% else %>

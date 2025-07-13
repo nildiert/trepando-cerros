@@ -9,6 +9,8 @@ class User < ApplicationRecord
   has_many :inverse_coachings, class_name: 'Coaching', foreign_key: :athlete_id, dependent: :destroy
   has_many :coaches, through: :inverse_coachings, source: :coach
 
+  delegate :first_name, :last_name, :full_name, to: :profile, allow_nil: true
+
   def permission_enabled?(name)
     permissions.find_by(name: name)&.enabled?
   end
