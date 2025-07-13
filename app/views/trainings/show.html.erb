@@ -1,12 +1,14 @@
 <div class="container mx-auto p-4 flex gap-6">
   <aside class="w-48 space-y-2">
     <ul class="menu bg-base-100 p-2 rounded-box">
-      <li>
-        <%= link_to dashboard_path, class: ["flex items-center gap-2", (current_page?(dashboard_path) ? "active" : nil)].compact.join(' ') do %>
-          <i class="fa-solid fa-chart-line"></i>
-          <span>Dashboard</span>
-        <% end %>
-      </li>
+      <% if session[:strava_token].present? %>
+        <li>
+          <%= link_to dashboard_path, class: ["flex items-center gap-2", (current_page?(dashboard_path) ? "active" : nil)].compact.join(' ') do %>
+            <i class="fa-solid fa-chart-line"></i>
+            <span>Calcular Carrera</span>
+          <% end %>
+        </li>
+      <% end %>
       <li>
         <% if @athlete.present? %>
           <%= link_to athlete_training_path(@athlete.id), class: ["flex items-center gap-2", (current_page?(athlete_training_path(@athlete.id)) ? "active" : nil)].compact.join(' ') do %>
