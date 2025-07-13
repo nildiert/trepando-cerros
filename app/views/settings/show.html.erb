@@ -3,7 +3,7 @@
     <ul class="menu bg-base-100 p-2 rounded-box">
       <% if session[:strava_token].present? %>
         <li>
-          <%= link_to dashboard_path, class: ["flex items-center gap-2", (current_page?(dashboard_path) ? "active" : nil)].compact.join(' ') do %>
+          <%= link_to race_predictor_path, class: ["flex items-center gap-2", (current_page?(race_predictor_path) ? "active" : nil)].compact.join(' ') do %>
             <i class="fa-solid fa-chart-line"></i>
             <span>Calcular Carrera</span>
           <% end %>
