@@ -5,9 +5,6 @@ class RolesController < ApplicationController
   def show
     authorize! :manage, :settings
     @permissions = available_permissions
-    return unless turbo_frame_request?
-
-    render partial: 'roles/permissions_form', locals: { role: @role, permissions: @permissions }
   end
 
   def update
@@ -19,7 +16,7 @@ class RolesController < ApplicationController
     end
     @permissions = available_permissions
     if turbo_frame_request?
-      render partial: 'roles/permissions_form', locals: { role: @role, permissions: @permissions }
+      render :show
     else
       redirect_to role_path(@role), notice: 'Perfil actualizado'
     end
