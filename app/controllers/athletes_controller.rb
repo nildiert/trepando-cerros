@@ -1,4 +1,5 @@
 class AthletesController < ApplicationController
+  before_action :authenticate_user
   def show
     @athlete = fetch_athlete(params[:id])
     unless @athlete

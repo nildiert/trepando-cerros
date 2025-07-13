@@ -18,10 +18,6 @@ class SettingsController < ApplicationController
 
   private
 
-  def authenticate_user
-    redirect_to root_path unless session[:user_id]
-  end
-
   def set_athlete
     @athlete = fetch_athlete(params[:athlete_id])
   end
