@@ -82,8 +82,8 @@ class SessionsController < ApplicationController
 
   def disconnect
     session.delete(:strava_token)
-    if current_athlete_id
-      redirect_to athlete_settings_path(current_athlete_id)
+    if current_user
+      redirect_to settings_path
     else
       redirect_to root_path
     end

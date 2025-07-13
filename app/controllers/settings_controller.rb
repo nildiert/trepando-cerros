@@ -13,7 +13,7 @@ class SettingsController < ApplicationController
     perm = current_user.permissions.find_or_initialize_by(name: 'race_predictor')
     perm.enabled = params[:race_predictor] == '1'
     perm.save!
-    redirect_to athlete_settings_path(@athlete), notice: 'Configuraci\u00f3n actualizada'
+    redirect_to settings_path, notice: 'Configuraci\u00f3n actualizada'
   end
 
   private
