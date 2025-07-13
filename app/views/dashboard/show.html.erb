@@ -1,0 +1,50 @@
+<div class="container mx-auto p-4 flex gap-6">
+  <aside class="w-48 space-y-2">
+    <ul class="menu bg-base-100 p-2 rounded-box">
+      <% if session[:strava_token].present? %>
+        <li>
+          <%= link_to race_predictor_path, class: ["flex items-center gap-2", (current_page?(race_predictor_path) ? "active" : nil)].compact.join(' ') do %>
+            <i class="fa-solid fa-chart-line"></i>
+            <span>Calcular Carrera</span>
+          <% end %>
+        </li>
+      <% end %>
+      <li>
+        <% if @athlete.present? %>
+          <%= link_to athlete_training_path(@athlete.id), class: ["flex items-center gap-2", (current_page?(athlete_training_path(@athlete.id)) ? "active" : nil)].compact.join(' ') do %>
+            <i class="fa-solid fa-dumbbell"></i>
+            <span>Entrenamiento</span>
+          <% end %>
+        <% else %>
+          <span class="flex items-center gap-2 text-gray-500">
+            <i class="fa-solid fa-dumbbell"></i>
+            <span>Entrenamiento</span>
+          </span>
+        <% end %>
+      </li>
+      <% if can? :manage, :settings %>
+        <li>
+          <% if @athlete.present? %>
+            <%= link_to athlete_settings_path(@athlete.id), class: ["flex items-center gap-2", (current_page?(athlete_settings_path(@athlete.id)) ? "active" : nil)].compact.join(' ') do %>
+              <i class="fa-solid fa-gear"></i>
+              <span>Configuración</span>
+            <% end %>
+          <% else %>
+            <span class="flex items-center gap-2 text-gray-500">
+              <i class="fa-solid fa-gear"></i>
+              <span>Configuración</span>
+            </span>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </aside>
+
+  <div class="flex-1 space-y-6">
+    <div class="card bg-base-100 shadow">
+      <div class="card-body">
+        <p class="text-gray-600">Bienvenido al panel principal.</p>
+      </div>
+    </div>
+  </div>
+</div>
