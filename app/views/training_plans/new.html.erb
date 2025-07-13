@@ -5,6 +5,15 @@
       <%= f.label :name, 'Nombre', class: 'label' %>
       <%= f.text_field :name, class: 'input input-bordered w-full' %>
     </div>
+    <% if @athletes.any? %>
+      <div class="form-control mb-4">
+        <%= f.label :athlete_id, 'Corredor', class: 'label' %>
+        <%= f.select :athlete_id,
+              options_from_collection_for_select(@athletes, :id, ->(u) { u.profile&.athlete_id || u.id }),
+              include_blank: true,
+              class: 'select select-bordered w-full' %>
+      </div>
+    <% end %>
     <div class="form-control mb-4">
       <%= f.label :description, 'Descripción', class: 'label' %>
       <%= f.text_area :description, rows: 4, class: 'textarea textarea-bordered w-full' %>

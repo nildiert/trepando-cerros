@@ -14,11 +14,13 @@ class TrainingPlansController < ApplicationController
   def new
     authorize! :manage, TrainingPlan
     @training_plan = current_user.training_plans.new
+    @athletes = current_user.trainees
   end
 
   def create
     authorize! :manage, TrainingPlan
     @training_plan = current_user.training_plans.new(training_plan_params)
+    @athletes = current_user.trainees
     if @training_plan.save
       redirect_to @training_plan, notice: 'Plan creado'
     else
@@ -33,6 +35,6 @@ class TrainingPlansController < ApplicationController
   end
 
   def training_plan_params
-    params.require(:training_plan).permit(:name, :description)
+    params.require(:training_plan).permit(:name, :description, :athlete_id)
   end
 end
