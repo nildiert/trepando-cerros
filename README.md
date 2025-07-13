@@ -19,10 +19,12 @@ echo "STRAVA_CLIENT_SECRET=tu-secret" >> .env
 echo "STRAVA_REDIRECT_URI=https://tu-dominio.ngrok-free.app/auth/strava/callback" >> .env
 echo "GOOGLE_CLIENT_ID=tu-google-id" >> .env
 echo "GOOGLE_CLIENT_SECRET=tu-google-secret" >> .env
+echo "GOOGLE_REDIRECT_URI=https://tu-dominio.ngrok-free.app/auth/google_oauth2/callback" >> .env
 ```
 La gema `dotenv-rails` cargará estas variables para permitir las llamadas a `StravaClient` y al proceso de OAuth. El flujo solicitará los scopes `activity:read_all` y `profile:read_all`, así que habilítalos también en la configuración de tu aplicación en Strava. Si no se definen `STRAVA_CLIENT_ID` y `STRAVA_CLIENT_SECRET`, la opción **Conectar con Strava** en la configuración mostrará un mensaje de error.
 
 Las variables `GOOGLE_CLIENT_ID` y `GOOGLE_CLIENT_SECRET` se usan para permitir el inicio de sesión con Google.
+Si trabajas con un dominio externo también define `GOOGLE_REDIRECT_URI` y registra esa misma URL en la consola de Google para evitar errores de tipo `redirect_uri_mismatch`.
 
 Si ejecutas la app desde una URL externa (por ejemplo mediante `ngrok`), Rails
 protege las redirecciones hacia otros dominios. El controlador ya indica
