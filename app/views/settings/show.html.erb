@@ -37,8 +37,23 @@
             </li>
           </ul>
         </nav>
-        <div data-tabs-target="panel">
+        <div data-tabs-target="panel" class="space-y-4">
           <p class="text-gray-600">Configuraciones generales.</p>
+          <% if ENV['STRAVA_CLIENT_ID'].present? && ENV['STRAVA_CLIENT_SECRET'].present? %>
+            <% if session[:strava_token].present? %>
+              <p class="text-success flex items-center gap-2">
+                <i class="fa-brands fa-strava text-orange-600"></i>
+                <span>Conectado con Strava</span>
+              </p>
+            <% else %>
+              <%= link_to strava_connect_path, class: 'btn btn-primary flex items-center gap-2' do %>
+                <i class="fa-brands fa-strava fa-lg text-orange-600"></i>
+                <span>Conectar con Strava</span>
+              <% end %>
+            <% end %>
+          <% else %>
+            <p class="text-error">Configura STRAVA_CLIENT_ID y STRAVA_CLIENT_SECRET en tu <code>.env</code> para conectarte con Strava.</p>
+          <% end %>
         </div>
         <div data-tabs-target="panel" class="hidden space-y-4">
           <div>
