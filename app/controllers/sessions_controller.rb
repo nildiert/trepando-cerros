@@ -19,7 +19,12 @@ class SessionsController < ApplicationController
 
     session[:user_id] = user.id
 
-    redirect_to root_path
+    athlete_id = user.profile&.athlete_id
+    if athlete_id.present?
+      redirect_to athlete_path(athlete_id)
+    else
+      redirect_to root_path
+    end
   end
   def connect
     client_id = ENV['STRAVA_CLIENT_ID']
