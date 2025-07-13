@@ -11,5 +11,6 @@ Rails.application.routes.draw do
 
   get "/auth/strava" => "sessions#connect", as: :strava_connect
   get "/auth/strava/callback" => "sessions#callback", as: :strava_callback
+  delete "/auth/strava" => "sessions#disconnect", as: :strava_disconnect
   delete "/logout" => "sessions#destroy", as: :logout
 end

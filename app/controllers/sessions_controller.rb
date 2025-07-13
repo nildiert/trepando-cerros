@@ -57,4 +57,9 @@ class SessionsController < ApplicationController
     reset_session
     redirect_to root_path
   end
+
+  def disconnect
+    session.delete(:strava_token)
+    redirect_to athlete_settings_path(current_athlete_id)
+  end
 end

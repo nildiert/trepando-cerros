@@ -41,15 +41,19 @@
           <p class="text-gray-600">Configuraciones generales.</p>
           <% if ENV['STRAVA_CLIENT_ID'].present? && ENV['STRAVA_CLIENT_SECRET'].present? %>
             <% if session[:strava_token].present? %>
-              <p class="text-success flex items-center gap-2">
-                <i class="fa-brands fa-strava text-orange-600"></i>
-                <span>Conectado con Strava</span>
-              </p>
+              <div class="flex items-center gap-4">
+                <span class="badge badge-success">Conectado</span>
+                <%= button_to 'Desconectar de Strava', strava_disconnect_path, method: :delete,
+                    class: 'btn btn-outline' %>
+              </div>
             <% else %>
-              <%= link_to strava_connect_path, class: 'btn btn-primary flex items-center gap-2' do %>
-                <i class="fa-brands fa-strava fa-lg text-orange-600"></i>
-                <span>Conectar con Strava</span>
-              <% end %>
+              <div class="flex items-center gap-4">
+                <%= link_to strava_connect_path, class: 'btn btn-primary flex items-center gap-2' do %>
+                  <i class="fa-brands fa-strava fa-lg text-orange-600"></i>
+                  <span>Conectar con Strava</span>
+                <% end %>
+                <span class="badge badge-secondary">No conectado</span>
+              </div>
             <% end %>
           <% else %>
             <p class="text-error">Configura STRAVA_CLIENT_ID y STRAVA_CLIENT_SECRET en tu <code>.env</code> para conectarte con Strava.</p>

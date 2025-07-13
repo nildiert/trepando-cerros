@@ -6,13 +6,9 @@
     </h1>
     <p class="text-lg">Analiza tus rutas y obtén un tiempo estimado basado en tu rendimiento en Strava.</p>
     <img src="/runner.svg" alt="Corredor" class="w-24 h-24 mx-auto" />
-    <% if ENV['STRAVA_CLIENT_ID'].present? && ENV['STRAVA_CLIENT_SECRET'].present? %>
-      <%= link_to strava_connect_path, class: 'btn btn-primary mt-4 flex items-center gap-2' do %>
-        <i class="fa-brands fa-strava fa-lg text-orange-600"></i>
-        <span>Conectar con Strava</span>
-      <% end %>
-    <% else %>
+    <% unless ENV['STRAVA_CLIENT_ID'].present? && ENV['STRAVA_CLIENT_SECRET'].present? %>
       <p class="text-error">Configura STRAVA_CLIENT_ID y STRAVA_CLIENT_SECRET en tu <code>.env</code> para conectarte con Strava.</p>
     <% end %>
+    <p class="mt-4">Ve a <strong>Configuración</strong> para conectar tu cuenta de Strava.</p>
   </div>
 </div>
