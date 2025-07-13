@@ -41,7 +41,7 @@ Inicia el servidor con:
 bundle exec rails server
 ```
 
-Al abrir `http://localhost:3000` verás una pantalla de bienvenida donde puedes **Iniciar sesión con Google**. Una vez autenticado podrás ir al apartado **Configuración** para usar la opción **Conectar con Strava** o **Desconectar** tu cuenta. Tras autorizar la aplicación se mostrará tu panel con tu información de atleta y un área para subir tu archivo GPX y obtener el tiempo estimado.
+Al abrir `http://localhost:3000` verás una pantalla de bienvenida con un botón destacado para **Iniciar sesión con Google**. También encontrarás ese mismo enlace en la barra superior cuando no estés autenticado. Una vez conectado podrás ir al apartado **Configuración** para usar la opción **Conectar con Strava** o **Desconectar** tu cuenta. Tras autorizar la aplicación se mostrará tu panel con tu información de atleta y un área para subir tu archivo GPX y obtener el tiempo estimado.
 La aplicación analiza tus carreras recientes para ajustar el ritmo en subidas, bajadas y terreno plano. Ahora se entrenan modelos simples con tus actividades del último año (priorizando las más largas) para predecir el ritmo según la pendiente. Estos modelos se generan con una regresión lineal muy ligera y se usan al estimar el tiempo de la ruta.
 Además considera el desgaste del cuerpo: a medida que se acumulan kilómetros se aplica un pequeño factor de fatiga que incrementa ligeramente el tiempo estimado. Los gemelos se cansan en las subidas y los cuádriceps en las bajadas. El efecto de la fatiga ahora crece de forma un poco exponencial, de modo que a mayor distancia o desnivel acumulado el ritmo se vuelve gradualmente más lento, pero con coeficientes reducidos para evitar resultados exagerados.
 

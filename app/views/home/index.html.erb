@@ -10,7 +10,8 @@
       <p class="text-error">Configura STRAVA_CLIENT_ID y STRAVA_CLIENT_SECRET en tu <code>.env</code> para conectarte con Strava.</p>
     <% end %>
     <% unless current_user %>
-      <%= link_to google_connect_path, class: 'btn btn-primary mt-4 flex items-center gap-2' do %>
+      <%= link_to google_connect_path,
+                  class: 'btn btn-primary btn-lg mt-4 flex items-center gap-2' do %>
         <i class="fa-brands fa-google"></i>
         <span>Iniciar sesión con Google</span>
       <% end %>
