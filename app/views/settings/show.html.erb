@@ -90,11 +90,16 @@
               <%= render 'users/list', users: @users %>
             </div>
             <div data-tabs-target="panel" class="hidden space-y-4">
-              <div>
-                <h3 class="font-semibold mb-2">Perfiles disponibles</h3>
-                <turbo-frame id="roles">
-                  <%= render 'roles/list', roles: @roles %>
-                </turbo-frame>
+              <div data-controller="role-selector">
+                <div class="form-control w-60 mb-4">
+                  <label for="role-select" class="label">Selecciona un perfil</label>
+                  <select id="role-select" class="select select-bordered" data-role-selector-target="select" data-action="change->role-selector#change">
+                    <% @roles.each do |r| %>
+                      <option value="<%= r.id %>"><%= r.name.capitalize %></option>
+                    <% end %>
+                  </select>
+                </div>
+                <turbo-frame id="role_permissions" src="<%= role_path(@roles.first) %>" data-role-selector-target="frame"></turbo-frame>
               </div>
             </div>
           </div>
