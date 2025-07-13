@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   resources :roles, only: [:show, :update, :create]
   resources :training_plans, only: [:index, :new, :create, :show]
   resources :coaches, only: [:index]
+  resources :clubs, only: [:index]
   resources :users, only: [:index, :edit, :update]
   post "athletes/:id" => "athletes#show"
 
