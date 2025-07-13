@@ -20,6 +20,9 @@ gem "jbuilder"
 # Access the Strava API via https://github.com/dblock/strava-ruby-client
 gem "strava-ruby-client"
 gem "cancancan"
+gem "omniauth"
+gem "omniauth-google-oauth2"
+gem "omniauth-rails_csrf_protection"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"

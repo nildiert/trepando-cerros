@@ -40,32 +40,11 @@
     </ul>
   </aside>
 
-  <div class="flex-1 space-y-6" data-controller="training-calendar" data-training-calendar-initial-index="<%= (Date.current - @week_start).to_i %>">
-    <div class="card bg-base-100 card-border border-base-300 card-sm overflow-hidden">
-      <div class="card-body gap-4">
-        <div class="border-b-base-300 grid grid-cols-7 border-b border-dashed pb-3" data-training-calendar-target="dayContainer">
-          <% (0..6).each do |i| %>
-            <% day = @week_start + i.days %>
-            <div class="rounded-field flex flex-col items-center px-2 py-1" data-training-calendar-target="day" data-training-calendar-index-value="<%= i %>" data-action="click->training-calendar#select">
-              <span class="text-sm font-semibold"><%= day.day %></span>
-              <span class="text-[10px] font-semibold opacity-50"><%= day.strftime('%a')[0] %></span>
-            </div>
-          <% end %>
-        </div>
+  <div class="flex-1 space-y-6">
+    <div class="card bg-base-100 shadow">
+      <div class="card-body">
+        <p class="text-gray-600">Bienvenido al panel principal.</p>
       </div>
     </div>
-
-    <% (0..6).each do |i| %>
-      <% day = @week_start + i.days %>
-      <div class="bg-base-100 border-base-300 collapse border" data-training-calendar-target="collapse">
-        <input type="checkbox" class="peer" <%= 'checked' if i == (Date.current - @week_start).to_i %>>
-        <div class="collapse-title bg-primary text-primary-content peer-checked:bg-secondary peer-checked:text-secondary-content">
-          <%= l day, format: :long %>
-        </div>
-        <div class="collapse-content bg-primary text-primary-content peer-checked:bg-secondary peer-checked:text-secondary-content">
-          <%= @messages[i] %>
-        </div>
-      </div>
-    <% end %>
   </div>
 </div>

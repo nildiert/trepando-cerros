@@ -1,19 +1,8 @@
-class SettingsController < ApplicationController
+class DashboardController < ApplicationController
   before_action :authenticate_user
   before_action :set_athlete
 
   def show
-    authorize! :manage, :settings
-    @race_predictor = current_user.permissions.find_or_initialize_by(name: 'race_predictor')
-    @roles = Role.all
-  end
-
-  def update
-    authorize! :manage, :settings
-    perm = current_user.permissions.find_or_initialize_by(name: 'race_predictor')
-    perm.enabled = params[:race_predictor] == '1'
-    perm.save!
-    redirect_to athlete_settings_path(@athlete), notice: 'Configuraci\u00f3n actualizada'
   end
 
   private
