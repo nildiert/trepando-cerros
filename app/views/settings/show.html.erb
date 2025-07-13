@@ -10,33 +10,17 @@
         </li>
       <% end %>
       <li>
-        <% if @athlete.present? %>
-          <%= link_to athlete_training_path(@athlete.id), class: ["flex items-center gap-2", (current_page?(athlete_training_path(@athlete.id)) ? "active" : nil)].compact.join(' ') do %>
-            <i class="fa-solid fa-dumbbell"></i>
-            <span>Entrenamiento</span>
-          <% end %>
-        <% else %>
-          <span class="flex items-center gap-2 text-gray-500">
-            <i class="fa-solid fa-dumbbell"></i>
-            <span>Entrenamiento</span>
-          </span>
+        <%= link_to training_path, class: ["flex items-center gap-2", (current_page?(training_path) ? "active" : nil)].compact.join(' ') do %>
+          <i class="fa-solid fa-dumbbell"></i>
+          <span>Entrenamiento</span>
         <% end %>
       </li>
-      <% if can? :manage, :settings %>
-        <li>
-          <% if @athlete.present? %>
-            <%= link_to athlete_settings_path(@athlete.id), class: ["flex items-center gap-2", (current_page?(athlete_settings_path(@athlete.id)) ? "active" : nil)].compact.join(' ') do %>
-              <i class="fa-solid fa-gear"></i>
-              <span>Configuración</span>
-            <% end %>
-          <% else %>
-            <span class="flex items-center gap-2 text-gray-500">
-              <i class="fa-solid fa-gear"></i>
-              <span>Configuración</span>
-            </span>
-          <% end %>
-        </li>
-      <% end %>
+      <li>
+        <%= link_to settings_path, class: ["flex items-center gap-2", (current_page?(settings_path) ? "active" : nil)].compact.join(' ') do %>
+          <i class="fa-solid fa-gear"></i>
+          <span>Configuración</span>
+        <% end %>
+      </li>
     </ul>
   </aside>
 
