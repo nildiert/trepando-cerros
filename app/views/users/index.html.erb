@@ -1,0 +1,21 @@
+<div class="container mx-auto p-4 space-y-4">
+  <h2 class="text-xl font-semibold mb-4">Usuarios</h2>
+  <table class="table w-full">
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>Perfil</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user.email %></td>
+          <td class="capitalize"><%= user.role&.name || 'Sin perfil' %></td>
+          <td><%= link_to 'Editar', edit_user_path(user), class: 'btn btn-sm' %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

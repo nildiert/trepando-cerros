@@ -23,6 +23,14 @@
           <% end %>
         </li>
       <% end %>
+      <% if can?(:manage, :settings) %>
+        <li>
+          <%= link_to users_path, class: ["flex items-center gap-2", (current_page?(users_path) ? "active" : nil)].compact.join(' ') do %>
+            <i class="fa-solid fa-users"></i>
+            <span>Usuarios</span>
+          <% end %>
+        </li>
+      <% end %>
       <li>
         <%= link_to settings_path, class: ["flex items-center gap-2", (current_page?(settings_path) ? "active" : nil)].compact.join(' ') do %>
           <i class="fa-solid fa-gear"></i>

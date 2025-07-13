@@ -60,6 +60,14 @@
                     <% end %>
                   </li>
                 <% end %>
+                <% if can?(:manage, :settings) %>
+                  <li>
+                    <%= link_to users_path, class: 'flex items-center gap-2' do %>
+                      <i class="fa-solid fa-users"></i>
+                      <span>Usuarios</span>
+                    <% end %>
+                  </li>
+                <% end %>
                 <li>
                   <%= button_to logout_path, method: :delete, class: 'flex items-center gap-2 w-full text-left' do %>
                     <i class="fa-solid fa-right-from-bracket"></i>

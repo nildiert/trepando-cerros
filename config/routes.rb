@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get "/dashboard" => "dashboard#show", as: :dashboard
   resources :roles, only: [:show, :update]
   resources :training_plans, only: [:index, :new, :create, :show]
+  resources :users, only: [:index, :edit, :update]
   post "athletes/:id" => "athletes#show"
 
   get "/auth/strava" => "sessions#connect", as: :strava_connect
