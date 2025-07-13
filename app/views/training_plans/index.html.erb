@@ -1,11 +1,64 @@
-<div class="container mx-auto p-4 space-y-4">
-  <h2 class="text-xl font-semibold">Mis Planes de Entrenamiento</h2>
-  <%= link_to 'Nuevo Plan', new_training_plan_path, class: 'btn btn-primary' %>
-  <ul class="list-disc pl-5">
-    <% @training_plans.each do |plan| %>
+<div class="container mx-auto p-4 flex gap-6">
+  <aside class="w-48 space-y-2">
+    <ul class="menu bg-base-100 p-2 rounded-box">
+      <% if session[:strava_token].present? %>
+        <li>
+          <%= link_to race_predictor_path, class: ["flex items-center gap-2", (current_page?(race_predictor_path) ? "active" : nil)].compact.join(' ') do %>
+            <i class="fa-solid fa-chart-line"></i>
+            <span>Calcular Carrera</span>
+          <% end %>
+        </li>
+      <% end %>
       <li>
-        <%= link_to plan.name, training_plan_path(plan) %>
+        <%= link_to training_path, class: ["flex items-center gap-2", (current_page?(training_path) ? "active" : nil)].compact.join(' ') do %>
+          <i class="fa-solid fa-dumbbell"></i>
+          <span>Entrenamiento</span>
+        <% end %>
       </li>
-    <% end %>
-  </ul>
+      <% if can?(:manage, TrainingPlan) %>
+        <li>
+          <%= link_to training_plans_path, class: ["flex items-center gap-2", (current_page?(training_plans_path) ? "active" : nil)].compact.join(' ') do %>
+            <i class="fa-solid fa-list-check"></i>
+            <span>Planes</span>
+          <% end %>
+        </li>
+      <% end %>
+      <li>
+        <%= link_to coaches_path, class: ["flex items-center gap-2", (current_page?(coaches_path) ? "active" : nil)].compact.join(' ') do %>
+          <i class="fa-solid fa-user"></i>
+          <span>Entrenadores</span>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to clubs_path, class: ["flex items-center gap-2", (current_page?(clubs_path) ? "active" : nil)].compact.join(' ') do %>
+          <i class="fa-solid fa-people-group"></i>
+          <span>Clubes</span>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to settings_path, class: ["flex items-center gap-2", (current_page?(settings_path) ? "active" : nil)].compact.join(' ') do %>
+          <i class="fa-solid fa-gear"></i>
+          <span>Configuración</span>
+        <% end %>
+      </li>
+    </ul>
+  </aside>
+
+  <div class="flex-1 space-y-6">
+    <div class="card bg-base-100 shadow">
+      <div class="card-body">
+        <h2 class="text-xl font-semibold mb-4">Mis Planes de Entrenamiento</h2>
+        <%= link_to 'Nuevo Plan', new_training_plan_path, class: 'btn btn-primary mb-4' %>
+        <% if @training_plans.any? %>
+          <ul class="list-disc pl-5">
+            <% @training_plans.each do |plan| %>
+              <li><%= link_to plan.name, training_plan_path(plan) %></li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p class="text-gray-600">No tienes planes creados.</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>

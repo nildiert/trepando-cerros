@@ -1,7 +1,7 @@
 <table class="table w-full">
   <thead>
     <tr>
-      <th>Email</th>
+      <th>Nombre</th>
       <th>Perfil</th>
       <th></th>
     </tr>
@@ -9,7 +9,7 @@
   <tbody>
     <% users.each do |user| %>
       <tr>
-        <td><%= user.email %></td>
+        <td><%= user.full_name.presence || user.email %></td>
         <td class="capitalize"><%= user.role&.name || 'Sin perfil' %></td>
         <td>
           <label for="edit-user-<%= user.id %>-modal" class="btn btn-sm">Editar</label>

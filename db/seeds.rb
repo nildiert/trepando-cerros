@@ -13,3 +13,17 @@ RolePermission.find_or_create_by!(role: role, name: 'race_predictor')
 
 trainer = Role.find_or_create_by!(name: 'trainer')
 RolePermission.find_or_create_by!(role: trainer, name: 'training_plan')
+
+club = Club.find_or_create_by!(name: 'Club de Entrenamiento') do |c|
+  c.description = 'Club principal de entrenamiento'
+end
+
+# Create admin role and default admin user
+admin_role = Role.find_or_create_by!(name: 'admin')
+admin_user = User.find_or_create_by!(email: 'admin@example.com') do |u|
+  u.google_id = SecureRandom.uuid
+  u.role = admin_role
+  u.club = club
+  u.build_profile(first_name: 'Admin', last_name: 'User')
+  u.admin = true if u.respond_to?(:admin=)
+end

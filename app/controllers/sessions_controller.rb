@@ -7,6 +7,8 @@ class SessionsController < ApplicationController
     auth = request.env['omniauth.auth']
     google_id = auth['uid']
     email = auth['info']['email']
+    first_name = auth['info']['first_name']
+    last_name = auth['info']['last_name']
 
     user = User.find_or_initialize_by(google_id: google_id)
     if user.new_record?
@@ -14,7 +16,10 @@ class SessionsController < ApplicationController
       user.role = default_role
       user.email = email
       user.save!
-      user.create_profile!
+      user.create_profile!(first_name: first_name, last_name: last_name)
+    elsif user.profile &&
+          (user.profile.first_name.blank? || user.profile.last_name.blank?)
+      user.profile.update(first_name: first_name, last_name: last_name)
     end
 
     session[:user_id] = user.id

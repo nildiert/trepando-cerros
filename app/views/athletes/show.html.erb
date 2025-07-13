@@ -16,6 +16,12 @@
         <% end %>
       </li>
       <li>
+        <%= link_to clubs_path, class: ["flex items-center gap-2", (current_page?(clubs_path) ? "active" : nil)].compact.join(' ') do %>
+          <i class="fa-solid fa-people-group"></i>
+          <span>Clubes</span>
+        <% end %>
+      </li>
+      <li>
         <%= link_to settings_path, class: ["flex items-center gap-2", (current_page?(settings_path) ? "active" : nil)].compact.join(' ') do %>
           <i class="fa-solid fa-gear"></i>
           <span>Configuración</span>
