@@ -1,7 +1,8 @@
 class TrainingPlanDay < ApplicationRecord
   belongs_to :training_plan
 
-  enum workout_type: { fuerza: 0, easy_run: 1, long_run: 2, intensidad: 3, descanso: 4 }
+  enum :workout_type,
+       { fuerza: 0, easy_run: 1, long_run: 2, intensidad: 3, descanso: 4 }
 
   validates :day, inclusion: { in: 0..6 }
   validates :workout_type, presence: true
