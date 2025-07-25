@@ -55,15 +55,15 @@
   <div class="flex-1 space-y-6">
     <div class="card bg-base-100 shadow">
       <div class="card-body">
-        <h2 class="text-xl font-semibold mb-4">Entrenadores Disponibles</h2>
-        <% if @coaches.any? %>
+        <h2 class="text-xl font-semibold mb-4">Atletas del Club</h2>
+        <% if @athletes.any? %>
           <ul class="list-disc pl-5">
-            <% @coaches.each do |coach| %>
-              <li><%= coach.full_name.presence || coach.email %></li>
+            <% @athletes.each do |athlete| %>
+              <li><%= athlete.full_name.presence || athlete.email %></li>
             <% end %>
           </ul>
         <% else %>
-          <p class="text-gray-600">No hay entrenadores disponibles.</p>
+          <p class="text-gray-600">No hay atletas disponibles.</p>
         <% end %>
       </div>
     </div>

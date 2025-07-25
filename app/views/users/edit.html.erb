@@ -5,6 +5,8 @@
       <%= f.label :role_id, 'Perfil', class: 'label' %>
       <%= f.select :role_id, @roles.map { |r| [r.name.humanize, r.id] }, include_blank: 'Sin perfil', class: 'select select-bordered w-full capitalize' %>
     </div>
-    <%= f.submit 'Guardar', class: 'btn btn-primary' %>
+    <div class="flex justify-end">
+      <%= f.submit 'Guardar', class: 'btn btn-primary' %>
+    </div>
   <% end %>
 </div>

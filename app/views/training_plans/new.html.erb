@@ -29,6 +29,14 @@
           <span>Entrenadores</span>
         <% end %>
       </li>
+      <% if can? :manage, :athletes %>
+        <li>
+          <%= link_to athletes_path, class: ["flex items-center gap-2", (current_page?(athletes_path) ? "active" : nil)].compact.join(' ') do %>
+            <i class="fa-solid fa-users"></i>
+            <span>Atletas</span>
+          <% end %>
+        </li>
+      <% end %>
       <li>
         <%= link_to clubs_path, class: ["flex items-center gap-2", (current_page?(clubs_path) ? "active" : nil)].compact.join(' ') do %>
           <i class="fa-solid fa-people-group"></i>
@@ -66,7 +74,9 @@
             <%= f.label :description, 'Descripción', class: 'label' %>
             <%= f.text_area :description, rows: 4, class: 'textarea textarea-bordered w-full' %>
           </div>
-          <%= f.submit 'Guardar', class: 'btn btn-primary' %>
+          <div class="flex justify-end">
+            <%= f.submit 'Guardar', class: 'btn btn-primary' %>
+          </div>
         <% end %>
       </div>
     </div>

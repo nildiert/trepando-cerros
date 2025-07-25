@@ -8,6 +8,7 @@ class Ability
 
     can :manage, :settings if user.persisted?
     can :manage, :all if user.role&.admin?
+    can :manage, :athletes if user.role&.name == 'trainer'
 
     role_perms = user.role ? user.role.role_permissions : []
     (role_perms + user.permissions).each do |perm|
