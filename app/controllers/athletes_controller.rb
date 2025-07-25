@@ -1,5 +1,15 @@
 class AthletesController < ApplicationController
   before_action :authenticate_user
+  before_action :authorize_trainer, only: [:index]
+
+  def index
+    authorize! :manage, :athletes
+    @athletes = if current_user.club
+      current_user.club.users.joins(:role).where(roles: { name: 'normal' })
+    else
+      []
+    end
+  end
   def show
     @athlete = fetch_athlete(params[:id])
     unless @athlete
@@ -27,6 +37,10 @@ class AthletesController < ApplicationController
   end
 
   private
+
+  def authorize_trainer
+    redirect_to root_path, alert: 'No autorizado' unless current_user.role&.name == 'trainer'
+  end
 
   def fetch_athlete(id = nil)
     token = session[:strava_token] || ENV['STRAVA_ACCESS_TOKEN']

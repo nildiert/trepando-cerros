@@ -55,26 +55,15 @@
   <div class="flex-1 space-y-6">
     <div class="card bg-base-100 shadow">
       <div class="card-body">
-        <h2 class="text-xl font-semibold mb-4">Nuevo Plan</h2>
-        <%= form_with model: @training_plan do |f| %>
-          <div class="form-control mb-4">
-            <%= f.label :name, 'Nombre', class: 'label' %>
-            <%= f.text_field :name, class: 'input input-bordered w-full' %>
-          </div>
-          <% if @athletes.any? %>
-            <div class="form-control mb-4">
-              <%= f.label :athlete_id, 'Corredor', class: 'label' %>
-              <%= f.select :athlete_id,
-                    options_from_collection_for_select(@athletes, :id, ->(u) { u.profile&.athlete_id || u.id }),
-                    include_blank: true,
-                    class: 'select select-bordered w-full' %>
-            </div>
-          <% end %>
-          <div class="form-control mb-4">
-            <%= f.label :description, 'Descripción', class: 'label' %>
-            <%= f.text_area :description, rows: 4, class: 'textarea textarea-bordered w-full' %>
-          </div>
-          <%= f.submit 'Guardar', class: 'btn btn-primary' %>
+        <h2 class="text-xl font-semibold mb-4">Atletas del Club</h2>
+        <% if @athletes.any? %>
+          <ul class="list-disc pl-5">
+            <% @athletes.each do |athlete| %>
+              <li><%= athlete.full_name.presence || athlete.email %></li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p class="text-gray-600">No hay atletas disponibles.</p>
         <% end %>
       </div>
     </div>

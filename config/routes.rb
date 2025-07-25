@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   root "home#index"
   resource :training, only: [:show]
   resource :settings, only: [:show, :update]
-  resources :athletes, only: [:show] do
+  resources :athletes, only: [:show, :index] do
     resource :training, only: [:show]
     resource :settings, only: [:show, :update]
   end
