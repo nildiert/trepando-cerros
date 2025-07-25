@@ -82,7 +82,7 @@
                                      TrainingPlanDay.workout_types.keys.map {
                                        |k| [t("activerecord.attributes.training_plan_day.workout_types.#{k}"), k]
                                      },
-                                     { include_blank: true },
+                                     {},
                                      class: 'select select-bordered w-full' %>
             </div>
           <% end %>
