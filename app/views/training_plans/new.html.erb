@@ -75,15 +75,26 @@
             <%= f.text_area :description, rows: 4, class: 'textarea textarea-bordered w-full' %>
           </div>
           <%= f.fields_for :training_plan_days do |day_fields| %>
-            <div class="form-control mb-4">
+            <% modal_id = "workout-modal-#{day_fields.object.day}" %>
+            <div class="form-control mb-4" data-controller="workout-selector" data-workout-selector-toggle-id-value="#{modal_id}">
               <%= day_fields.hidden_field :day %>
-              <%= day_fields.label :workout_type, TrainingPlanDay::DAYS_OF_WEEK[day_fields.object.day], class: 'label' %>
-              <%= day_fields.select :workout_type,
-                                     TrainingPlanDay.workout_types.keys.map {
-                                       |k| [t("activerecord.attributes.training_plan_day.workout_types.#{k}"), k]
-                                     },
-                                     {},
-                                     class: 'select select-bordered w-full' %>
+              <%= day_fields.hidden_field :workout_type, value: day_fields.object.workout_type, data: { workout_selector_target: 'workoutInput' } %>
+              <label for="#{modal_id}" class="label cursor-pointer">
+                <span class="label-text"><%= TrainingPlanDay::DAYS_OF_WEEK[day_fields.object.day] %>:</span>
+                <span data-workout-selector-target="display">
+                  <%= t("activerecord.attributes.training_plan_day.workout_types.#{day_fields.object.workout_type}") %>
+                </span>
+              </label>
+              <input type="checkbox" id="#{modal_id}" class="modal-toggle" />
+              <div class="modal">
+                <div class="modal-box relative">
+                  <label for="#{modal_id}" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+                  <h3 class="text-lg font-semibold mb-4"><%= t('training_plans.select_activity') %></h3>
+                  <select class="select select-bordered w-full" data-action="change->workout-selector#select">
+                    <%= options_for_select(TrainingPlanDay.workout_types.keys.map { |k| [t("activerecord.attributes.training_plan_day.workout_types.#{k}"), k] }, day_fields.object.workout_type) %>
+                  </select>
+                </div>
+              </div>
             </div>
           <% end %>
           <div class="flex justify-end">

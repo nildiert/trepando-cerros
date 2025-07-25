@@ -38,3 +38,5 @@ en:
           long_run: "Long run"
           intensity: "Intensidad"
           rest: "Descanso"
+  training_plans:
+    select_activity: "Seleccione una actividad"
