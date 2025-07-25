@@ -3,7 +3,7 @@ class CreateTrainingPlanDays < ActiveRecord::Migration[7.1]
     create_table :training_plan_days do |t|
       t.references :training_plan, null: false, foreign_key: true
       t.integer :day, null: false
-      # default to descanso so blank days don't show as fuerza
+      # default to rest so blank days don't show as strength
       t.integer :workout_type, null: false, default: 4
 
       t.timestamps

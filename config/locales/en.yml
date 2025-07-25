@@ -33,8 +33,8 @@ en:
     attributes:
       training_plan_day:
         workout_types:
-          fuerza: "Fuerza"
+          strength: "Fuerza"
           easy_run: "Easy run"
           long_run: "Long run"
-          intensidad: "Intensidad"
-          descanso: "Descanso"
+          intensity: "Intensidad"
+          rest: "Descanso"
