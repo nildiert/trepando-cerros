@@ -120,7 +120,7 @@
                       <% end %>
                     </select>
                   </div>
-                  <label for="new-role-modal" class="btn btn-primary btn-sm self-end">Nuevo perfil</label>
+                  <label for="new-role-modal" class="btn btn-secondary btn-sm self-end">Nuevo perfil</label>
                 </div>
                 <turbo-frame id="role_permissions" src="<%= role_path(@roles.first) %>" data-role-selector-target="frame"></turbo-frame>
                 <%= render 'roles/new_modal' %>
