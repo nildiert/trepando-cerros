@@ -74,6 +74,16 @@
             <%= f.label :description, 'Descripción', class: 'label' %>
             <%= f.text_area :description, rows: 4, class: 'textarea textarea-bordered w-full' %>
           </div>
+          <%= f.fields_for :training_plan_days do |day_fields| %>
+            <div class="form-control mb-4">
+              <%= day_fields.hidden_field :day %>
+              <%= day_fields.label :workout_type, TrainingPlanDay::DAYS_OF_WEEK[day_fields.object.day], class: 'label' %>
+              <%= day_fields.select :workout_type,
+                                     TrainingPlanDay.workout_types.keys.map { |k| [k.humanize, k] },
+                                     { include_blank: true },
+                                     class: 'select select-bordered w-full' %>
+            </div>
+          <% end %>
           <div class="flex justify-end">
             <%= f.submit 'Guardar', class: 'btn btn-primary' %>
           </div>

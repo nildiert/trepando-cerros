@@ -16,6 +16,7 @@ class TrainingPlansController < ApplicationController
     authorize! :manage, TrainingPlan
     @training_plan = current_user.training_plans.new
     @athletes = current_user.trainees
+    7.times { |i| @training_plan.training_plan_days.build(day: i) }
   end
 
   def create
@@ -52,6 +53,7 @@ class TrainingPlansController < ApplicationController
   end
 
   def training_plan_params
-    params.require(:training_plan).permit(:name, :description, :athlete_id)
+    params.require(:training_plan).permit(:name, :description, :athlete_id,
+                                          training_plan_days_attributes: %i[id day workout_type])
   end
 end
