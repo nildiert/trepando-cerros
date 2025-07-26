@@ -17,7 +17,7 @@ class TrainingPlansController < ApplicationController
     @training_plan = current_user.training_plans.new
     @athletes = current_user.trainees
     TrainingPlanDay::DAYS_OF_WEEK.each_index do |i|
-      # start each day as rest; Mondays (0) and Fridays (4) are explicitly set
+      # initialize every day as rest
       @training_plan.training_plan_days.build(day: i, workout_type: :rest)
     end
   end

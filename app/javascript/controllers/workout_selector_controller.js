@@ -29,6 +29,21 @@ export default class extends Controller {
       intensity: "bg-red-700 hover:bg-red-800 text-white",
       strength: "bg-orange-500 hover:bg-orange-600 text-white",
     }
+    const borders = {
+      rest: "border-green-700",
+      easy_run: "border-blue-500",
+      long_run: "border-blue-800",
+      intensity: "border-red-700",
+      strength: "border-orange-500",
+    }
     this.displayTarget.className = `badge rounded-lg ${classes[value] || ''}`
+    this.element.classList.remove(
+      "border-green-700",
+      "border-blue-500",
+      "border-blue-800",
+      "border-red-700",
+      "border-orange-500",
+    )
+    if (borders[value]) this.element.classList.add(borders[value])
   }
 }

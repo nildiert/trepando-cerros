@@ -7,8 +7,20 @@ module ApplicationHelper
     'strength' => 'bg-orange-500 hover:bg-orange-600 text-white'
   }.freeze
 
+  WORKOUT_BORDER_CLASSES = {
+    'rest' => 'border-green-700',
+    'easy_run' => 'border-blue-500',
+    'long_run' => 'border-blue-800',
+    'intensity' => 'border-red-700',
+    'strength' => 'border-orange-500'
+  }.freeze
+
   def workout_color_class(type)
     WORKOUT_COLOR_CLASSES[type.to_s] || ''
+  end
+
+  def workout_border_class(type)
+    WORKOUT_BORDER_CLASSES[type.to_s] || ''
   end
 
   def workout_badge(type)

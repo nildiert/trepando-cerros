@@ -76,7 +76,7 @@
           </div>
           <%= f.fields_for :training_plan_days do |day_fields| %>
             <% modal_id = "workout-modal-#{day_fields.object.day}" %>
-            <div class="form-control mb-4 border border-base-300 rounded-lg p-2" data-controller="workout-selector" data-workout-selector-toggle-id-value="#{modal_id}">
+            <div class="form-control mb-4 border border-base-300 rounded-lg p-2 <%= workout_border_class(day_fields.object.workout_type) %>" data-controller="workout-selector" data-workout-selector-toggle-id-value="#{modal_id}">
               <%= day_fields.hidden_field :day %>
               <%= day_fields.hidden_field :workout_type, value: day_fields.object.workout_type, data: { workout_selector_target: 'workoutInput' } %>
               <label for="#{modal_id}" class="label cursor-pointer">
