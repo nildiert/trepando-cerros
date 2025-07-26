@@ -9,7 +9,9 @@ export default class extends Controller {
   }
 
   choose(event) {
-    const { workoutValue: value, workoutText: text } = event.currentTarget.dataset
+    event.preventDefault()
+    const { workoutValue: value, workoutText: text } =
+      event.currentTarget.dataset
     this.workoutInputTarget.value = value
     this.displayTarget.textContent = text
     this.updateAppearance(value)
