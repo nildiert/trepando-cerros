@@ -74,6 +74,32 @@
             <%= f.label :description, 'Descripción', class: 'label' %>
             <%= f.text_area :description, rows: 4, class: 'textarea textarea-bordered w-full' %>
           </div>
+          <%= f.fields_for :training_plan_days do |day_fields| %>
+            <% modal_id = "workout-modal-#{day_fields.object.day}" %>
+            <div class="form-control mb-4 border border-base-300 rounded-lg p-2 <%= workout_border_class(day_fields.object.workout_type) %>" data-controller="workout-selector" data-workout-selector-toggle-id-value="#{modal_id}">
+              <%= day_fields.hidden_field :day %>
+              <%= day_fields.hidden_field :workout_type, value: day_fields.object.workout_type, data: { workout_selector_target: 'workoutInput' } %>
+              <label for="#{modal_id}" class="label cursor-pointer">
+                <span class="label-text"><%= TrainingPlanDay::DAYS_OF_WEEK[day_fields.object.day] %>:</span>
+                <span data-workout-selector-target="display" class="<%= workout_color_class(day_fields.object.workout_type) %> badge rounded-lg">
+                  <%= t("activerecord.attributes.training_plan_day.workout_types.#{day_fields.object.workout_type}") %>
+                </span>
+              </label>
+              <input type="checkbox" id="#{modal_id}" class="modal-toggle" />
+              <div class="modal">
+                <div class="modal-box relative rounded-xl">
+                  <label for="#{modal_id}" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+                  <h3 class="text-lg font-semibold mb-4"><%= t('training_plans.select_activity') %></h3>
+                  <div class="flex flex-col gap-2">
+                    <% TrainingPlanDay.workout_types.keys.each do |k| %>
+                      <% text = t("activerecord.attributes.training_plan_day.workout_types.#{k}") %>
+                      <button type="button" class="btn <%= workout_color_class(k) %> rounded-lg" data-action="click->workout-selector#choose" data-workout-value="<%= k %>" data-workout-text="<%= text %>"><%= text %></button>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
           <div class="flex justify-end">
             <%= f.submit 'Guardar', class: 'btn btn-primary' %>
           </div>

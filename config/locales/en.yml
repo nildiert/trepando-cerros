@@ -29,3 +29,14 @@
 
 en:
   hello: "Hello world"
+  activerecord:
+    attributes:
+      training_plan_day:
+        workout_types:
+          strength: "Fuerza"
+          easy_run: "Easy run"
+          long_run: "Long run"
+          intensity: "Intensidad"
+          rest: "Descanso"
+  training_plans:
+    select_activity: "Seleccione una actividad"

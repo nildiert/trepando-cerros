@@ -57,6 +57,14 @@
       <div class="card-body">
         <h2 class="text-xl font-semibold mb-4"><%= @training_plan.name %></h2>
         <p class="mb-4"><%= simple_format(@training_plan.description) %></p>
+        <ul class="list-disc pl-6 mb-4">
+          <% @training_plan.training_plan_days.order(:day).each do |day| %>
+            <li>
+              <strong><%= day.day_name %>:</strong>
+              <%= workout_badge(day.workout_type) %>
+            </li>
+          <% end %>
+        </ul>
         <%= link_to 'Volver', training_plans_path, class: 'btn btn-secondary' %>
       </div>
     </div>
