@@ -4,9 +4,8 @@ export default class extends Controller {
   static targets = ["display", "workoutInput"]
   static values = { toggleId: String }
 
-  select(event) {
-    const value = event.target.value
-    const text = event.target.selectedOptions[0].textContent
+  choose(event) {
+    const { workoutValue: value, workoutText: text } = event.currentTarget.dataset
     this.workoutInputTarget.value = value
     this.displayTarget.textContent = text
     if (this.toggleIdValue) {

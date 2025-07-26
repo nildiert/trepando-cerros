@@ -90,9 +90,12 @@
                 <div class="modal-box relative">
                   <label for="#{modal_id}" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
                   <h3 class="text-lg font-semibold mb-4"><%= t('training_plans.select_activity') %></h3>
-                  <select class="select select-bordered w-full" data-action="change->workout-selector#select">
-                    <%= options_for_select(TrainingPlanDay.workout_types.keys.map { |k| [t("activerecord.attributes.training_plan_day.workout_types.#{k}"), k] }, day_fields.object.workout_type) %>
-                  </select>
+                  <div class="flex flex-col gap-2">
+                    <% TrainingPlanDay.workout_types.keys.each do |k| %>
+                      <% text = t("activerecord.attributes.training_plan_day.workout_types.#{k}") %>
+                      <button type="button" class="btn" data-action="workout-selector#choose" data-workout-value="<%= k %>" data-workout-text="<%= text %>"><%= text %></button>
+                    <% end %>
+                  </div>
                 </div>
               </div>
             </div>
