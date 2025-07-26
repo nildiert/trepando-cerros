@@ -29,6 +29,6 @@ export default class extends Controller {
       intensity: "bg-red-700 hover:bg-red-800 text-white",
       strength: "bg-orange-500 hover:bg-orange-600 text-white",
     }
-    this.displayTarget.className = `badge ${classes[value] || ''}`
+    this.displayTarget.className = `badge rounded-lg ${classes[value] || ''}`
   }
 }
