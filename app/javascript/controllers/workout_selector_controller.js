@@ -21,11 +21,11 @@ export default class extends Controller {
 
   updateAppearance(value) {
     const classes = {
-      rest: "bg-green-300 text-green-800",
-      easy_run: "bg-blue-200 text-blue-800",
-      long_run: "bg-blue-700 text-white",
-      intensity: "bg-orange-200 text-orange-800",
-      strength: "bg-orange-200 text-orange-800",
+      rest: "bg-green-700 text-white",
+      easy_run: "bg-blue-500 text-white",
+      long_run: "bg-blue-800 text-white",
+      intensity: "bg-red-700 text-white",
+      strength: "bg-orange-500 text-white",
     }
     this.displayTarget.className = `badge ${classes[value] || ''}`
   }
