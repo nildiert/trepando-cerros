@@ -10,7 +10,12 @@ abort 'Please set USER_EMAIL with your account email' unless ENV['USER_EMAIL']
 
 coach = User.find_by(email: ENV['USER_EMAIL'])
 abort "User #{ENV['USER_EMAIL']} not found" unless coach
-abort "User #{coach.email} must belong to a club" unless coach.club
+
+# ensure the coach belongs to a club for testing purposes
+unless coach.club
+  club = Club.first_or_create!(name: 'Sample Club')
+  coach.update!(club: club)
+end
 
 normal_role = Role.find_or_create_by!(name: 'normal')
 
