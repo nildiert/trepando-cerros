@@ -18,10 +18,17 @@
                     include_blank: true,
                     class: 'select select-bordered w-full' %>
             </div>
+          <% else %>
+            <%= f.hidden_field :athlete_id %>
           <% end %>
-          <div class="form-control mb-4">
-            <%= f.label :description, 'Descripción', class: 'label' %>
-            <%= f.text_area :description, rows: 4, class: 'textarea textarea-bordered w-full' %>
+          <div class="collapse collapse-arrow bg-base-200 rounded-lg mb-4">
+            <input type="checkbox" />
+            <div class="collapse-title text-sm font-medium">
+              Descripción (opcional)
+            </div>
+            <div class="collapse-content">
+              <%= f.text_area :description, rows: 4, class: 'textarea textarea-bordered w-full' %>
+            </div>
           </div>
           <%= f.fields_for :training_plan_days do |day_fields| %>
             <% modal_id = "workout-modal-#{day_fields.object.day}" %>
