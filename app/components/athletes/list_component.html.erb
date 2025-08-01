@@ -1,0 +1,22 @@
+<div class="card bg-base-100 shadow">
+  <div class="card-body">
+    <h2 class="text-xl font-semibold mb-4">
+      Atletas <%= @club ? "de #{@club.name}" : 'del Club' %>
+    </h2>
+    <% if @athletes.any? %>
+      <%= render Ui::TableComponent.new(headers: ['Nombre']) do %>
+        <% @athletes.each do |athlete| %>
+          <tr>
+            <td>
+              <%= link_to athlete.full_name.presence || athlete.email,
+                          profile_path(athlete),
+                          class: 'link link-primary' %>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    <% else %>
+      <p class="text-gray-600">No hay atletas disponibles.</p>
+    <% end %>
+  </div>
+</div>

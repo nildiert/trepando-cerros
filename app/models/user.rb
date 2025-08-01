@@ -4,6 +4,7 @@ class User < ApplicationRecord
   has_one :profile, dependent: :destroy
   has_many :permissions, dependent: :destroy
   has_many :training_plans, dependent: :destroy
+  has_many :received_training_plans, class_name: 'TrainingPlan', foreign_key: :athlete_id, dependent: :destroy
   has_many :coachings, foreign_key: :coach_id, dependent: :destroy
   has_many :trainees, through: :coachings, source: :athlete
   has_many :inverse_coachings, class_name: 'Coaching', foreign_key: :athlete_id, dependent: :destroy
@@ -11,7 +12,20 @@ class User < ApplicationRecord
 
   delegate :first_name, :last_name, :full_name, to: :profile, allow_nil: true
 
+  after_commit :sync_role_permissions, if: :saved_change_to_role_id?
+
   def permission_enabled?(name)
     permissions.find_by(name: name)&.enabled?
+  end
+
+  private
+
+  def sync_role_permissions
+    return unless role
+
+    role.role_permissions.find_each do |rp|
+      perm = permissions.find_or_initialize_by(name: rp.name)
+      perm.update(enabled: rp.enabled)
+    end
   end
 end

@@ -33,6 +33,8 @@ module ApplicationHelper
   end
 
   def short_date_es(date)
+    return "" unless date
+
     "#{date.day} #{MONTHS_ES_ABBR[date.month - 1]}"
   end
 end

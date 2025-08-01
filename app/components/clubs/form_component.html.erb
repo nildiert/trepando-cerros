@@ -1,0 +1,13 @@
+<%= form_with model: @club do |f| %>
+  <div class="form-control mb-4">
+    <%= f.label :name, 'Nombre', class: 'label' %>
+    <%= f.text_field :name, class: 'input input-bordered w-full' %>
+  </div>
+  <div class="form-control mb-4">
+    <%= f.label :description, 'Descripción', class: 'label' %>
+    <%= f.text_area :description, rows: 4, class: 'textarea textarea-bordered w-full' %>
+  </div>
+  <div class="flex justify-end">
+    <%= f.submit 'Guardar', class: 'btn text-white bg-[#5E81AC] hover:bg-[#4c6b90] border-none' %>
+  </div>
+<% end %>

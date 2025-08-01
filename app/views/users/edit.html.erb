@@ -5,8 +5,17 @@
       <%= f.label :role_id, 'Perfil', class: 'label' %>
       <%= f.select :role_id, @roles.map { |r| [r.name.humanize, r.id] }, include_blank: 'Sin perfil', class: 'select select-bordered w-full capitalize' %>
     </div>
+    <% @permissions.each do |perm| %>
+      <% record = @user.permissions.find_by(name: perm) %>
+      <div class="form-control mb-2">
+        <div class="flex items-center justify-between">
+          <span class="label-text capitalize"><%= perm.tr('_', ' ') %></span>
+          <%= check_box_tag perm, '1', record&.enabled?, class: 'toggle border-red-600 bg-red-500 checked:border-green-600 checked:bg-green-500' %>
+        </div>
+      </div>
+    <% end %>
     <div class="flex justify-end">
-      <%= f.submit 'Guardar', class: 'btn btn-primary' %>
+      <%= f.submit 'Guardar', class: 'btn text-white bg-[#5E81AC] hover:bg-[#4c6b90] border-none' %>
     </div>
   <% end %>
 </div>

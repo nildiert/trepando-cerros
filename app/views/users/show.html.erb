@@ -1,0 +1,20 @@
+<div class="card bg-base-100 shadow">
+  <div class="card-body">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-xl font-semibold"><%= @user.full_name.presence || @user.email %></h2>
+      <% if can? :manage, TrainingPlan %>
+        <%= link_to 'Agregar plan de entrenamiento', new_training_plan_path(athlete_id: @user.id), class: 'btn text-white bg-[#5E81AC] hover:bg-[#4c6b90] border-none' %>
+      <% end %>
+    </div>
+    <p>Email: <%= @user.email %></p>
+    <% if @training_plan %>
+      <h3 class="text-lg font-semibold mt-4">Plan de entrenamiento</h3>
+      <% @training_plan.training_plan_days.order(:day).each do |day| %>
+        <div class="mb-2 rounded-lg p-2 <%= workout_color_class(day.workout_type) %> text-white flex justify-between">
+          <span><%= "#{day.day_name} #{short_date_es(day.date)}" %></span>
+          <span><%= t("activerecord.attributes.training_plan_day.workout_types.#{day.workout_type}") %></span>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

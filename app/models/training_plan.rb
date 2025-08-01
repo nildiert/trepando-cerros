@@ -7,10 +7,20 @@ class TrainingPlan < ApplicationRecord
 
   validates :name, presence: true
   validates :start_date, presence: true
+  validates :end_date, presence: true
+
+  before_validation :set_default_dates, on: :create
 
   def date_for(day_index)
     return nil unless start_date
 
     start_date + day_index
+  end
+
+  private
+
+  def set_default_dates
+    self.start_date ||= Date.current.beginning_of_week(:monday)
+    self.end_date ||= start_date&.end_of_week(:sunday)
   end
 end

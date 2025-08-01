@@ -1,7 +1,7 @@
 <div class="card bg-base-100 shadow">
   <div class="card-body">
         <h2 class="text-xl font-semibold mb-4">Mis Planes de Entrenamiento</h2>
-        <%= link_to 'Nuevo Plan', new_training_plan_path, class: 'btn btn-primary mb-4' %>
+        <%= link_to 'Nuevo Plan', new_training_plan_path, class: 'btn text-white bg-[#5E81AC] hover:bg-[#4c6b90] border-none mb-4' %>
         <% if @training_plans.any? %>
           <ul class="list-disc pl-5">
             <% @training_plans.each do |plan| %>

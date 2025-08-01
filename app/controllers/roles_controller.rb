@@ -1,4 +1,5 @@
 class RolesController < ApplicationController
+  layout 'internal'
   before_action :authenticate_user
   before_action :set_role, only: [:show, :update]
 
@@ -40,7 +41,7 @@ class RolesController < ApplicationController
   end
 
   def available_permissions
-    %w[race_predictor training_plan]
+    RolePermission::AVAILABLE_PERMISSIONS
   end
 
   def role_params

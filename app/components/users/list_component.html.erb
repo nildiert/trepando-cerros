@@ -13,7 +13,7 @@
         <td class="capitalize"><%= user.role&.name || 'Sin perfil' %></td>
         <td>
           <label for="edit-user-<%= user.id %>-modal" class="btn btn-sm">Editar</label>
-          <%= render 'users/edit_modal', user: user, roles: @roles %>
+          <%= render 'users/edit_modal', user: user, roles: @roles, permissions: @permissions %>
         </td>
       </tr>
     <% end %>
