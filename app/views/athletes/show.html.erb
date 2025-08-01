@@ -43,7 +43,7 @@
       <% local_athlete = current_user.trainees.joins(:profile).find_by(profiles: { athlete_id: @athlete.id }) %>
       <% if local_athlete %>
         <div class="flex justify-end">
-          <%= link_to 'Crear plan de entrenamiento', new_training_plan_path(athlete_id: local_athlete.id), class: 'btn btn-primary' %>
+          <%= link_to 'Crear plan de entrenamiento', new_training_plan_path(athlete_id: local_athlete.id), class: 'btn text-white bg-[#5E81AC] hover:bg-[#4c6b90] border-none' %>
         </div>
       <% end %>
     <% end %>
@@ -75,7 +75,7 @@
               <input type="time" data-analysis-target="timeInput" class="input input-bordered">
               <div class="flex justify-end space-x-2 mt-4">
                 <button type="button" data-action="analysis#cancelTime" class="btn">Cancelar</button>
-                <button type="button" data-action="analysis#confirmTime" class="btn btn-primary">Aceptar</button>
+                <button type="button" data-action="analysis#confirmTime" class="btn text-white bg-[#5E81AC] hover:bg-[#4c6b90] border-none">Aceptar</button>
               </div>
             </div>
           <% end %>
@@ -149,7 +149,7 @@
           <form data-action="submit->checkpoints#add" class="mb-4 flex gap-2">
             <input type="text" placeholder="Nombre" data-checkpoints-target="name" class="input input-bordered flex-grow">
             <input type="number" step="0.1" placeholder="Km" data-checkpoints-target="km" class="input input-bordered w-24">
-            <button type="submit" class="btn btn-primary flex items-center gap-1">
+              <button type="submit" class="btn text-white bg-[#5E81AC] hover:bg-[#4c6b90] border-none flex items-center gap-1">
               <i class="fa-solid fa-plus text-primary"></i>
               <span>Agregar</span>
             </button>
@@ -183,7 +183,7 @@
         <div data-tabs-target="panel" class="hidden" data-controller="dropbags" data-dropbags-km-seconds-value='<%= raw(@km_seconds.to_json) %>'>
           <form data-action="submit->dropbags#add" class="mb-4 flex gap-2">
             <input type="number" step="0.1" placeholder="Km" data-dropbags-target="km" class="input input-bordered w-24">
-            <button type="submit" class="btn btn-primary flex items-center gap-1">
+            <button type="submit" class="btn text-white bg-[#5E81AC] hover:bg-[#4c6b90] border-none flex items-center gap-1">
               <i class="fa-solid fa-plus text-primary"></i>
               <span>Agregar</span>
             </button>

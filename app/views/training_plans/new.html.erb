@@ -10,6 +10,10 @@
             <%= f.label :start_date, 'Fecha de inicio', class: 'label' %>
             <%= f.date_field :start_date, class: 'input input-bordered w-full' %>
           </div>
+          <div class="form-control mb-4">
+            <%= f.label :end_date, 'Fecha final', class: 'label' %>
+            <%= f.date_field :end_date, class: 'input input-bordered w-full' %>
+          </div>
           <% if @athletes.any? %>
             <div class="form-control mb-4">
               <%= f.label :athlete_id, 'Corredor', class: 'label' %>
@@ -33,7 +37,7 @@
           <%= f.fields_for :training_plan_days do |day_fields| %>
             <% modal_id = "workout-modal-#{day_fields.object.day}" %>
             <% date = @training_plan.date_for(day_fields.object.day) %>
-            <div class="form-control mb-4 border border-base-300 rounded-lg p-2 <%= workout_border_class(day_fields.object.workout_type) %>" data-controller="workout-selector" data-workout-selector-toggle-id-value="<%= modal_id %>" data-workout-selector-title-value="<%= t('training_plans.select_activity_for', date: "#{TrainingPlanDay::DAYS_OF_WEEK[day_fields.object.day]} #{short_date_es(date)}") %>">
+              <div class="form-control mb-4 rounded-lg p-2 <%= workout_color_class(day_fields.object.workout_type) %>" data-controller="workout-selector" data-workout-selector-toggle-id-value="<%= modal_id %>" data-workout-selector-title-value="<%= t('training_plans.select_activity_for', date: "#{TrainingPlanDay::DAYS_OF_WEEK[day_fields.object.day]} #{short_date_es(date)}") %>">
               <%= day_fields.hidden_field :day %>
               <%= day_fields.hidden_field :workout_type, value: day_fields.object.workout_type, data: { workout_selector_target: 'workoutInput' } %>
               <label for="<%= modal_id %>" class="label cursor-pointer" data-action="click->workout-selector#open">
@@ -58,7 +62,7 @@
             </div>
           <% end %>
           <div class="flex justify-end">
-            <%= f.submit 'Guardar', class: 'btn btn-primary' %>
+            <%= f.submit 'Guardar', class: 'btn text-white bg-[#5E81AC] hover:bg-[#4c6b90] border-none' %>
           </div>
         <% end %>
       </div>

@@ -35,21 +35,22 @@ export default class extends Controller {
       intensity: "bg-[#BF616A] hover:bg-[#a04c54] text-white",
       strength: "bg-[#D08770] hover:bg-[#b36f5d] text-white",
     }
-    const borders = {
-      rest: "border-[#A3BE8C]",
-      easy_run: "border-[#8FBCBB]",
-      long_run: "border-[#5E81AC]",
-      intensity: "border-[#BF616A]",
-      strength: "border-[#D08770]",
-    }
     this.displayTarget.className = `badge rounded-lg ${classes[value] || ''}`
     this.element.classList.remove(
-      "border-[#A3BE8C]",
-      "border-[#8FBCBB]",
-      "border-[#5E81AC]",
-      "border-[#BF616A]",
-      "border-[#D08770]",
+      "bg-[#A3BE8C]",
+      "bg-[#8FBCBB]",
+      "bg-[#5E81AC]",
+      "bg-[#BF616A]",
+      "bg-[#D08770]",
+      "hover:bg-[#8CA877]",
+      "hover:bg-[#7aa9a8]",
+      "hover:bg-[#4c6b90]",
+      "hover:bg-[#a04c54]",
+      "hover:bg-[#b36f5d]",
+      "text-white"
     )
-    if (borders[value]) this.element.classList.add(borders[value])
+    if (classes[value]) {
+      this.element.classList.add(...classes[value].split(" "))
+    }
   }
 }

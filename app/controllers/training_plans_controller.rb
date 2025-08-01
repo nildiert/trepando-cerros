@@ -23,6 +23,7 @@ class TrainingPlansController < ApplicationController
       @athletes = current_user.trainees
     end
     @training_plan.start_date = Date.current.beginning_of_week(:monday)
+    @training_plan.end_date = @training_plan.start_date.end_of_week(:sunday)
     TrainingPlanDay::DAYS_OF_WEEK.each_index do |i|
       # initialize every day as rest
       @training_plan.training_plan_days.build(day: i, workout_type: :rest)
@@ -34,7 +35,11 @@ class TrainingPlansController < ApplicationController
     @training_plan = current_user.training_plans.new(training_plan_params)
     @athletes = current_user.trainees
     if @training_plan.save
-      redirect_to @training_plan, notice: 'Plan creado'
+      if @training_plan.athlete_id
+        redirect_to profile_path(@training_plan.athlete_id), notice: 'Plan creado'
+      else
+        redirect_to @training_plan, notice: 'Plan creado'
+      end
     else
       render :new, status: :unprocessable_entity
     end
@@ -67,6 +72,7 @@ class TrainingPlansController < ApplicationController
       :name,
       :description,
       :start_date,
+      :end_date,
       :athlete_id,
       training_plan_days_attributes: %i[id day workout_type _destroy]
     )

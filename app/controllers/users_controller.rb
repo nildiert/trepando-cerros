@@ -34,6 +34,7 @@ class UsersController < ApplicationController
 
   def show
     authorize! :manage, :athletes
+    @training_plan = @user.training_plans.order(start_date: :desc).first
   end
 
   private

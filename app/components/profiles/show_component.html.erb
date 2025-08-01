@@ -9,5 +9,15 @@
       <% end %>
     </div>
     <p>Email: <%= @user.email %></p>
+    <% plan = @user.training_plans.order(start_date: :desc).first %>
+    <% if plan %>
+      <h3 class="text-lg font-semibold mt-4">Plan de entrenamiento</h3>
+      <% plan.training_plan_days.order(:day).each do |day| %>
+        <div class="mb-2 rounded-lg p-2 <%= workout_color_class(day.workout_type) %> text-white flex justify-between">
+          <span><%= "#{day.day_name} #{short_date_es(day.date)}" %></span>
+          <span><%= t("activerecord.attributes.training_plan_day.workout_types.#{day.workout_type}") %></span>
+        </div>
+      <% end %>
+    <% end %>
   </div>
 </div>
