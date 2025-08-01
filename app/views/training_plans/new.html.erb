@@ -55,7 +55,7 @@
                 <div class="modal-box relative rounded-xl">
                   <label for="<%= modal_id %>" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
                   <h3 class="text-lg font-semibold mb-4" data-workout-selector-target="modalTitle"><%= t('training_plans.select_activity') %></h3>
-                  <div class="flex flex-col gap-2">
+                  <div class="flex flex-col gap-2" data-workout-selector-target="workoutContainer">
                     <% TrainingPlanDay.workout_types.keys.each do |k| %>
                       <% text = t("activerecord.attributes.training_plan_day.workout_types.#{k}") %>
                       <button type="button" class="btn <%= workout_color_class(k) %> rounded-lg" data-action="click->workout-selector#choose" data-workout-value="<%= k %>" data-workout-text="<%= text %>"><%= text %></button>

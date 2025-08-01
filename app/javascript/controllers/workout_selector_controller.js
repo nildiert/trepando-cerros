@@ -6,6 +6,7 @@ export default class extends Controller {
     "workoutInput",
     "phaseInput",
     "phaseDisplay",
+    "workoutContainer",
     "phaseContainer",
     "modalTitle",
   ]
@@ -13,9 +14,8 @@ export default class extends Controller {
 
   connect() {
     this.updateAppearance(this.workoutInputTarget.value)
-    if (this.hasPhaseContainerTarget) {
-      this.phaseContainerTarget.classList.add("hidden")
-    }
+    if (this.hasPhaseContainerTarget) this.phaseContainerTarget.classList.add("hidden")
+    if (this.hasWorkoutContainerTarget) this.workoutContainerTarget.classList.remove("hidden")
   }
 
   choose(event) {
@@ -25,9 +25,8 @@ export default class extends Controller {
     this.workoutInputTarget.value = value
     this.displayTarget.textContent = text
     this.updateAppearance(value)
-    if (this.hasPhaseContainerTarget) {
-      this.phaseContainerTarget.classList.remove("hidden")
-    }
+    if (this.hasPhaseContainerTarget) this.phaseContainerTarget.classList.remove("hidden")
+    if (this.hasWorkoutContainerTarget) this.workoutContainerTarget.classList.add("hidden")
   }
 
   choosePhase(event) {
@@ -39,12 +38,16 @@ export default class extends Controller {
       const toggle = document.getElementById(this.toggleIdValue)
       if (toggle) toggle.checked = false
     }
+    if (this.hasWorkoutContainerTarget) this.workoutContainerTarget.classList.remove("hidden")
+    if (this.hasPhaseContainerTarget) this.phaseContainerTarget.classList.add("hidden")
   }
 
   open() {
     if (this.hasModalTitleTarget && this.hasTitleValue) {
       this.modalTitleTarget.textContent = this.titleValue
     }
+    if (this.hasWorkoutContainerTarget) this.workoutContainerTarget.classList.remove("hidden")
+    if (this.hasPhaseContainerTarget) this.phaseContainerTarget.classList.add("hidden")
   }
 
   updateAppearance(value) {
