@@ -4,6 +4,7 @@ Esta aplicación usa permisos y otras verificaciones para decidir cuándo mostra
 
 ## Icono "Calcular Carrera"
 - **Requisito:** que exista `session[:strava_token]`.
+- Los administradores pueden verlo siempre gracias a su habilidad `:use` sobre `:race_predictor`.
 - Si el usuario ha conectado Strava, en el menú lateral aparece la opción *Calcular Carrera*.
 
 ## Icono "Planes"
@@ -21,3 +22,4 @@ Esta aplicación usa permisos y otras verificaciones para decidir cuándo mostra
 - Cuando se cumplen ambos puntos, aparece un botón que enlaza a `new_training_plan_path`.
 
 Estas verificaciones están implementadas en las vistas con condicionales `if` y en el modelo `Ability` mediante CanCanCan.
+Los administradores reciben `can :manage, :all`, por lo que siempre ven todas las funciones.
