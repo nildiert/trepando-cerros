@@ -1,0 +1,26 @@
+<% if @clubs.any? %>
+  <div class="overflow-x-auto">
+    <table class="table w-full">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Entrenadores</th>
+          <th>Atletas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @clubs.each do |club| %>
+          <tr>
+            <td class="font-medium"><%= club.name %></td>
+            <td><%= club.description %></td>
+            <td><%= club.coaches.map { |c| c.full_name.presence || c.email }.to_sentence.presence || '-' %></td>
+            <td><%= club.users.joins(:role).where(roles: { name: 'normal' }).count %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <p class="text-gray-600">No hay clubes registrados.</p>
+<% end %>
