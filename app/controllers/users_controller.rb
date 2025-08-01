@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user
-  before_action :set_user, only: [:edit, :update]
+  before_action :set_user, only: [:edit, :update, :show]
 
   def index
     authorize! :manage, :settings
@@ -29,6 +29,10 @@ class UsersController < ApplicationController
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def show
+    authorize! :manage, :athletes
   end
 
   private

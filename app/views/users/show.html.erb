@@ -1,0 +1,11 @@
+<div class="card bg-base-100 shadow">
+  <div class="card-body">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-xl font-semibold"><%= @user.full_name.presence || @user.email %></h2>
+      <% if can? :manage, TrainingPlan %>
+        <%= link_to 'Agregar plan de entrenamiento', new_training_plan_path(athlete_id: @user.id), class: 'btn btn-primary' %>
+      <% end %>
+    </div>
+    <p>Email: <%= @user.email %></p>
+  </div>
+</div>

@@ -6,7 +6,11 @@
     <% if @athletes.any? %>
       <ul class="list-disc pl-5">
         <% @athletes.each do |athlete| %>
-          <li><%= athlete.full_name.presence || athlete.email %></li>
+          <li>
+            <%= link_to athlete.full_name.presence || athlete.email,
+                        user_path(athlete),
+                        class: 'link link-primary' %>
+          </li>
         <% end %>
       </ul>
     <% else %>

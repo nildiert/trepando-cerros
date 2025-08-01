@@ -19,10 +19,20 @@
             <td>
               <%= link_to club.users.joins(:role).where(roles: { name: 'normal' }).count, athletes_path(club_id: club.id), class: 'link link-primary' %>
             </td>
-            <td>
+            <td class="flex gap-2">
               <% if helpers.can? :manage, Club %>
-                <%= link_to club_path(club), method: :delete, data: { turbo_confirm: '¿Eliminar club?' }, class: 'text-error', title: 'Eliminar' do %>
+                <%= link_to club_path(club), method: :delete,
+                            data: { turbo_confirm: '¿Eliminar club?' },
+                            class: 'text-error',
+                            title: 'Eliminar' do %>
                   <i class="fa-solid fa-trash"></i>
+                <% end %>
+                <% if club.coaches.none? %>
+                  <%= link_to coaches_path(club_id: club.id),
+                              class: 'text-info',
+                              title: 'Asignar entrenador' do %>
+                    <i class="fa-solid fa-user-plus"></i>
+                  <% end %>
                 <% end %>
               <% end %>
             </td>
