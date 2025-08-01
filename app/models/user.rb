@@ -11,7 +11,20 @@ class User < ApplicationRecord
 
   delegate :first_name, :last_name, :full_name, to: :profile, allow_nil: true
 
+  after_commit :sync_role_permissions, if: :saved_change_to_role_id?
+
   def permission_enabled?(name)
     permissions.find_by(name: name)&.enabled?
+  end
+
+  private
+
+  def sync_role_permissions
+    return unless role
+
+    role.role_permissions.find_each do |rp|
+      perm = permissions.find_or_initialize_by(name: rp.name)
+      perm.update(enabled: rp.enabled)
+    end
   end
 end
