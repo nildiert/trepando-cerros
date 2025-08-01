@@ -14,9 +14,7 @@ export default class extends Controller {
   connect() {
     this.updateAppearance(this.workoutInputTarget.value)
     if (this.hasPhaseContainerTarget) {
-      if (this.phaseInputTarget.value) {
-        this.phaseContainerTarget.classList.remove("hidden")
-      }
+      this.phaseContainerTarget.classList.add("hidden")
     }
   }
 
@@ -29,10 +27,6 @@ export default class extends Controller {
     this.updateAppearance(value)
     if (this.hasPhaseContainerTarget) {
       this.phaseContainerTarget.classList.remove("hidden")
-    }
-    if (this.toggleIdValue) {
-      const toggle = document.getElementById(this.toggleIdValue)
-      if (toggle) toggle.checked = false
     }
   }
 
