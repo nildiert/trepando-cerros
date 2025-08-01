@@ -17,6 +17,9 @@ gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
+# Reusable view components for Rails [https://viewcomponent.org/]
+gem "view_component"
+
 # Access the Strava API via https://github.com/dblock/strava-ruby-client
 gem "strava-ruby-client"
 gem "cancancan"

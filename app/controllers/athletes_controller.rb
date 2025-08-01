@@ -1,4 +1,5 @@
 class AthletesController < ApplicationController
+  layout 'internal'
   before_action :authenticate_user
   before_action :authorize_trainer, only: [:index]
 

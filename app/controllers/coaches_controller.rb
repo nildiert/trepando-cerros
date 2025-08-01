@@ -1,4 +1,5 @@
 class CoachesController < ApplicationController
+  layout 'internal'
   before_action :authenticate_user
   before_action :set_athlete
   before_action :authorize_admin, only: [:index]

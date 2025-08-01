@@ -1,4 +1,5 @@
 class TrainingPlansController < ApplicationController
+  layout 'internal'
   before_action :authenticate_user
   before_action :set_training_plan, only: [:show]
   before_action :set_athlete
