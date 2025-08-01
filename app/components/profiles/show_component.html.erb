@@ -11,13 +11,20 @@
     <p>Email: <%= @user.email %></p>
     <% plan = @user.received_training_plans.order(start_date: :desc).first %>
     <% if plan %>
-      <h3 class="text-lg font-semibold mt-4">Plan de entrenamiento</h3>
-      <% plan.training_plan_days.order(:day).each do |day| %>
-        <div class="mb-2 rounded-lg p-2 <%= helpers.workout_color_class(day.workout_type) %> text-white flex justify-between">
-          <span><%= "#{day.day_name} #{helpers.short_date_es(day.date)}" %></span>
-          <span><%= t("activerecord.attributes.training_plan_day.workout_types.#{day.workout_type}") %></span>
+      <div class="card bg-base-200 shadow mt-4">
+        <div class="card-body">
+          <h3 class="text-lg font-semibold mb-2">
+            Plan de entrenamiento
+            <%= "#{helpers.short_date_es(plan.start_date)} - #{helpers.short_date_es(plan.end_date)}" %>
+          </h3>
+          <% plan.training_plan_days.order(:day).each do |day| %>
+            <div class="mb-2 rounded-lg p-2 <%= helpers.workout_color_class(day.workout_type) %> text-white flex justify-between">
+              <span><%= "#{day.day_name} #{helpers.short_date_es(day.date)}" %></span>
+              <span><%= t("activerecord.attributes.training_plan_day.workout_types.#{day.workout_type}") %></span>
+            </div>
+          <% end %>
         </div>
-      <% end %>
+      </div>
     <% end %>
   </div>
 </div>
