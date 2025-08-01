@@ -1,8 +1,8 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["display", "workoutInput"]
-  static values = { toggleId: String }
+  static targets = ["display", "workoutInput", "modalTitle"]
+  static values = { toggleId: String, title: String }
 
   connect() {
     this.updateAppearance(this.workoutInputTarget.value)
@@ -18,6 +18,12 @@ export default class extends Controller {
     if (this.toggleIdValue) {
       const toggle = document.getElementById(this.toggleIdValue)
       if (toggle) toggle.checked = false
+    }
+  }
+
+  open() {
+    if (this.hasModalTitleTarget && this.hasTitleValue) {
+      this.modalTitleTarget.textContent = this.titleValue
     }
   }
 
