@@ -17,7 +17,7 @@
             <td><%= club.description %></td>
             <td><%= club.coaches.map { |c| c.full_name.presence || c.email }.to_sentence.presence || '-' %></td>
             <td>
-              <%= link_to club.users.joins(:role).where(roles: { name: 'normal' }).count, athletes_path, class: 'link link-primary' %>
+              <%= link_to club.users.joins(:role).where(roles: { name: 'normal' }).count, athletes_path(club_id: club.id), class: 'link link-primary' %>
             </td>
             <td>
               <% if helpers.can? :manage, Club %>

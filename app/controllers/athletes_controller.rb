@@ -5,8 +5,9 @@ class AthletesController < ApplicationController
 
   def index
     authorize! :manage, :athletes
-    @athletes = if current_user.club
-      current_user.club.users.joins(:role).where(roles: { name: 'normal' })
+    @club = Club.find_by(id: params[:club_id]) || current_user.club
+    @athletes = if @club
+      @club.users.joins(:role).where(roles: { name: 'normal' })
     else
       []
     end
@@ -40,7 +41,7 @@ class AthletesController < ApplicationController
   private
 
   def authorize_trainer
-    redirect_to root_path, alert: 'No autorizado' unless current_user.role&.name == 'trainer'
+    redirect_to dashboard_path, alert: 'No autorizado' unless can?(:manage, :athletes)
   end
 
   def fetch_athlete(id = nil)
