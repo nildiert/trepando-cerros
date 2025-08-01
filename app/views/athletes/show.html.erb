@@ -39,6 +39,14 @@
   </aside>
 
   <div class="flex-1 space-y-6">
+    <% if can?(:manage, TrainingPlan) && @athlete.present? %>
+      <% local_athlete = current_user.trainees.joins(:profile).find_by(profiles: { athlete_id: @athlete.id }) %>
+      <% if local_athlete %>
+        <div class="flex justify-end">
+          <%= link_to 'Crear plan de entrenamiento', new_training_plan_path(athlete_id: local_athlete.id), class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    <% end %>
     <div class="space-y-6">
     <% if @athlete.present? %>
       <% if can? :use, :race_predictor %>

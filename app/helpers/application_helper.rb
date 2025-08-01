@@ -1,19 +1,19 @@
 module ApplicationHelper
   MONTHS_ES_ABBR = %w[Ene Feb Mar Abr May Jun Jul Ago Sep Oct Nov Dic].freeze
   WORKOUT_COLOR_CLASSES = {
-    'rest' => 'bg-green-700 hover:bg-green-800 text-white',
-    'easy_run' => 'bg-blue-500 hover:bg-blue-600 text-white',
-    'long_run' => 'bg-blue-800 hover:bg-blue-900 text-white',
-    'intensity' => 'bg-red-700 hover:bg-red-800 text-white',
-    'strength' => 'bg-orange-500 hover:bg-orange-600 text-white'
+    'rest' => 'bg-[#A3BE8C] hover:bg-[#8CA877] text-white',
+    'easy_run' => 'bg-[#8FBCBB] hover:bg-[#7aa9a8] text-white',
+    'long_run' => 'bg-[#5E81AC] hover:bg-[#4c6b90] text-white',
+    'intensity' => 'bg-[#BF616A] hover:bg-[#a04c54] text-white',
+    'strength' => 'bg-[#D08770] hover:bg-[#b36f5d] text-white'
   }.freeze
 
   WORKOUT_BORDER_CLASSES = {
-    'rest' => 'border-green-700',
-    'easy_run' => 'border-blue-500',
-    'long_run' => 'border-blue-800',
-    'intensity' => 'border-red-700',
-    'strength' => 'border-orange-500'
+    'rest' => 'border-[#A3BE8C]',
+    'easy_run' => 'border-[#8FBCBB]',
+    'long_run' => 'border-[#5E81AC]',
+    'intensity' => 'border-[#BF616A]',
+    'strength' => 'border-[#D08770]'
   }.freeze
 
   def workout_color_class(type)
