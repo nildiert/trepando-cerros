@@ -1,15 +1,36 @@
 <div class="card bg-base-100 shadow">
   <div class="card-body">
         <h2 class="text-xl font-semibold mb-4">Clubes</h2>
+        <% if can? :manage, Club %>
+          <%= link_to 'Nuevo Club', new_club_path, class: 'btn btn-primary mb-4' %>
+        <% end %>
         <% if @clubs.any? %>
-          <ul class="list-disc pl-5 space-y-2">
-            <% @clubs.each do |club| %>
-              <li>
-                <h3 class="font-medium"><%= club.name %></h3>
-                <p class="text-gray-600"><%= club.description %></p>
-              </li>
-            <% end %>
-          </ul>
+          <div class="overflow-x-auto">
+            <table class="table w-full">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Descripción</th>
+                  <th>Entrenadores</th>
+                  <th>Atletas</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @clubs.each do |club| %>
+                  <tr>
+                    <td class="font-medium"><%= club.name %></td>
+                    <td><%= club.description %></td>
+                    <td>
+                      <%= club.coaches.map { |c| c.full_name.presence || c.email }.to_sentence.presence || '-' %>
+                    </td>
+                    <td>
+                      <%= club.users.joins(:role).where(roles: { name: 'normal' }).count %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
         <% else %>
           <p class="text-gray-600">No hay clubes registrados.</p>
         <% end %>
