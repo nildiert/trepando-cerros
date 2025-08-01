@@ -6,4 +6,11 @@ class TrainingPlan < ApplicationRecord
   accepts_nested_attributes_for :training_plan_days, allow_destroy: true
 
   validates :name, presence: true
+  validates :start_date, presence: true
+
+  def date_for(day_index)
+    return nil unless start_date
+
+    start_date + day_index
+  end
 end

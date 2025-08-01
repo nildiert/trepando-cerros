@@ -40,3 +40,7 @@ en:
           rest: "Descanso"
   training_plans:
     select_activity: "Seleccione una actividad"
+    select_activity_for: "Seleccione una actividad para %{date}"
+  date:
+    formats:
+      short_es: "%d %b"

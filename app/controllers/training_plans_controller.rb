@@ -16,6 +16,7 @@ class TrainingPlansController < ApplicationController
     authorize! :manage, TrainingPlan
     @training_plan = current_user.training_plans.new
     @athletes = current_user.trainees
+    @training_plan.start_date = Date.current.beginning_of_week(:monday)
     TrainingPlanDay::DAYS_OF_WEEK.each_index do |i|
       # initialize every day as rest
       @training_plan.training_plan_days.build(day: i, workout_type: :rest)
@@ -59,6 +60,7 @@ class TrainingPlansController < ApplicationController
     params.require(:training_plan).permit(
       :name,
       :description,
+      :start_date,
       :athlete_id,
       training_plan_days_attributes: %i[id day workout_type _destroy]
     )

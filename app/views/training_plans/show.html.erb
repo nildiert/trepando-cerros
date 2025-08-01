@@ -60,7 +60,7 @@
         <ul class="list-disc pl-6 mb-4">
           <% @training_plan.training_plan_days.order(:day).each do |day| %>
             <li>
-              <strong><%= day.day_name %>:</strong>
+              <strong><%= "#{day.day_name} #{short_date_es(day.date)}" %>:</strong>
               <%= workout_badge(day.workout_type) %>
             </li>
           <% end %>

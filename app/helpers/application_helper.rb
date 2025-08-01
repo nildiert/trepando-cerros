@@ -1,4 +1,5 @@
 module ApplicationHelper
+  MONTHS_ES_ABBR = %w[Ene Feb Mar Abr May Jun Jul Ago Sep Oct Nov Dic].freeze
   WORKOUT_COLOR_CLASSES = {
     'rest' => 'bg-green-700 hover:bg-green-800 text-white',
     'easy_run' => 'bg-blue-500 hover:bg-blue-600 text-white',
@@ -29,5 +30,9 @@ module ApplicationHelper
       t("activerecord.attributes.training_plan_day.workout_types.#{type}"),
       class: "badge #{workout_color_class(type)}"
     )
+  end
+
+  def short_date_es(date)
+    "#{date.day} #{MONTHS_ES_ABBR[date.month - 1]}"
   end
 end

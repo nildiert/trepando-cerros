@@ -19,4 +19,8 @@ class TrainingPlanDay < ApplicationRecord
   def day_name
     DAYS_OF_WEEK[day]
   end
+
+  def date
+    training_plan&.date_for(day)
+  end
 end
