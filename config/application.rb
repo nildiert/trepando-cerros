@@ -26,5 +26,8 @@ module TrepandoCerros
 
     # Autocarga servicios personalizados en app/services
     config.eager_load_paths << Rails.root.join("app/services")
+
+    # Autocarga componentes de ViewComponent
+    config.autoload_paths << Rails.root.join("app/components")
   end
 end
