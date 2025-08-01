@@ -4,6 +4,7 @@ class User < ApplicationRecord
   has_one :profile, dependent: :destroy
   has_many :permissions, dependent: :destroy
   has_many :training_plans, dependent: :destroy
+  has_many :received_training_plans, class_name: 'TrainingPlan', foreign_key: :athlete_id, dependent: :destroy
   has_many :coachings, foreign_key: :coach_id, dependent: :destroy
   has_many :trainees, through: :coachings, source: :athlete
   has_many :inverse_coachings, class_name: 'Coaching', foreign_key: :athlete_id, dependent: :destroy
