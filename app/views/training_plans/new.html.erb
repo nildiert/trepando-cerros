@@ -81,19 +81,19 @@
           <%= f.fields_for :training_plan_days do |day_fields| %>
             <% modal_id = "workout-modal-#{day_fields.object.day}" %>
             <% date = @training_plan.date_for(day_fields.object.day) %>
-            <div class="form-control mb-4 border border-base-300 rounded-lg p-2 <%= workout_border_class(day_fields.object.workout_type) %>" data-controller="workout-selector" data-workout-selector-toggle-id-value="#{modal_id}" data-workout-selector-title-value="<%= t('training_plans.select_activity_for', date: "#{TrainingPlanDay::DAYS_OF_WEEK[day_fields.object.day]} #{short_date_es(date)}") %>">
+            <div class="form-control mb-4 border border-base-300 rounded-lg p-2 <%= workout_border_class(day_fields.object.workout_type) %>" data-controller="workout-selector" data-workout-selector-toggle-id-value="<%= modal_id %>" data-workout-selector-title-value="<%= t('training_plans.select_activity_for', date: "#{TrainingPlanDay::DAYS_OF_WEEK[day_fields.object.day]} #{short_date_es(date)}") %>">
               <%= day_fields.hidden_field :day %>
               <%= day_fields.hidden_field :workout_type, value: day_fields.object.workout_type, data: { workout_selector_target: 'workoutInput' } %>
-              <label for="#{modal_id}" class="label cursor-pointer" data-action="click->workout-selector#open">
+              <label for="<%= modal_id %>" class="label cursor-pointer" data-action="click->workout-selector#open">
                 <span class="label-text"><%= "#{TrainingPlanDay::DAYS_OF_WEEK[day_fields.object.day]} #{short_date_es(date)}" %>:</span>
                 <span data-workout-selector-target="display" class="<%= workout_color_class(day_fields.object.workout_type) %> badge rounded-lg">
                   <%= t("activerecord.attributes.training_plan_day.workout_types.#{day_fields.object.workout_type}") %>
                 </span>
               </label>
-              <input type="checkbox" id="#{modal_id}" class="modal-toggle" />
+              <input type="checkbox" id="<%= modal_id %>" class="modal-toggle" />
               <div class="modal">
                 <div class="modal-box relative rounded-xl">
-                  <label for="#{modal_id}" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+                  <label for="<%= modal_id %>" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
                   <h3 class="text-lg font-semibold mb-4" data-workout-selector-target="modalTitle"><%= t('training_plans.select_activity') %></h3>
                   <div class="flex flex-col gap-2">
                     <% TrainingPlanDay.workout_types.keys.each do |k| %>
