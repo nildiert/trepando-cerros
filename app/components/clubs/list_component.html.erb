@@ -7,6 +7,7 @@
           <th>Descripción</th>
           <th>Entrenadores</th>
           <th>Atletas</th>
+          <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
@@ -15,7 +16,14 @@
             <td class="font-medium"><%= club.name %></td>
             <td><%= club.description %></td>
             <td><%= club.coaches.map { |c| c.full_name.presence || c.email }.to_sentence.presence || '-' %></td>
-            <td><%= club.users.joins(:role).where(roles: { name: 'normal' }).count %></td>
+            <td>
+              <%= link_to club.users.joins(:role).where(roles: { name: 'normal' }).count, athletes_path, class: 'link link-primary' %>
+            </td>
+            <td>
+              <% if helpers.can? :manage, Club %>
+                <%= button_to 'Eliminar', club_path(club), method: :delete, data: { turbo_confirm: '¿Eliminar club?' }, class: 'btn btn-error btn-sm' %>
+              <% end %>
+            </td>
           </tr>
         <% end %>
       </tbody>

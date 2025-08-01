@@ -21,6 +21,13 @@ class ClubsController < ApplicationController
     end
   end
 
+  def destroy
+    authorize! :manage, Club
+    club = Club.find(params[:id])
+    club.destroy
+    redirect_to clubs_path, notice: 'Club eliminado'
+  end
+
   private
 
   def club_params
