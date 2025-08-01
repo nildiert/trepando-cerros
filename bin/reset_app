@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -e
+
+# Reset the database and seed initial data
+bin/rails db:drop db:create db:migrate db:seed
+
+# Remove uploaded files
+rm -rf storage/*
+
+echo "Application reset complete."
