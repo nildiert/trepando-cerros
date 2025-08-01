@@ -1,11 +1,23 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["display", "workoutInput", "modalTitle"]
+  static targets = [
+    "display",
+    "workoutInput",
+    "phaseInput",
+    "phaseDisplay",
+    "phaseContainer",
+    "modalTitle",
+  ]
   static values = { toggleId: String, title: String }
 
   connect() {
     this.updateAppearance(this.workoutInputTarget.value)
+    if (this.hasPhaseContainerTarget) {
+      if (this.phaseInputTarget.value) {
+        this.phaseContainerTarget.classList.remove("hidden")
+      }
+    }
   }
 
   choose(event) {
@@ -15,6 +27,20 @@ export default class extends Controller {
     this.workoutInputTarget.value = value
     this.displayTarget.textContent = text
     this.updateAppearance(value)
+    if (this.hasPhaseContainerTarget) {
+      this.phaseContainerTarget.classList.remove("hidden")
+    }
+    if (this.toggleIdValue) {
+      const toggle = document.getElementById(this.toggleIdValue)
+      if (toggle) toggle.checked = false
+    }
+  }
+
+  choosePhase(event) {
+    event.preventDefault()
+    const { phaseValue: value, phaseText: text } = event.currentTarget.dataset
+    if (this.hasPhaseInputTarget) this.phaseInputTarget.value = value
+    if (this.hasPhaseDisplayTarget) this.phaseDisplayTarget.textContent = text
     if (this.toggleIdValue) {
       const toggle = document.getElementById(this.toggleIdValue)
       if (toggle) toggle.checked = false

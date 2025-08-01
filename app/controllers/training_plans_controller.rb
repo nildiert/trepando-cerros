@@ -26,7 +26,11 @@ class TrainingPlansController < ApplicationController
     @training_plan.end_date = @training_plan.start_date.end_of_week(:sunday)
     TrainingPlanDay::DAYS_OF_WEEK.each_index do |i|
       # initialize every day as rest
-      @training_plan.training_plan_days.build(day: i, workout_type: :rest)
+      @training_plan.training_plan_days.build(
+        day: i,
+        workout_type: :rest,
+        activity_phase: :rest
+      )
     end
   end
 
@@ -74,7 +78,7 @@ class TrainingPlansController < ApplicationController
       :start_date,
       :end_date,
       :athlete_id,
-      training_plan_days_attributes: %i[id day workout_type _destroy]
+      training_plan_days_attributes: %i[id day workout_type activity_phase _destroy]
     )
   end
 end

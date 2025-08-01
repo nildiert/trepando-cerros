@@ -40,10 +40,14 @@
               <div class="form-control mb-4 rounded-lg p-2 <%= workout_color_class(day_fields.object.workout_type) %>" data-controller="workout-selector" data-workout-selector-toggle-id-value="<%= modal_id %>" data-workout-selector-title-value="<%= t('training_plans.select_activity_for', date: "#{TrainingPlanDay::DAYS_OF_WEEK[day_fields.object.day]} #{short_date_es(date)}") %>">
               <%= day_fields.hidden_field :day %>
               <%= day_fields.hidden_field :workout_type, value: day_fields.object.workout_type, data: { workout_selector_target: 'workoutInput' } %>
+              <%= day_fields.hidden_field :activity_phase, value: day_fields.object.activity_phase, data: { workout_selector_target: 'phaseInput' } %>
               <label for="<%= modal_id %>" class="label cursor-pointer" data-action="click->workout-selector#open">
                 <span class="label-text"><%= "#{TrainingPlanDay::DAYS_OF_WEEK[day_fields.object.day]} #{short_date_es(date)}" %>:</span>
                 <span data-workout-selector-target="display" class="<%= workout_color_class(day_fields.object.workout_type) %> badge rounded-lg">
                   <%= t("activerecord.attributes.training_plan_day.workout_types.#{day_fields.object.workout_type}") %>
+                </span>
+                <span data-workout-selector-target="phaseDisplay" class="badge badge-outline ml-2">
+                  <%= t("activerecord.attributes.training_plan_day.activity_phases.#{day_fields.object.activity_phase}") %>
                 </span>
               </label>
               <input type="checkbox" id="<%= modal_id %>" class="modal-toggle" />
@@ -55,6 +59,12 @@
                     <% TrainingPlanDay.workout_types.keys.each do |k| %>
                       <% text = t("activerecord.attributes.training_plan_day.workout_types.#{k}") %>
                       <button type="button" class="btn <%= workout_color_class(k) %> rounded-lg" data-action="click->workout-selector#choose" data-workout-value="<%= k %>" data-workout-text="<%= text %>"><%= text %></button>
+                    <% end %>
+                  </div>
+                  <div data-workout-selector-target="phaseContainer" class="flex flex-col gap-2 mt-4 hidden">
+                    <% TrainingPlanDay.activity_phases.keys.each do |p| %>
+                      <% text = t("activerecord.attributes.training_plan_day.activity_phases.#{p}") %>
+                      <button type="button" class="btn btn-outline rounded-lg" data-action="click->workout-selector#choosePhase" data-phase-value="<%= p %>" data-phase-text="<%= text %>"><%= text %></button>
                     <% end %>
                   </div>
                 </div>

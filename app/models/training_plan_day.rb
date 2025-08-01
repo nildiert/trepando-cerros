@@ -11,8 +11,19 @@ class TrainingPlanDay < ApplicationRecord
        },
        prefix: true
 
+  enum :activity_phase,
+       {
+         warm_up: 0,
+         workout: 1,
+         rest: 2,
+         cool_down: 3,
+         interval: 4
+       },
+       prefix: true
+
   validates :day, inclusion: { in: 0..6 }
   validates :workout_type, presence: true
+  validates :activity_phase, presence: true
 
   DAYS_OF_WEEK = %w[Lunes Martes Miércoles Jueves Viernes Sábado Domingo].freeze
 
