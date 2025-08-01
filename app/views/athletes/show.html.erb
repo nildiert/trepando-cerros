@@ -1,7 +1,7 @@
 <div class="container mx-auto p-4 flex gap-6" data-controller="analysis">
   <aside class="w-48 space-y-2">
     <ul class="menu bg-base-100 p-2 rounded-box">
-      <% if session[:strava_token].present? %>
+      <% if session[:strava_token].present? || can?(:use, :race_predictor) %>
         <li>
           <%= link_to race_predictor_path, class: ["flex items-center gap-2", (current_page?(race_predictor_path) ? "active" : nil)].compact.join(' ') do %>
             <i class="fa-solid fa-chart-line"></i>
@@ -19,7 +19,7 @@
         <li>
           <%= link_to athletes_path, class: ["flex items-center gap-2", (current_page?(athletes_path) ? "active" : nil)].compact.join(' ') do %>
             <i class="fa-solid fa-users"></i>
-            <span>Atletas</span>
+            <span>Atletes</span>
           <% end %>
         </li>
       <% end %>
@@ -39,6 +39,14 @@
   </aside>
 
   <div class="flex-1 space-y-6">
+    <% if can?(:manage, TrainingPlan) && @athlete.present? %>
+      <% local_athlete = current_user.trainees.joins(:profile).find_by(profiles: { athlete_id: @athlete.id }) %>
+      <% if local_athlete %>
+        <div class="flex justify-end">
+          <%= link_to 'Crear plan de entrenamiento', new_training_plan_path(athlete_id: local_athlete.id), class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    <% end %>
     <div class="space-y-6">
     <% if @athlete.present? %>
       <% if can? :use, :race_predictor %>

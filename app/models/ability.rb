@@ -7,7 +7,10 @@ class Ability
     can :read, :all
 
     can :manage, :settings if user.persisted?
-    can :manage, :all if user.role&.admin?
+    if user.role&.admin?
+      can :manage, :all
+      can :use, :race_predictor
+    end
     can :manage, :athletes if user.role&.name == 'trainer'
 
     role_perms = user.role ? user.role.role_permissions : []
