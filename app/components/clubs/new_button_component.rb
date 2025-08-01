@@ -3,7 +3,9 @@ module Clubs
     def call
       return unless helpers.can? :manage, Club
 
-      link_to 'Nuevo Club', helpers.new_club_path, class: 'btn btn-primary mb-4'
+      render Ui::ButtonComponent.new(href: helpers.new_club_path, classes: 'btn btn-primary mb-4') do
+        'Nuevo Club'
+      end
     end
   end
 end

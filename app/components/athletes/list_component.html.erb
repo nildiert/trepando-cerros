@@ -4,15 +4,17 @@
       Atletas <%= @club ? "de #{@club.name}" : 'del Club' %>
     </h2>
     <% if @athletes.any? %>
-      <ul class="list-disc pl-5">
+      <%= render Ui::TableComponent.new(headers: ['Nombre']) do %>
         <% @athletes.each do |athlete| %>
-          <li>
-            <%= link_to athlete.full_name.presence || athlete.email,
-                        user_path(athlete),
-                        class: 'link link-primary' %>
-          </li>
+          <tr>
+            <td>
+              <%= link_to athlete.full_name.presence || athlete.email,
+                          profile_path(athlete),
+                          class: 'link link-primary' %>
+            </td>
+          </tr>
         <% end %>
-      </ul>
+      <% end %>
     <% else %>
       <p class="text-gray-600">No hay atletas disponibles.</p>
     <% end %>

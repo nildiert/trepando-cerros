@@ -1,4 +1,5 @@
 class RolesController < ApplicationController
+  layout 'internal'
   before_action :authenticate_user
   before_action :set_role, only: [:show, :update]
 

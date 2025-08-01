@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :training_plans, only: [:index, :new, :create, :show]
   resources :coaches, only: [:index]
   resources :clubs, only: [:index, :new, :create, :destroy]
+  resources :profiles, only: [:show]
   resources :users, only: [:index, :edit, :update, :show]
   post "athletes/:id" => "athletes#show"
 
