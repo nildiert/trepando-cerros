@@ -1,6 +1,6 @@
 <aside class="w-48 space-y-2">
   <ul class="menu bg-base-100 p-2 rounded-box">
-    <% if session[:strava_token].present? || can?(:use, :race_predictor) %>
+    <% if session[:strava_token].present? || helpers.can?(:use, :race_predictor) %>
       <li>
         <%= link_to race_predictor_path, class: ["flex items-center gap-2", (current_page?(race_predictor_path) ? "active" : nil)].compact.join(' ') do %>
           <i class="fa-solid fa-chart-line"></i>
@@ -14,7 +14,7 @@
         <span>Entrenamiento</span>
       <% end %>
     </li>
-    <% if can?(:manage, TrainingPlan) %>
+    <% if helpers.can?(:manage, TrainingPlan) %>
       <li>
         <%= link_to training_plans_path, class: ["flex items-center gap-2", (current_page?(training_plans_path) ? "active" : nil)].compact.join(' ') do %>
           <i class="fa-solid fa-list-check"></i>
@@ -28,7 +28,7 @@
         <span>Entrenadores</span>
       <% end %>
     </li>
-    <% if can? :manage, :athletes %>
+    <% if helpers.can? :manage, :athletes %>
       <li>
         <%= link_to athletes_path, class: ["flex items-center gap-2", (current_page?(athletes_path) ? "active" : nil)].compact.join(' ') do %>
           <i class="fa-solid fa-users"></i>
