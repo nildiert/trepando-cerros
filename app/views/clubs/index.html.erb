@@ -1,9 +1,7 @@
 <div class="card bg-base-100 shadow">
   <div class="card-body">
     <h2 class="text-xl font-semibold mb-4">Clubes</h2>
-    <% if can? :manage, Club %>
-      <%= link_to 'Nuevo Club', new_club_path, class: 'btn btn-primary mb-4' %>
-    <% end %>
+    <%= render Clubs::NewButtonComponent.new %>
     <%= render Clubs::ListComponent.new(clubs: @clubs) %>
   </div>
 </div>
