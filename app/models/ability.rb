@@ -1,6 +1,8 @@
 class Ability
   include CanCan::Ability
 
+  PERMISSIONS = RolePermission::AVAILABLE_PERMISSIONS
+
   def initialize(user)
     user ||= User.new
 
@@ -22,6 +24,12 @@ class Ability
         can :use, :race_predictor
       when 'training_plan'
         can :manage, TrainingPlan
+      when 'club'
+        can :manage, Club
+      when 'athletes'
+        can :manage, :athletes
+      when 'users'
+        can :manage, User
       end
     end
   end

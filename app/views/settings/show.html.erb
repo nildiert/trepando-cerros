@@ -54,7 +54,7 @@
               </ul>
             </nav>
             <div data-tabs-target="panel" class="space-y-4">
-              <%= render Users::ListComponent.new(users: @users, roles: @roles) %>
+              <%= render Users::ListComponent.new(users: @users, roles: @roles, permissions: @permissions) %>
             </div>
             <div data-tabs-target="panel" class="hidden space-y-4">
               <div data-controller="role-selector" class="space-y-4">
