@@ -21,7 +21,9 @@
             </td>
             <td>
               <% if helpers.can? :manage, Club %>
-                <%= button_to 'Eliminar', club_path(club), method: :delete, data: { turbo_confirm: '¿Eliminar club?' }, class: 'btn btn-error btn-sm' %>
+                <%= link_to club_path(club), method: :delete, data: { turbo_confirm: '¿Eliminar club?' }, class: 'text-error', title: 'Eliminar' do %>
+                  <i class="fa-solid fa-trash"></i>
+                <% end %>
               <% end %>
             </td>
           </tr>
