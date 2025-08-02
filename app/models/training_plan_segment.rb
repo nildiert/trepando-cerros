@@ -4,6 +4,12 @@ class TrainingPlanSegment < ApplicationRecord
   attribute :phase, :integer
   attribute :objective_type, :integer
   attribute :intensity_type, :integer
+  attribute :duration, :integer
+  attribute :distance, :decimal
+  attribute :hr_zone, :integer
+  attribute :intensity_from, :integer
+  attribute :intensity_to, :integer
+  attribute :position, :integer
 
   enum :phase,
        {
