@@ -29,18 +29,6 @@ export default class extends Controller {
     if (this.hasWorkoutContainerTarget) this.workoutContainerTarget.classList.add("hidden")
   }
 
-  choosePhase(event) {
-    event.preventDefault()
-    const { phaseValue: value, phaseText: text } = event.currentTarget.dataset
-    if (this.hasPhaseInputTarget) this.phaseInputTarget.value = value
-    if (this.hasPhaseDisplayTarget) this.phaseDisplayTarget.textContent = text
-    if (this.toggleIdValue) {
-      const toggle = document.getElementById(this.toggleIdValue)
-      if (toggle) toggle.checked = false
-    }
-    if (this.hasWorkoutContainerTarget) this.workoutContainerTarget.classList.remove("hidden")
-    if (this.hasPhaseContainerTarget) this.phaseContainerTarget.classList.add("hidden")
-  }
 
   open() {
     if (this.hasModalTitleTarget && this.hasTitleValue) {

@@ -21,6 +21,9 @@ class TrainingPlanDay < ApplicationRecord
        },
        prefix: true
 
+  has_many :segments, class_name: 'TrainingPlanSegment', dependent: :destroy, inverse_of: :training_plan_day
+  accepts_nested_attributes_for :segments, allow_destroy: true
+
   validates :day, inclusion: { in: 0..6 }
   validates :workout_type, presence: true
   validates :activity_phase, presence: true

@@ -46,8 +46,8 @@
                 <span data-workout-selector-target="display" class="<%= workout_color_class(day_fields.object.workout_type) %> badge rounded-lg">
                   <%= t("activerecord.attributes.training_plan_day.workout_types.#{day_fields.object.workout_type}") %>
                 </span>
-                <span data-workout-selector-target="phaseDisplay" class="badge badge-outline ml-2">
-                  <%= t("activerecord.attributes.training_plan_day.activity_phases.#{day_fields.object.activity_phase}") %>
+                <span data-workout-selector-target="phaseDisplay" data-segments-target="display" class="badge badge-outline ml-2">
+                  <%= day_fields.object.segments.map { |s| t("activerecord.attributes.training_plan_segment.phases.#{s.phase}") }.join(', ') %>
                 </span>
               </label>
               <input type="checkbox" id="<%= modal_id %>" class="modal-toggle" />
@@ -61,11 +61,26 @@
                       <button type="button" class="btn <%= workout_color_class(k) %> rounded-lg" data-action="click->workout-selector#choose" data-workout-value="<%= k %>" data-workout-text="<%= text %>"><%= text %></button>
                     <% end %>
                   </div>
-                  <div data-workout-selector-target="phaseContainer" class="flex flex-col gap-2 mt-4 hidden">
-                    <% TrainingPlanDay.activity_phases.keys.each do |p| %>
-                      <% text = t("activerecord.attributes.training_plan_day.activity_phases.#{p}") %>
-                      <button type="button" class="btn btn-outline rounded-lg" data-action="click->workout-selector#choosePhase" data-phase-value="<%= p %>" data-phase-text="<%= text %>"><%= text %></button>
-                    <% end %>
+                  <div data-workout-selector-target="phaseContainer" class="flex flex-col gap-2 mt-4 hidden" data-controller="segments" data-segments-target="display">
+                    <div data-segments-target="list">
+                      <%= day_fields.fields_for :segments do |seg_fields| %>
+                        <%= render 'training_plan_days/segment_fields', f: seg_fields %>
+                      <% end %>
+                    </div>
+                    <template data-segments-target="template">
+                      <%= day_fields.fields_for :segments, TrainingPlanSegment.new, child_index: 'NEW_RECORD' do |seg_fields| %>
+                        <%= render 'training_plan_days/segment_fields', f: seg_fields %>
+                      <% end %>
+                    </template>
+                    <div class="flex gap-2 mt-2">
+                      <% TrainingPlanSegment.phases.keys.each do |p| %>
+                        <% text = t("activerecord.attributes.training_plan_segment.phases.#{p}") %>
+                        <button type="button" class="btn btn-outline" data-action="segments#addPhase" data-phase-value="<%= p %>"><%= text %></button>
+                      <% end %>
+                    </div>
+                    <div class="modal-action mt-4">
+                      <label for="<%= modal_id %>" class="btn text-white bg-[#5E81AC] hover:bg-[#4c6b90]">Guardar</label>
+                    </div>
                   </div>
                 </div>
               </div>

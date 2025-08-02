@@ -31,6 +31,7 @@ class TrainingPlansController < ApplicationController
         workout_type: :rest,
         activity_phase: :rest
       )
+      @training_plan.training_plan_days[i].segments.build(phase: :warm_up)
     end
   end
 
@@ -78,7 +79,14 @@ class TrainingPlansController < ApplicationController
       :start_date,
       :end_date,
       :athlete_id,
-      training_plan_days_attributes: %i[id day workout_type activity_phase _destroy]
+      training_plan_days_attributes: [
+        :id,
+        :day,
+        :workout_type,
+        :activity_phase,
+        :_destroy,
+        segments_attributes: %i[id phase duration distance hr_zone position _destroy]
+      ]
     )
   end
 end

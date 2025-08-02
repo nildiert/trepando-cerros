@@ -44,6 +44,13 @@ en:
           rest: "Descanso"
           cool_down: "Vuelta a la calma"
           interval: "Intervalo"
+      training_plan_segment:
+        phases:
+          warm_up: "Calentamiento"
+          workout: "Entrenar"
+          rest: "Descanso"
+          cool_down: "Vuelta a la calma"
+          interval: "Intervalo"
   training_plans:
     select_activity: "Seleccione una actividad"
     select_activity_for: "Seleccione una actividad para %{date}"

@@ -1,0 +1,9 @@
+<div data-segment-item class="flex gap-2 items-end mb-2">
+  <%= f.select :phase, TrainingPlanSegment.phases.keys.map { |p| [t("activerecord.attributes.training_plan_segment.phases.#{p}"), p] }, {}, class: "select select-bordered" %>
+  <%= f.number_field :duration, placeholder: 'min', class: 'input input-bordered w-20' %>
+  <%= f.number_field :distance, step: 0.1, placeholder: 'km', class: 'input input-bordered w-20' %>
+  <%= f.number_field :hr_zone, placeholder: 'FC', class: 'input input-bordered w-20' %>
+  <button type="button" class="btn btn-sm btn-outline" data-action="segments#remove">🗑</button>
+  <%= f.hidden_field :position %>
+  <%= f.hidden_field :_destroy %>
+</div>
