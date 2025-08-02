@@ -4,7 +4,6 @@ export default class extends Controller {
   static targets = [
     "display",
     "workoutInput",
-    "phaseInput",
     "phaseDisplay",
     "workoutContainer",
     "phaseContainer",
@@ -20,15 +19,13 @@ export default class extends Controller {
 
   choose(event) {
     event.preventDefault()
-    const { workoutValue: value, workoutText: text } =
-      event.currentTarget.dataset
+    const { workoutValue: value, workoutText: text } = event.currentTarget.dataset
     this.workoutInputTarget.value = value
     this.displayTarget.textContent = text
     this.updateAppearance(value)
     if (this.hasPhaseContainerTarget) this.phaseContainerTarget.classList.remove("hidden")
     if (this.hasWorkoutContainerTarget) this.workoutContainerTarget.classList.add("hidden")
   }
-
 
   open() {
     if (this.hasModalTitleTarget && this.hasTitleValue) {
@@ -45,6 +42,7 @@ export default class extends Controller {
       long_run: "bg-[#5E81AC] hover:bg-[#4c6b90] text-white",
       intensity: "bg-[#BF616A] hover:bg-[#a04c54] text-white",
       strength: "bg-[#D08770] hover:bg-[#b36f5d] text-white",
+      cross_training: "bg-[#EBCB8B] hover:bg-[#d4b473] text-white",
     }
     this.displayTarget.className = `badge rounded-lg ${classes[value] || ''}`
     this.element.classList.remove(
@@ -58,7 +56,9 @@ export default class extends Controller {
       "hover:bg-[#4c6b90]",
       "hover:bg-[#a04c54]",
       "hover:bg-[#b36f5d]",
-      "text-white"
+      "bg-[#EBCB8B]",
+      "hover:bg-[#d4b473]",
+      "text-white",
     )
     if (classes[value]) {
       this.element.classList.add(...classes[value].split(" "))

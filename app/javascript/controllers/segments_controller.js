@@ -3,20 +3,11 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["list", "template", "display"]
 
-  addPhase(event) {
+  add(event) {
     event.preventDefault()
-    const phase = event.currentTarget.dataset.phaseValue
-    this.add({ phase })
-  }
-
-  add(detail = {}) {
     const content = this.templateTarget.innerHTML.replace(/NEW_RECORD/g, Date.now())
     const fragment = document.createRange().createContextualFragment(content)
     const item = fragment.firstElementChild
-    if (detail.phase) {
-      const select = item.querySelector("select[name*='[phase]']")
-      if (select) select.value = detail.phase
-    }
     this.listTarget.appendChild(item)
     this.updateDisplay()
   }
@@ -33,6 +24,12 @@ export default class extends Controller {
 
   connect() {
     this.updateDisplay()
+    this.listTarget
+      .querySelectorAll("select[name*='[objective_type]']")
+      .forEach(select => this.changeObjective({ currentTarget: select }))
+    this.listTarget
+      .querySelectorAll("select[name*='[intensity_type]']")
+      .forEach(select => this.changeIntensity({ currentTarget: select }))
   }
 
   updateDisplay() {
@@ -41,5 +38,20 @@ export default class extends Controller {
       this.listTarget.querySelectorAll("select[name*='[phase]'] option:checked")
     ).map(o => o.textContent.trim())
     this.displayTarget.textContent = texts.join(', ')
+  }
+
+  changeObjective(event) {
+    const item = event.currentTarget.closest("[data-segment-item]")
+    const type = event.currentTarget.value
+    item.querySelector('[data-objective-distance]').classList.toggle('hidden', type !== 'distance')
+    item.querySelector('[data-objective-time]').classList.toggle('hidden', type !== 'time')
+    item.querySelector('[data-objective-hr]').classList.toggle('hidden', type !== 'heart_rate_zone')
+  }
+
+  changeIntensity(event) {
+    const item = event.currentTarget.closest("[data-segment-item]")
+    const type = event.currentTarget.value
+    item.querySelector('[data-intensity-hr]').classList.toggle('hidden', type !== 'heart_rate')
+    item.querySelector('[data-intensity-rpe]').classList.toggle('hidden', type !== 'rpe')
   }
 }
