@@ -45,6 +45,7 @@ en:
             workout: "Entrenar"
             rest: "Descanso"
             cool_down: "Vuelta a la calma"
+            interval: "Intervalo"
           objective_types:
             distance: "Distancia"
             time: "Tiempo"

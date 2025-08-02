@@ -1,12 +1,17 @@
 class TrainingPlanSegment < ApplicationRecord
   belongs_to :training_plan_day
 
+  attribute :phase, :integer
+  attribute :objective_type, :integer
+  attribute :intensity_type, :integer
+
   enum :phase,
        {
          warm_up: 0,
          workout: 1,
          rest: 2,
-         cool_down: 3
+         cool_down: 3,
+         interval: 4
        },
        prefix: true
 
