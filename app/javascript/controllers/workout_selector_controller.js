@@ -12,9 +12,13 @@ export default class extends Controller {
   static values = { toggleId: String, title: String }
 
   connect() {
-    this.updateAppearance(this.workoutInputTarget.value)
-    if (this.hasPhaseContainerTarget) this.phaseContainerTarget.classList.add("hidden")
-    if (this.hasWorkoutContainerTarget) this.workoutContainerTarget.classList.remove("hidden")
+    const value = this.workoutInputTarget.value
+    this.updateAppearance(value)
+    const hasWorkout = value && value.length > 0
+    if (this.hasWorkoutContainerTarget)
+      this.workoutContainerTarget.classList.toggle("hidden", hasWorkout)
+    if (this.hasPhaseContainerTarget)
+      this.phaseContainerTarget.classList.toggle("hidden", !hasWorkout)
   }
 
   choose(event) {
