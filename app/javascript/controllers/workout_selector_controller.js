@@ -1,30 +1,42 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["display", "workoutInput", "modalTitle"]
+  static targets = [
+    "display",
+    "workoutInput",
+    "phaseDisplay",
+    "workoutContainer",
+    "phaseContainer",
+    "modalTitle",
+  ]
   static values = { toggleId: String, title: String }
 
   connect() {
-    this.updateAppearance(this.workoutInputTarget.value)
+    const value = this.workoutInputTarget.value
+    this.updateAppearance(value)
+    const hasWorkout = value && value.length > 0
+    if (this.hasWorkoutContainerTarget)
+      this.workoutContainerTarget.classList.toggle("hidden", hasWorkout)
+    if (this.hasPhaseContainerTarget)
+      this.phaseContainerTarget.classList.toggle("hidden", !hasWorkout)
   }
 
   choose(event) {
     event.preventDefault()
-    const { workoutValue: value, workoutText: text } =
-      event.currentTarget.dataset
+    const { workoutValue: value, workoutText: text } = event.currentTarget.dataset
     this.workoutInputTarget.value = value
     this.displayTarget.textContent = text
     this.updateAppearance(value)
-    if (this.toggleIdValue) {
-      const toggle = document.getElementById(this.toggleIdValue)
-      if (toggle) toggle.checked = false
-    }
+    if (this.hasPhaseContainerTarget) this.phaseContainerTarget.classList.remove("hidden")
+    if (this.hasWorkoutContainerTarget) this.workoutContainerTarget.classList.add("hidden")
   }
 
   open() {
     if (this.hasModalTitleTarget && this.hasTitleValue) {
       this.modalTitleTarget.textContent = this.titleValue
     }
+    if (this.hasWorkoutContainerTarget) this.workoutContainerTarget.classList.remove("hidden")
+    if (this.hasPhaseContainerTarget) this.phaseContainerTarget.classList.add("hidden")
   }
 
   updateAppearance(value) {
@@ -34,6 +46,7 @@ export default class extends Controller {
       long_run: "bg-[#5E81AC] hover:bg-[#4c6b90] text-white",
       intensity: "bg-[#BF616A] hover:bg-[#a04c54] text-white",
       strength: "bg-[#D08770] hover:bg-[#b36f5d] text-white",
+      cross_training: "bg-[#EBCB8B] hover:bg-[#d4b473] text-white",
     }
     this.displayTarget.className = `badge rounded-lg ${classes[value] || ''}`
     this.element.classList.remove(
@@ -47,7 +60,9 @@ export default class extends Controller {
       "hover:bg-[#4c6b90]",
       "hover:bg-[#a04c54]",
       "hover:bg-[#b36f5d]",
-      "text-white"
+      "bg-[#EBCB8B]",
+      "hover:bg-[#d4b473]",
+      "text-white",
     )
     if (classes[value]) {
       this.element.classList.add(...classes[value].split(" "))

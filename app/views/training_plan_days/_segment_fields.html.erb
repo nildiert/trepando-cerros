@@ -1,0 +1,24 @@
+<div data-segment-item class="flex flex-wrap gap-2 items-end mb-2">
+  <%= f.select :phase, TrainingPlanSegment.phases.keys.map { |p| [t("activerecord.attributes.training_plan_segment.phases.#{p}"), p] }, {}, class: "select select-bordered" %>
+  <%= f.select :objective_type, TrainingPlanSegment.objective_types.keys.map { |o| [t("activerecord.attributes.training_plan_segment.objective_types.#{o}"), o] }, {}, class: "select select-bordered", data: { action: "segments#changeObjective" } %>
+  <div data-objective-distance>
+    <%= f.number_field :distance, step: 0.1, placeholder: 'km', class: 'input input-bordered w-24' %>
+  </div>
+  <div data-objective-time class="hidden">
+    <%= f.number_field :duration, placeholder: 'min', class: 'input input-bordered w-24' %>
+  </div>
+  <div data-objective-hr class="hidden">
+    <%= f.number_field :hr_zone, placeholder: 'Zona', class: 'input input-bordered w-24' %>
+  </div>
+  <%= f.select :intensity_type, TrainingPlanSegment.intensity_types.keys.map { |i| [t("activerecord.attributes.training_plan_segment.intensity_types.#{i}"), i] }, {}, class: "select select-bordered", data: { action: "segments#changeIntensity" } %>
+  <div data-intensity-hr>
+    <%= f.number_field :intensity_from, placeholder: 'FC min', class: 'input input-bordered w-20' %>
+    <%= f.number_field :intensity_to, placeholder: 'FC máx', class: 'input input-bordered w-20' %>
+  </div>
+  <div data-intensity-rpe class="hidden">
+    <%= f.select :intensity_from, (1..10).to_a, {}, class: 'select select-bordered w-24' %>
+  </div>
+  <button type="button" class="btn btn-sm btn-outline" data-action="segments#remove">🗑</button>
+  <%= f.hidden_field :position %>
+  <%= f.hidden_field :_destroy %>
+</div>

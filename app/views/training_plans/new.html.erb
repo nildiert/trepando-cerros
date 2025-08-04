@@ -39,11 +39,14 @@
             <% date = @training_plan.date_for(day_fields.object.day) %>
               <div class="form-control mb-4 rounded-lg p-2 <%= workout_color_class(day_fields.object.workout_type) %>" data-controller="workout-selector" data-workout-selector-toggle-id-value="<%= modal_id %>" data-workout-selector-title-value="<%= t('training_plans.select_activity_for', date: "#{TrainingPlanDay::DAYS_OF_WEEK[day_fields.object.day]} #{short_date_es(date)}") %>">
               <%= day_fields.hidden_field :day %>
-              <%= day_fields.hidden_field :workout_type, value: day_fields.object.workout_type, data: { workout_selector_target: 'workoutInput' } %>
+                <%= day_fields.hidden_field :workout_type, value: day_fields.object.workout_type, data: { workout_selector_target: 'workoutInput' } %>
               <label for="<%= modal_id %>" class="label cursor-pointer" data-action="click->workout-selector#open">
                 <span class="label-text"><%= "#{TrainingPlanDay::DAYS_OF_WEEK[day_fields.object.day]} #{short_date_es(date)}" %>:</span>
                 <span data-workout-selector-target="display" class="<%= workout_color_class(day_fields.object.workout_type) %> badge rounded-lg">
                   <%= t("activerecord.attributes.training_plan_day.workout_types.#{day_fields.object.workout_type}") %>
+                </span>
+                <span data-workout-selector-target="phaseDisplay" data-segments-target="display" class="badge badge-outline ml-2">
+                  <%= day_fields.object.segments.map { |s| t("activerecord.attributes.training_plan_segment.phases.#{s.phase}") }.join(', ') %>
                 </span>
               </label>
               <input type="checkbox" id="<%= modal_id %>" class="modal-toggle" />
@@ -51,16 +54,35 @@
                 <div class="modal-box relative rounded-xl">
                   <label for="<%= modal_id %>" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
                   <h3 class="text-lg font-semibold mb-4" data-workout-selector-target="modalTitle"><%= t('training_plans.select_activity') %></h3>
-                  <div class="flex flex-col gap-2">
-                    <% TrainingPlanDay.workout_types.keys.each do |k| %>
-                      <% text = t("activerecord.attributes.training_plan_day.workout_types.#{k}") %>
-                      <button type="button" class="btn <%= workout_color_class(k) %> rounded-lg" data-action="click->workout-selector#choose" data-workout-value="<%= k %>" data-workout-text="<%= text %>"><%= text %></button>
-                    <% end %>
+                    <div class="flex flex-col gap-2" data-workout-selector-target="workoutContainer">
+                      <% TrainingPlanDay.workout_types.keys.each do |k| %>
+                        <% text = t("activerecord.attributes.training_plan_day.workout_types.#{k}") %>
+                        <button type="button" class="btn <%= workout_color_class(k) %> rounded-lg" data-action="click->workout-selector#choose" data-workout-value="<%= k %>" data-workout-text="<%= text %>"><%= text %></button>
+                      <% end %>
+                    </div>
+                    <div data-workout-selector-target="phaseContainer" class="flex flex-col gap-2 mt-4 hidden" data-controller="segments" data-segments-target="display">
+                      <div class="flex items-center gap-2 mb-2">
+                        <span>Seleccionar ejercicio</span>
+                        <button type="button" class="btn btn-sm btn-outline" data-action="segments#add">+</button>
+                      </div>
+                      <div data-segments-target="list">
+                        <%= day_fields.fields_for :segments do |seg_fields| %>
+                          <%= render 'training_plan_days/segment_fields', f: seg_fields %>
+                        <% end %>
+                      </div>
+                      <template data-segments-target="template">
+                        <%= day_fields.fields_for :segments, TrainingPlanSegment.new, child_index: 'NEW_RECORD' do |seg_fields| %>
+                          <%= render 'training_plan_days/segment_fields', f: seg_fields %>
+                        <% end %>
+                      </template>
+                      <div class="modal-action mt-4">
+                        <label for="<%= modal_id %>" class="btn text-white bg-[#5E81AC] hover:bg-[#4c6b90]">Guardar</label>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          <% end %>
+            <% end %>
           <div class="flex justify-end">
             <%= f.submit 'Guardar', class: 'btn text-white bg-[#5E81AC] hover:bg-[#4c6b90] border-none' %>
           </div>

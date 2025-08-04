@@ -24,10 +24,13 @@ class TrainingPlansController < ApplicationController
     end
     @training_plan.start_date = Date.current.beginning_of_week(:monday)
     @training_plan.end_date = @training_plan.start_date.end_of_week(:sunday)
-    TrainingPlanDay::DAYS_OF_WEEK.each_index do |i|
-      # initialize every day as rest
-      @training_plan.training_plan_days.build(day: i, workout_type: :rest)
-    end
+      TrainingPlanDay::DAYS_OF_WEEK.each_index do |i|
+        # initialize every day as rest
+        @training_plan.training_plan_days.build(
+          day: i,
+          workout_type: :rest
+        )
+      end
   end
 
   def create
@@ -74,7 +77,15 @@ class TrainingPlansController < ApplicationController
       :start_date,
       :end_date,
       :athlete_id,
-      training_plan_days_attributes: %i[id day workout_type _destroy]
-    )
+        training_plan_days_attributes: [
+          :id,
+          :day,
+          :workout_type,
+          :_destroy,
+          segments_attributes: %i[
+            id phase objective_type duration distance hr_zone intensity_type intensity_from intensity_to position _destroy
+          ]
+        ]
+      )
+    end
   end
-end
